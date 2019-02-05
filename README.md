@@ -58,12 +58,16 @@ First, you need to import the library:
 
     [TODO]
 
-
 Load the remote payment form javascript library:
 
-    KRGlue.loadLibrary().then( function(KR) {
-        /* do your stuff here */
-    });
+    const setupConfig = {
+        'kr-public-key': '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5'
+        };
+
+    KRGlue.loadLibrary('https://api.payzen.eu')
+        .then( KR.setFormConfig(setupConfig) )
+        .then( KR.addForm('#myPaymentForm') )
+        .then( KR.showForm(formId) );
 
 for more details, see [TODO]
 
