@@ -65,9 +65,9 @@ Load the remote payment form javascript library:
         };
 
     KRGlue.loadLibrary('https://api.payzen.eu')
-        .then( KR.setFormConfig(setupConfig) )
-        .then( KR.addForm('#myPaymentForm') )
-        .then( KR.showForm(formId) );
+          .then( KR.setFormConfig(setupConfig) )
+          .then( KR.addForm('#myPaymentForm') )
+          .then( KR.showForm(formId) );
 
 for more details, see [TODO]
 
