@@ -1,6 +1,6 @@
-# embedded-form-flue javascript library
+# embedded-form-glue javascript library
 
-The **embedded-form-flue** helps you to integrate a payment form into your favorite
+The **embedded-form-glue** helps you to integrate a payment form into your favorite
 framekwork easily using npm or any similar tools.
 
 ## Context
@@ -24,9 +24,9 @@ The Lyra payment form javascript component has to be loaded from Lyra server. It
 not possible to add it easily into your package.json file like any other javascript library.
 
 To make your life easier, we have created a glue library that help you to include it into
-your build: the **embedded-form-flue**.
+your build: the **embedded-form-glue**.
 
-The **embedded-form-flue** glue library helps you to deal with:
+The **embedded-form-glue** glue library helps you to deal with:
 
 - async loading of the payment form javascript component 
 - help to manage configuration if the component is not yet loaded
