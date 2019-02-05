@@ -1,5 +1,7 @@
 # embedded-form-glue javascript library
 
+[WORK IN PROGRESS]
+
 The **embedded-form-glue** javascript library helps you to integrate a payment form into
 your favorite framework easily using npm or any similar tools.
 
@@ -69,7 +71,14 @@ Load the remote payment form javascript library:
           .then((KR) => KR.addForm('#myPaymentForm'))    /* create a payment form */
           .then((KR, formId) => KR.showForm(formId));    /* show the payment form */
 
-for more details, see [TODO]
+## New methods (work in progress)
+
+- KR.addForm(/*CSS class or id*/) : Add a form into a div: return a promise with a formId
+- KR.showForm(formId): display an hidden form
+- KR.hideForm(formId): hide a visible form
+- KR.removeForms(): Remove all existing forms 
+- KR.removeForm(FormID): remove a form
+- KR.attachForm([CLASS OR ID]): Scan a DOM element and attach a form, return a formId
 
 [REST Link]: #
 [JS Link]: #
