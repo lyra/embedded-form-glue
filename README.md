@@ -3,6 +3,10 @@
 The **embedded-form-glue** javascript library helps you to integrate a payment form into
 your favorite framework easily using npm or any similar tools.
 
+A simple payment form will look like:
+
+![payment form](/payment_form.png)
+
 ## Context
 
 Any credit card payment form should comply with PCI-DSS requirements. A classical integration
@@ -12,14 +16,14 @@ PCI-DSS requirements are done by your bank.
 If you want to integrate a payment form on your web-page and get it easier with PCI-DSS, you
 can use IFrames.
 
-The [Lyra payment form remote javascript library](todo) helps you to integrate a payment form using standard
+The [Payment form remote javascript library][JS Link] helps you to integrate a payment form using standard
 HTML components on your website. It will transform automatically each sensitive field
 (Pan, security form) into an IFrame. Merchant page can't access the data into the IFrame
 loaded on a different domain name.
 
-The [Lyra payment form remote javascript library](todo) is based on a [REST API provided by Lyra](todo).
+The [Payment form remote javascript library][JS Link] is based on a [Payment REST API][REST Link].
 
-The [Lyra payment form remote javascript library](todo) has to be loaded from Lyra servers. It's
+The [Payment form remote javascript library][JS Link] has to be loaded from Lyra servers. It's
 not possible to add it easily into your package.json file like any other javascript library.
 
 To make your life easier, we have created a glue library that helps you to include it into
@@ -27,8 +31,8 @@ your build: the **embedded-form-glue** library.
 
 The **embedded-form-glue** glue library helps you to deal with:
 
-- async loading of the [Lyra payment form remote javascript library](todo)
-- helps you to manage configuration if the [Lyra payment form remote javascript library](todo) is not yet loaded
+- async loading of the [Payment form remote javascript library][JS Link]
+- helps you to manage configuration if the [Payment form remote javascript library][JS Link] is not yet loaded
 - preload payment form elements and display them quickly on slow network
 - various helpers to add, display or remove the payment form
 
@@ -62,3 +66,6 @@ Load the remote payment form javascript library:
     });
 
 for more details, see [TODO]
+
+[REST Link]: #
+[JS Link]: #
