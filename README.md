@@ -73,12 +73,12 @@ Load the remote payment form javascript library:
 
 ## New methods (work in progress)
 
-- KR.addForm(/*CSS class or id*/) : Add a form into a div: return a promise with a formId
+- KR.addForm(/*CSS class or id*/) : Add a form into a div (HTML elements): return a promise with a formId
 - KR.showForm(formId): display an hidden form
 - KR.hideForm(formId): hide a visible form
 - KR.removeForms(): Remove all existing forms 
 - KR.removeForm(FormID): remove a form
-- KR.attachForm([CLASS OR ID]): Scan a DOM element and attach a form, return a formId
+- KR.attachForm([CLASS OR ID]): Scan a DOM and attach the library to an existing DOM, return a formId
 
 [REST Link]: #
 [JS Link]: #
