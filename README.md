@@ -1,9 +1,9 @@
-# kr-payment-form-glue javascript library
+# embedded-form-flue javascript library
 
-The **kr-payment-form-glue** helps you to integrate a payment form into your favorite
+The **embedded-form-flue** helps you to integrate a payment form into your favorite
 framekwork easily using npm or any similar tools.
 
-## Context
+## Context
 
 Any creditcard payment form should comply with PCI-DSS requirements. A classical integration
 displays the payment form on the bank page using a redirection. In this case, 
@@ -24,9 +24,9 @@ The Lyra payment form javascript component has to be loaded from Lyra server. It
 not possible to add it easily into your package.json file like any other javascript library.
 
 To make your life easier, we have created a glue library that help you to include it into
-your build: the **kr-payment-form-glue**.
+your build: the **embedded-form-flue**.
 
-The **kr-payment-form-glue** glue library helps you to deal with:
+The **embedded-form-flue** glue library helps you to deal with:
 
 - async loading of the payment form javascript component 
 - help to manage configuration if the component is not yet loaded
