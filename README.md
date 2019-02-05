@@ -1,19 +1,19 @@
 # embedded-form-glue javascript library
 
 The **embedded-form-glue** helps you to integrate a payment form into your favorite
-framekwork easily using npm or any similar tools.
+framework easily using npm or any similar tools.
 
 ## Context
 
-Any creditcard payment form should comply with PCI-DSS requirements. A classical integration
+Any credit card payment form should comply with PCI-DSS requirements. A classical integration
 displays the payment form on the bank page using a redirection. In this case, 
 PCI-DSS requirements are done by your bank.
 
-If you want to integrate a payment form on your web-page, and get it easier with PCI-DSS, you
+If you want to integrate a payment form on your web-page and get it easier with PCI-DSS, you
 should use IFrames. 
 
 Lyra Payment form javascript library helps you to integrate a payment form using standard
-HTML components on your web-site. It will transform automatically each sensitive field 
+HTML components on your website. It will transform automatically each sensitive field 
 (Pan, security form) into an IFrame. Merchant page can't access the data into the IFrame
 loaded on a different domain name.
 
@@ -23,7 +23,7 @@ be found here: [TODO]
 The Lyra payment form javascript component has to be loaded from Lyra server. It's
 not possible to add it easily into your package.json file like any other javascript library.
 
-To make your life easier, we have created a glue library that help you to include it into
+To make your life easier, we have created a glue library that helps you to include it into
 your build: the **embedded-form-glue**.
 
 The **embedded-form-glue** glue library helps you to deal with:
