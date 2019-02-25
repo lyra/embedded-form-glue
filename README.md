@@ -2,8 +2,8 @@
 
 [WORK IN PROGRESS]
 
-The **embedded-form-glue** javascript library helps you to integrate a payment form into
-your favorite framework easily using npm or any similar tools.
+The **embedded-form-glue** javascript library helps you to integrate a payment
+form into your favorite framework easily using npm or any similar tools.
 
 A simple payment form will look like:
 
@@ -11,25 +11,27 @@ A simple payment form will look like:
 
 ## Context
 
-Any credit card payment form should comply with PCI-DSS requirements. A classical integration
-displays the payment form on the bank page using a redirection. In this case,
-PCI-DSS requirements are done by your bank.
+Any credit card payment form should comply with PCI-DSS requirements. A
+classical integration displays the payment form on the bank page using a
+redirection. In this case, PCI-DSS requirements are done by your bank.
 
-If you want to integrate a payment form on your web-page and get it easier with PCI-DSS, you
-can use IFrames.
+If you want to integrate a payment form on your web-page and get it easier with
+PCI-DSS, you can use IFrames.
 
-The [Payment form remote javascript library][JS Link] helps you to integrate a payment form using standard
-HTML components on your website. It will transform automatically each sensitive field
-(Pan, security form) into an IFrame. Merchant page can't access the data into the IFrame
-loaded on a different domain name.
+The [Payment form remote javascript library][JS Link] helps you to integrate a
+payment form using standard HTML components on your website. It will transform
+automatically each sensitive field (Pan, security form) into an IFrame. Merchant
+page can't access the data into the IFrame loaded on a different domain name.
 
-The [Payment form remote javascript library][JS Link] is based on a [Payment REST API][REST Link].
+The [Payment form remote javascript library][JS Link] is based on
+a [Payment REST API][REST Link].
 
-The [Payment form remote javascript library][JS Link] has to be loaded from Lyra servers. It's
-not possible to add it easily into your package.json file like any other javascript library.
+The [Payment form remote javascript library][JS Link] has to be loaded from Lyra
+servers. It's not possible to add it easily into your package.json file like any
+other javascript library.
 
-To make your life easier, we have created a glue library that helps you to include it into
-your build: the **embedded-form-glue** library.
+To make your life easier, we have created a glue library that helps you to
+include it into your build: the **embedded-form-glue** library.
 
 The **embedded-form-glue** glue library helps you to deal with:
 
@@ -69,7 +71,7 @@ Load the remote payment form javascript library:
     KRGlue.loadLibrary('https://api.payzen.eu')          /* Load the remote library */
           .then((KR) => KR.setFormConfig(defaultConfig)) /* set the minimal configuration */
           .then((KR) => KR.addForm('#myPaymentForm'))    /* create a payment form */
-          .then((KR, formId) => KR.showForm(formId));    /* show the payment form */
+          .then((KR) => KR.showForm(KR.result.formId));    /* show the payment form */
 
 ## New methods (work in progress)
 
@@ -81,3 +83,4 @@ Load the remote payment form javascript library:
 
 [REST Link]: #
 [JS Link]: #
+
