@@ -1,0 +1,8 @@
+version: "2"
+services:
+  glue:
+    build: ./docker/build/node/.
+    volumes:
+      - ./src:/opt/code
+      - ./dist:/opt/dist
+    container_name: glue_node

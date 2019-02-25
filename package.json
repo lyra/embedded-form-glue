@@ -1,0 +1,27 @@
+{
+  "name": "@lyracom/embedded-form-glue",
+  "version": "0.1.3",
+  "description": "Lyra embedded form glue",
+  "main": "src/app/index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lyra/embedded-form-glue.git"
+  },
+  "keywords": [
+    "javascript",
+    "embedded",
+    "form",
+    "lyra",
+    "glue"
+  ],
+  "author": "Lyra Network",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lyra/embedded-form-glue/issues"
+  },
+  "homepage": "https://github.com/lyra/embedded-form-glue#readme",
+  "devDependencies": {},
+  "dependencies": {}
+}
+
