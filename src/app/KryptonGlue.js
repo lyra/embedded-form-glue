@@ -35,9 +35,9 @@ class Glue {
 
     loadKryptonClient() {
         const _this = this;
-        const domain = this.domain;
         const publicKey = this.publicKey;
         const formToken = this.formToken;
+        let domain = this.domain;
 
         return new Promise((resolve, reject) => {
             let script = document.createElement('script');
