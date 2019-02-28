@@ -6,10 +6,11 @@ class Glue {
         this.configuration = {};
         this.loaded = false;
         this.domain = null;
+        this.formToken = null;
         this.publicKey = null;
     }
 
-    loadLibrary(domain, publicKey) {
+    loadLibrary(domain, publicKey, formToken='01AayTWy5HTiOWMyKQFUiAfg186eyJhIjoxMDAwMCwiYyI6eyJiIjp7ImJjIjp7ImYiOnsidmFkQ2FyZFR5cGUiOnsidmFsdWUiOiJCQU5DT05UQUNUIn19fSwidmkiOnsiZiI6eyJ2YWRDYXJkVHlwZSI6eyJ2YWx1ZSI6IlZJU0EifX19LCJtYyI6eyJmIjp7InZhZENhcmRUeXBlIjp7InZhbHVlIjoiTUFTVEVSQ0FSRCJ9fX0sImFtIjp7ImYiOnsidmFkQ2FyZFR5cGUiOnsidmFsdWUiOiJBTUVYIn19fSwiY2IiOnsiZiI6eyJkZWJpdENyZWRpdCI6eyJ2YWx1ZSI6ImNyZWRpdCJ9fX19fSwibSI6IkVVUiIsIm8iOm51bGx90f02') {
         if (typeof window.KR_CLIENT_LOADED != 'undefined') {
             return Promise.reject("Library KR already loaded");
         }
@@ -36,11 +37,18 @@ class Glue {
         const _this = this;
         const domain = this.domain;
         const publicKey = this.publicKey;
+        const formToken = this.formToken;
 
         return new Promise((resolve, reject) => {
             let script = document.createElement('script');
             script.type = 'text/javascript';
-            script.src = `${domain}/static/js/krypton-client/V4.0/stable/kr-payment-form.min.js`;
+
+            // Domain must end with slash
+            if (!/^.+\/$/.test(domain)) {
+                domain += "/";
+            }
+
+            script.src = `${domain}static/js/krypton-client/V4.0/stable/kr-payment-form.min.js?formToken=${formToken}`;
             script.setAttribute("kr-public-key", publicKey);
 
             // Append it to body
