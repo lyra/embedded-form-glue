@@ -14,7 +14,7 @@ export default {
   components: {
   },
   mounted: function() {
-      KRGlue.loadLibrary('http://krypton.local/', '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5').then(KR => {
+      KRGlue.loadLibrary('http://krypton.local', '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5').then(KR => {
           return KR.setFormConfig({
               formToken,
           });

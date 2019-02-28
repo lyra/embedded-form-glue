@@ -675,10 +675,10 @@
     cssnano-preset-default "^4.0.0"
     postcss "^7.0.0"
 
-"@lyracom/embedded-form-glue@^0.1.3":
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/@lyracom/embedded-form-glue/-/embedded-form-glue-0.1.3.tgz#6ae9e3526c98c8f3bfb5cd2c599d739b9d9ac3ab"
-  integrity sha512-4NPyM8fvqsDJeILpqjt4NIdHkVUHw6p1rdKZ1MWccC2GLPOSHOKOGjdt8xg+a4nSdSquXmrgt04FKU+rQu8s1g==
+"@lyracom/embedded-form-glue@0.1.4":
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/@lyracom/embedded-form-glue/-/embedded-form-glue-0.1.4.tgz#12694e3323900406b72deb8f2c1f54c305787e6c"
+  integrity sha512-sgne2QDDOWFhuNaCRKFAf1kFVe4XM0Jx8lzt1TAQ7UZKzc+JOZhxtOnuCRdjeMoYixEo6xmpXqNIh9v5uyL5CQ==
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
