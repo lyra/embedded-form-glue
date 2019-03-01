@@ -25,6 +25,7 @@ class Glue {
 
         this.domain = domain;
         this.publicKey = publicKey;
+        this.formToken = formToken;
 
         if (this.domain && !this.loaded && this.publicKey) {
             return this.loadKryptonClient();
