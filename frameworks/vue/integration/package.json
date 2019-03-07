@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "@lyracom/embedded-form-glue": "0.1.5",
+    "js-url": "^2.3.0",
+    "underscore": "^1.9.1",
     "vue": "^2.6.6"
   },
   "devDependencies": {
