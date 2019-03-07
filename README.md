@@ -66,10 +66,13 @@ Load the remote payment form javascript library:
 
     const defaultConfig = {
         'kr-public-key': '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5'
+        'formToken': 'DEMO-TOKEN-TO-BE-REPLACED',
         };
 
-    KRGlue.loadLibrary('https://api.payzen.eu')          /* Load the remote library */
-          .then((KR) => KR.setFormConfig(defaultConfig)) /* set the minimal configuration */
+    KRGlue.loadLibrary('https://api.payzen.eu', defaultConfig.publicKey)          /* Load the remote library */
+          .then((KR) => KR.setFormConfig({
+            formToken: defaultConfig.formToken,
+          })) /* set the minimal configuration */
           .then((KR) => KR.addForm('#myPaymentForm'))    /* create a payment form */
           .then((KR) => KR.showForm(KR.result.formId));    /* show the payment form */
 
