@@ -1,13 +1,7 @@
-<template>
-  <div id="app">
-      <div id="myPaymentForm"></div>
-      <pre v-if="response">{{response}}</pre>
-  </div>
-</template>
-
-<script>
+import React, { Component } from 'react';
 import KRGlue from "@lyracom/embedded-form-glue";
 import _ from "underscore";
+import './App.css';
 
 const getQuery = function() {
     let queryString = window.location.href.split("?")[1];
@@ -27,30 +21,45 @@ let query = getQuery();
 let formToken = query.formToken;
 let endpoint = query.endpoint;
 let publicKey = query.publicKey;
+let pre;
 
-export default {
-  name: 'app',
-  data: function() {
-      return {
-          response: null,
-      };
-  },
-  components: {
-  },
-  mounted: function() {
-      const _this = this;
+class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            response: null,
+        };
+    }
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+            <h1>Payment form</h1>
+        </header>
+        <div id="myPaymentForm"></div>
+        <pre>{this.state.response}</pre>
+      </div>
+    );
+  }
+    componentDidMount() {
+        const _this = this;
       KRGlue.loadLibrary(endpoint, publicKey).then(KR => {
           return KR.setFormConfig({
               formToken,
           });
       }).then(KR => {
           KR.onSubmit(response => {
-              _this.response = JSON.stringify(response);
+              _this.setState({
+                  response: JSON.stringify(response),
+              });
           });
           return KR.addForm("myPaymentForm");
       }).then(KR => {
           return KR.showForm(KR.result.formId);
-      }).catch();
-  }
+      }).catch(err => {
+          console.log({err});
+      });
+    }
 }
-</script>
+
+export default App;
