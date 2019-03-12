@@ -1,7 +1,5 @@
 # embedded-form-glue javascript library
 
-[WORK IN PROGRESS]
-
 The **embedded-form-glue** javascript library helps you to integrate a payment
 form into your favorite framework easily using npm or any similar tools.
 
@@ -18,13 +16,13 @@ redirection. In this case, PCI-DSS requirements are done by your bank.
 If you want to integrate a payment form on your web-page and get it easier with
 PCI-DSS, you can use IFrames loaded from a PCI-DSS certified server.
 
-Lyra provides a [Lyra Javacript library][JS Link] that helps you to integrate a
+Lyra provides a [Javacript library][JS Link] that helps you to integrate a
 payment form using standard HTML components on your website. The library will transform
-automatically each sensitive field (Pan, security form) into an IFrame loaded from
+automatically each sensitive field (pan, security code, ...) into an IFrame loaded from
 Lyra servers.
 
-To allow IFrame loading from Lyra servers, The [Lyra Javascript library][JS Link] **must** be loaded from
-them. For this reason, it's not possible to add it in your package.json file like any
+For this reason, the [Lyra Javascript library][JS Link] **must** be loaded from the Lyra PCI-DSS
+certifed servers. Consequently, it's not possible to add it in your package.json file like any
 other javascript library.
 
 To make your life easier, we have created a glue library that helps you to
@@ -58,7 +56,7 @@ npm install --save @lyracom/embedded-form-glue
 First you need to load the theme files in your HEAD section:
 
 ```javascript
-<!-- theme and plugins. should be loaded after the javascript library -->
+<!-- theme and plugins. should be loaded in the HEAD section -->
 <link rel="stylesheet"
 href="https://krypton.purebilling.io/static/js/krypton-client/dev/ext/classic-reset.css">
 <script
@@ -66,23 +64,39 @@ href="https://krypton.purebilling.io/static/js/krypton-client/dev/ext/classic-re
 </script>
 ```
 
+For more information about theming, take a look to [Lyra theming documentation][JS Themes]
+
 Import the component:
 
     import KRGlue from "@lyracom/embedded-form-glue";
 
 and Load the [Lyra Javascript library][JS Link]:
 
-    const defaultConfig = {
-        'kr-public-key': '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5',
-        'formToken': 'DEMO-TOKEN-TO-BE-REPLACED',
-    };
+```javascript
+const publicKey = '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5';
 
-    KRGlue.loadLibrary('https://api.payzen.eu', defaultConfig.publicKey) /* Load the remote library */
-          .then((KR) => KR.setFormConfig({                               /* set the minimal configuration */
-            formToken: defaultConfig.formToken,
-          }))
-          .then((KR) => KR.addForm('#myPaymentForm'))                    /* create a payment form */
-          .then((KR) => KR.showForm(KR.result.formId));                  /* show the payment form */
+KRGlue.loadLibrary('https://krypton.purebilling.io', publicKey) /* Load the remote library */
+      .then((KR) => KR.setFormConfig({                          /* set the minimal configuration */
+        formToken: 'DEMO-TOKEN-TO-BE-REPLACED',
+      }))
+      .then((KR) => KR.addForm('#myPaymentForm'))               /* create a payment form */
+      .then((KR) => KR.showForm(KR.result.formId));             /* show the payment form */
+```
+
+## your first transaction
+
+The payment form is up and ready, You can try to make a transaction using
+a test card with the debug toolbar (at the botton of the page).
+
+If you try to pay, you will have the following error: **CLIENT_998: Demo form, see the documentation**.
+It's because the **formToken** you have defined using **KR.setFormConfig** is set to **DEMO-TOKEN-TO-BE-REPLACED**.
+
+you have to create a **formToken** before displaying the payment form using Charge/CreatePayment web-service.
+For more information, please take a look to:
+
+* [Embedded form quick start][JS quick start]
+* [Embbedded form integration guide][JS integration guide]
+* [Payment REST API reference][REST API]
 
 ## Lyra Javascript methods
 
@@ -109,3 +123,7 @@ following examples to see how to deal with:
 
 [JS Link]: https://lyra.com/fr/doc/rest/V4.0/javascript/
 [JS Reference]: https://lyra.com/fr/doc/rest/V4.0/javascript/features/reference.html
+[JS Themes]: https://lyra.com/fr/doc/rest/V4.0/javascript/features/themes.html
+[JS quick start]: https://lyra.com/fr/doc/rest/V4.0/javascript/quick_start_js.html
+[JS integration guide]: https://lyra.com/fr/doc/rest/V4.0/javascript/guide/start.html
+[REST API]: https://lyra.com/fr/doc/rest/V4.0/api/reference.html

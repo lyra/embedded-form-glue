@@ -1,7 +1,7 @@
 # Payment form from scratch with vue-cli
 
 This page explain how-to create a dynamic payment form from scratch using
-vue.js and vue-cli and embbedded-form-glue component.
+vue.js and vue-cli and embbedded-form-glue library.
 
 ## First, create the project
 
@@ -34,7 +34,7 @@ First you have to add 2 theme files:
 Add them in examples/vuejs/minimal-example/public/index.html in the the HEAD section:
 
 ```javascript
-<!-- theme and plugins. should be loaded after the javascript library -->
+<!-- theme and plugins. should be loaded in the HEAD section -->
 <link rel="stylesheet"
 href="https://krypton.purebilling.io/static/js/krypton-client/dev/ext/classic-reset.css">
 <script
@@ -80,7 +80,7 @@ Import the component and create the payment form adding the following in
 src/components/HelloWorld.vue after the <script> element:
 
 ```javascript
-/* import embedded-form-glue component */
+/* import embedded-form-glue library */
 import KRGlue from "@lyracom/embedded-form-glue";
 
 /* define the public key, you should use your personal key */
@@ -97,16 +97,17 @@ KRGlue.loadLibrary('https://krypton.purebilling.io', publicKey) /* Load the remo
 ## your first transaction
 
 The payment form is up and ready, You can try to make a transaction using
-a test card with the debug toolbar (at the button of the page).
+a test card with the debug toolbar (at the botton of the page).
 
 If you try to pay, you will have the following error: **CLIENT_998: Demo form, see the documentation**.
-It's because the formToken you have defined using **KR.setFormConfig** is **DEMO-TOKEN-TO-BE-REPLACED**.
+It's because the **formToken** you have defined using **KR.setFormConfig** is set to **DEMO-TOKEN-TO-BE-REPLACED**.
 
-you have to create a formToken before displaying the payment form using Charge/CreatePayment web-service.
+you have to create a **formToken** before displaying the payment form using Charge/CreatePayment web-service.
 For more information, please take a look to:
 
 * [Embedded form quick start][JS quick start]
 * [Embbedded form integration guide][JS integration guide]
+* [Payment REST API reference][REST API]
 
 ## Run it from github
 
@@ -122,3 +123,4 @@ npm run server
 [JS Themes]: https://lyra.com/fr/doc/rest/V4.0/javascript/features/themes.html
 [JS quick start]: https://lyra.com/fr/doc/rest/V4.0/javascript/quick_start_js.html
 [JS integration guide]: https://lyra.com/fr/doc/rest/V4.0/javascript/guide/start.html
+[REST API]: https://lyra.com/fr/doc/rest/V4.0/api/reference.html

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-/* import embedded-form-glue component */
+/* import embedded-form-glue library */
 import KRGlue from "@lyracom/embedded-form-glue";
 
 /* define the public key, you should use your personal key */
