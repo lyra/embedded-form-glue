@@ -1,7 +1,7 @@
 # Payment form from scratch with vue-cli
 
-This page explain how-to create a dynamic payment form from scratch using
-vue.js and vue-cli and embbedded-form-glue library.
+This page explains how-to create a dynamic payment form from scratch using
+vue.js and vue-cli and embedded-form-glue library.
 
 ## First, create the project
 
@@ -36,9 +36,9 @@ Add them in examples/vuejs/minimal-example/public/index.html in the the HEAD sec
 ```javascript
 <!-- theme and plugins. should be loaded in the HEAD section -->
 <link rel="stylesheet"
-href="https://krypton.purebilling.io/static/js/krypton-client/dev/ext/classic-reset.css">
+href="https://api.payzen.eu/static/js/krypton-client/dev/ext/classic-reset.css">
 <script
-    src="https://krypton.purebilling.io/static/js/krypton-client/dev/ext/classic.js">
+    src="https://api.payzen.eu/static/js/krypton-client/dev/ext/classic.js">
 </script>
 ```
 
@@ -86,7 +86,7 @@ import KRGlue from "@lyracom/embedded-form-glue";
 /* define the public key, you should use your personal key */
 const publicKey = '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5';
 
-KRGlue.loadLibrary('https://krypton.purebilling.io', publicKey) /* Load the remote library */
+KRGlue.loadLibrary('https://api.payzen.eu', publicKey) /* Load the remote library */
       .then((KR) => KR.setFormConfig({                          /* set the minimal configuration */
         formToken: 'DEMO-TOKEN-TO-BE-REPLACED',
       }))
@@ -96,8 +96,8 @@ KRGlue.loadLibrary('https://krypton.purebilling.io', publicKey) /* Load the remo
 
 ## your first transaction
 
-The payment form is up and ready, You can try to make a transaction using
-a test card with the debug toolbar (at the botton of the page).
+The payment form is up and ready, you can try to make a transaction using
+a test card with the debug toolbar (at the bottom of the page).
 
 If you try to pay, you will have the following error: **CLIENT_998: Demo form, see the documentation**.
 It's because the **formToken** you have defined using **KR.setFormConfig** is set to **DEMO-TOKEN-TO-BE-REPLACED**.
@@ -106,7 +106,7 @@ you have to create a **formToken** before displaying the payment form using Char
 For more information, please take a look to:
 
 * [Embedded form quick start][JS quick start]
-* [Embbedded form integration guide][JS integration guide]
+* [embedded form integration guide][JS integration guide]
 * [Payment REST API reference][REST API]
 
 ## Run it from github

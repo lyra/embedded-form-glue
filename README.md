@@ -1,6 +1,6 @@
-# embedded-form-glue javascript library
+# embedded-form-glue Javascript library
 
-The **embedded-form-glue** javascript library helps you to integrate a payment
+The **embedded-form-glue** Javascript library helps you to integrate a payment
 form into your favorite framework easily using npm or any similar tools.
 
 A simple payment form will look like:
@@ -22,8 +22,8 @@ automatically each sensitive field (pan, security code, ...) into an IFrame load
 Lyra servers.
 
 For this reason, the [Lyra Javascript library][JS Link] **must** be loaded from the Lyra PCI-DSS
-certifed servers. Consequently, it's not possible to add it in your package.json file like any
-other javascript library.
+certified servers. Consequently, it's not possible to add it in your package.json file like any
+other Javascript library.
 
 To make your life easier, we have created a glue library that helps you to
 include it into your build: the **embedded-form-glue** library.
@@ -58,9 +58,9 @@ First you need to load the theme files in your HEAD section:
 ```javascript
 <!-- theme and plugins. should be loaded in the HEAD section -->
 <link rel="stylesheet"
-href="https://krypton.purebilling.io/static/js/krypton-client/dev/ext/classic-reset.css">
+href="https://api.payzen.eu/static/js/krypton-client/dev/ext/classic-reset.css">
 <script
-    src="https://krypton.purebilling.io/static/js/krypton-client/dev/ext/classic.js">
+    src="https://api.payzen.eu/static/js/krypton-client/dev/ext/classic.js">
 </script>
 ```
 
@@ -75,7 +75,7 @@ and Load the [Lyra Javascript library][JS Link]:
 ```javascript
 const publicKey = '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5';
 
-KRGlue.loadLibrary('https://krypton.purebilling.io', publicKey) /* Load the remote library */
+KRGlue.loadLibrary('https://api.payzen.eu', publicKey) /* Load the remote library */
       .then((KR) => KR.setFormConfig({                          /* set the minimal configuration */
         formToken: 'DEMO-TOKEN-TO-BE-REPLACED',
       }))
@@ -85,8 +85,8 @@ KRGlue.loadLibrary('https://krypton.purebilling.io', publicKey) /* Load the remo
 
 ## your first transaction
 
-The payment form is up and ready, You can try to make a transaction using
-a test card with the debug toolbar (at the botton of the page).
+The payment form is up and ready, you can try to make a transaction using
+a test card with the debug toolbar (at the bottom of the page).
 
 If you try to pay, you will have the following error: **CLIENT_998: Demo form, see the documentation**.
 It's because the **formToken** you have defined using **KR.setFormConfig** is set to **DEMO-TOKEN-TO-BE-REPLACED**.
@@ -95,7 +95,7 @@ you have to create a **formToken** before displaying the payment form using Char
 For more information, please take a look to:
 
 * [Embedded form quick start][JS quick start]
-* [Embbedded form integration guide][JS integration guide]
+* [embedded form integration guide][JS integration guide]
 * [Payment REST API reference][REST API]
 
 ## Lyra Javascript methods
@@ -112,7 +112,7 @@ See Lyra [Javascript library reference][JS Reference] for all complete reference
 
 ## Using embedded-form-glue with javascript frameworks
 
-Using embedded-form-glue javascript library is quite easy. Take a look to the
+Using embedded-form-glue Javascript library is quite easy. Take a look to the
 following examples to see how to deal with:
 
 | Framework | Description                                                                |
