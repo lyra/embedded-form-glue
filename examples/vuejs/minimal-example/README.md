@@ -11,6 +11,18 @@ First, create the vue-cli HelloWorld project:
 vue create mininal-example
 ```
 
+Add the dependency with yarn:
+
+```bash
+yarn add @lyracom/embedded-form-glue
+```
+
+Or with npm:
+
+```bash
+npm install --save @lyracom/embedded-form-glue
+```
+
 Run and test it:
 
 ```sh
