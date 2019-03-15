@@ -3,7 +3,21 @@
 This page explains how-to create a dynamic payment form from scratch using
 vue.js and vue-cli and embedded-form-glue library.
 
-## First, create the project
+## Requirements
+
+You need to install [node.js LTS version](https://nodejs.org/en/).
+
+Next ,install vue-cli:
+
+```bash
+npm install -g @vue/cli
+# OR
+yarn global add @vue/cli
+```
+
+More details on [vue-cli web-site](https://cli.vuejs.org/guide/installation.html).
+
+## Create the project
 
 First, create the vue-cli HelloWorld project:
 
@@ -46,7 +60,7 @@ First you have to add 2 theme files:
 Add them in examples/vuejs/minimal-example/public/index.html in the the HEAD section:
 
 ```javascript
-<!-- theme and plugins. should be loaded in the HEAD section -->
+<!-- theme and plugins. should be loaded in the HEAD section -->º
 <link rel="stylesheet"
 href="https://api.payzen.eu/static/js/krypton-client/dev/ext/classic-reset.css">
 <script
