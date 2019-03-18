@@ -22,7 +22,7 @@ More details on [vue-cli web-site](https://cli.vuejs.org/guide/installation.html
 First, create the vue-cli HelloWorld project:
 
 ```sh
-vue create mininal-example
+vue create minimal-example
 ```
 
 Add the dependency with yarn:
@@ -57,25 +57,25 @@ First you have to add 2 theme files:
 | classic-reset.css     | default style applied before the [Lyra Javascript Library][JS Link] is loaded
 | classic.js            | theme logic, like waiting annimation on submit button, ...
 
-Add them in examples/vuejs/minimal-example/public/index.html in the the HEAD section:
+Add them in public/index.html in the the HEAD section:
 
 ```javascript
 <!-- theme and plugins. should be loaded in the HEAD section -->º
 <link rel="stylesheet"
-href="https://api.payzen.eu/static/js/krypton-client/dev/ext/classic-reset.css">
+href="https://api.payzen.eu/static/js/krypton-client/V4.0/ext/classic-reset.css">
 <script
-    src="https://api.payzen.eu/static/js/krypton-client/dev/ext/classic.js">
+    src="https://api.payzen.eu/static/js/krypton-client/V4.0/ext/classic.js">
 </script>
 ```
 
 For more information about theming, take a look to [Lyra theming documentation][JS Themes]
 
-Update the src/components/HelloWorld.vue template to:
+Update the src/App.vue template to:
 
 ```html
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
+  <div class="form">
+    <h1>Payment Form</h1>
       <div class="container">
         <div id="myPaymentForm"></div>
       </div>
@@ -85,39 +85,43 @@ Update the src/components/HelloWorld.vue template to:
 
 Your payment form will be added to #myPaymentForm element.
 
-Update the src/components/HelloWorld.vue styles to:
+Update the src/App.vue styles to:
 
 ```html
 <style scoped>
-h3 {
-  margin: 40px 0 0;
+h1 {
+  margin: 40px 0 20px 0;
+  width: 100%;
+  text-align: center;
 }
 
 .container {
   display: flex;
-  flex-direction: row;
   justify-content: center;
-  align-items: center;
 }
 </style>
 ```
 
 Import the component and create the payment form adding the following in
-src/components/HelloWorld.vue after the <script> element:
+src/App.vue on the mounted property of the application:
 
 ```javascript
 /* import embedded-form-glue library */
 import KRGlue from "@lyracom/embedded-form-glue";
 
 /* define the public key, you should use your personal key */
-const publicKey = '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5';
+export default {
+    mounted() {
+        const publicKey = '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5';
 
-KRGlue.loadLibrary('https://api.payzen.eu', publicKey) /* Load the remote library */
-      .then((KR) => KR.setFormConfig({                          /* set the minimal configuration */
-        formToken: 'DEMO-TOKEN-TO-BE-REPLACED',
-      }))
-      .then((KR) => KR.addForm('#myPaymentForm'))               /* create a payment form */
-      .then((KR) => KR.showForm(KR.result.formId));             /* show the payment form */
+        KRGlue.loadLibrary('https://api.payzen.eu', publicKey) /* Load the remote library */
+              .then((KR) => KR.setFormConfig({                          /* set the minimal configuration */
+                formToken: 'DEMO-TOKEN-TO-BE-REPLACED',
+              }))
+              .then((KR) => KR.addForm('#myPaymentForm'))               /* create a payment form */
+              .then((KR) => KR.showForm(KR.result.formId));             /* show the payment form */
+    }
+}
 ```
 
 ## your first transaction

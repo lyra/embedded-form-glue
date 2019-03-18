@@ -1,7 +1,7 @@
 declare var window:any;
 declare var JSON:any;
 
-import { Component, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
+import { Component, AfterViewChecked } from '@angular/core';
 import KRGlue from "@lyracom/embedded-form-glue";
 import _ from "underscore";
 
@@ -15,13 +15,8 @@ export class AppComponent implements AfterViewChecked {
     called:boolean = false;
     response:any = null;
 
-    constructor(private ref: ChangeDetectorRef) {}
-
     ngAfterViewChecked() {
-        if (!this.called) {
-            this.called = true;
-            this.createKrypton();
-        }
+        this.createKrypton();
     }
 
     createKrypton() {
