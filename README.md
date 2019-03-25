@@ -70,11 +70,11 @@ and Load the [Lyra Javascript library][JS Link]:
 const publicKey = '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5';
 
 KRGlue.loadLibrary('https://api.payzen.eu', publicKey) /* Load the remote library */
-      .then((KR) => KR.setFormConfig({                          /* set the minimal configuration */
+      .then(({KR, result}) => KR.setFormConfig({                          /* set the minimal configuration */
         formToken: 'DEMO-TOKEN-TO-BE-REPLACED',
       }))
-      .then((KR) => KR.addForm('#myPaymentForm'))               /* create a payment form */
-      .then((KR) => KR.showForm(KR.result.formId));             /* show the payment form */
+      .then(({KR, result}) => KR.addForm('#myPaymentForm'))               /* create a payment form */
+      .then(({KR, result}) => KR.showForm(result.formId));             /* show the payment form */
 ```
 
 ## your first transaction
