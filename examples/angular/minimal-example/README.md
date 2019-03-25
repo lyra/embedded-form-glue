@@ -132,24 +132,29 @@ Add the next block to create the block on the **ngAfterViewChecked** of
 your component class:
 
 ```js
+interface Response {
+    KR: any
+    result: any
+}
+
 export class AppComponent implements AfterViewChecked {
     // ...
     ngAfterViewChecked() {
         const publicKey = '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5';
         const formToken = 'DEMO-TOKEN-TO-BE-REPLACED';
 
-        KRGlue.loadLibrary("https://api.payzen.eu", publicKey).then(KR => {
-            return KR.setFormConfig({formToken});
-        }).then(KR => {
-            return KR.onSubmit((response:any) => {
+        KRGlue.loadLibrary("https://api.payzen.eu", publicKey).then((response):Response => {
+            return response.KR.setFormConfig({formToken});
+        }).then((response):Response => {
+            return response.KR.onSubmit((response:any) => {
                 // The payment response is here
                 let paymentResponse = response;
             });
 
-            return KR.addForm("#myPaymentForm");
-        }).then(KR => {
-            return KR.showForm(KR.result.formId);
-        }).catch(err => {
+            return response.KR.addForm("#myPaymentForm");
+        }).then((response):Response => {
+            return response.KR.showForm(response.result.formId);
+        }).catch((err):any => {
             // Any error will be thrown here
         });
     }

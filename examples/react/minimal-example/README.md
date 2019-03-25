@@ -128,16 +128,16 @@ class App extends Component {
         const publicKey = '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5';
         const formToken = 'DEMO-TOKEN-TO-BE-REPLACED';
 
-        KRGlue.loadLibrary("https://api.payzen.eu", publicKey).then(KR => {
+        KRGlue.loadLibrary("https://api.payzen.eu", publicKey).then(({KR, result}) => {
             return KR.setFormConfig({formToken});
-        }).then(KR => {
+        }).then(({KR, result}) => {
             return KR.onSubmit((response:any) => {
                 // The payment response is here
                 let paymentResponse = response;
             });
             return KR.addForm("#myPaymentForm");
-        }).then(KR => {
-            return KR.showForm(KR.result.formId);
+        }).then(({KR, result}) => {
+            return KR.showForm(result.formId);
         }).catch(err => {
             // Any error will be thrown here
         });
