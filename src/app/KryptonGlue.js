@@ -31,7 +31,7 @@ class Glue {
             return this.loadKryptonClient();
         }
 
-        return Promise.resolve(null);
+        return Promise.reject("The library cannot be loaded");
     }
 
     loadKryptonClient() {
@@ -58,7 +58,9 @@ class Glue {
 
             whenDefined(window, 'KR', () => {
                 whenDefined(window.KR, "onFormReady", () => {
-                    resolve(window.KR);
+                    resolve({
+                        KR: window.KR,
+                    });
                 });
             });
         });
