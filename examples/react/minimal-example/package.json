@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@lyracom/embedded-form-glue": "^0.1.8",
+    "@lyracom/embedded-form-glue": "^0.1.9",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-scripts": "2.1.8",
@@ -11,7 +11,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "PUBLIC_URL='https://api.payzen.eu/spareact/build' react-scripts build",
+    "build": "PUBLIC_URL='https://api.lyra.com/spareact/build' react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

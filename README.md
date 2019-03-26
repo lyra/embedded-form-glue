@@ -52,9 +52,9 @@ First you need to load the theme files in your HEAD section:
 ```javascript
 <!-- theme and plugins. should be loaded in the HEAD section -->
 <link rel="stylesheet"
-href="https://api.payzen.eu/static/js/krypton-client/dev/ext/classic-reset.css">
+href="https://api.lyra.com/static/js/krypton-client/V4.0/ext/classic-reset.css">
 <script
-    src="https://api.payzen.eu/static/js/krypton-client/dev/ext/classic.js">
+    src="https://api.lyra.com/static/js/krypton-client/V4.0/ext/classic.js">
 </script>
 ```
 
@@ -69,7 +69,7 @@ and Load the [Lyra Javascript library][JS Link]:
 ```javascript
 const publicKey = '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5';
 
-KRGlue.loadLibrary('https://api.payzen.eu', publicKey) /* Load the remote library */
+KRGlue.loadLibrary('https://api.lyra.com', publicKey) /* Load the remote library */
       .then(({KR, result}) => KR.setFormConfig({       /* set the minimal configuration */
         formToken: 'DEMO-TOKEN-TO-BE-REPLACED',
       }))

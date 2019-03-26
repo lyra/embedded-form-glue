@@ -1,6 +1,6 @@
 {
   "name": "@lyracom/embedded-form-glue",
-  "version": "0.1.9",
+  "version": "0.2.0",
   "description": "Lyra embedded form glue",
   "main": "src/app/index.js",
   "scripts": {},
@@ -24,4 +24,3 @@
   "devDependencies": {},
   "dependencies": {}
 }
-

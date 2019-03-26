@@ -58,9 +58,9 @@ Add them in public/index.html in the the HEAD section:
 ```javascript
 <!-- theme and plugins. should be loaded in the HEAD section -->º
 <link rel="stylesheet"
-href="https://api.payzen.eu/static/js/krypton-client/dev/ext/classic-reset.css">
+href="https://api.lyra.com/static/js/krypton-client/V4.0/ext/classic-reset.css">
 <script
-    src="https://api.payzen.eu/static/js/krypton-client/dev/ext/classic.js">
+    src="https://api.lyra.com/static/js/krypton-client/V4.0/ext/classic.js">
 </script>
 ```
 
@@ -127,7 +127,7 @@ class App extends Component {
         const publicKey = '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5';
         const formToken = 'DEMO-TOKEN-TO-BE-REPLACED';
 
-        KRGlue.loadLibrary("https://api.payzen.eu", publicKey).then(({KR, result}) => {
+        KRGlue.loadLibrary("https://api.lyra.com", publicKey).then(({KR, result}) => {
             return KR.setFormConfig({formToken});
         }).then(({KR, result}) => {
             return KR.onSubmit((response:any) => {
@@ -196,7 +196,7 @@ You can try the current example from the current github repository doing:
 ```sh
 cd examples/vuejs/minimal-example
 npm install
-npm run server
+npm run start
 ```
 
 [JS Link]: https://lyra.com/fr/doc/rest/V4.0/javascript

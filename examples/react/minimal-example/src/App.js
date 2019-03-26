@@ -43,7 +43,7 @@ class App extends Component {
   }
     componentDidMount() {
         const _this = this;
-        const endpoint = "https://api.payzen.eu";
+        const endpoint = "https://api.lyra.com";
         const publicKey = '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5';
         const formToken = "DEMO-TOKEN-TO-BE-REPLACED";
 

@@ -93,7 +93,7 @@ var AppComponent = /** @class */ (function () {
         var formToken = query.formToken;
         var endpoint = query.endpoint;
         var publicKey = query.publicKey;
-        _lyracom_embedded_form_glue__WEBPACK_IMPORTED_MODULE_2__["default"].loadLibrary('https://api.payzen.eu', publicKey)
+        _lyracom_embedded_form_glue__WEBPACK_IMPORTED_MODULE_2__["default"].loadLibrary('https://api.lyra.com', publicKey)
             .then(function (KR) { return KR.setFormConfig({
             formToken: formToken,
         }); })

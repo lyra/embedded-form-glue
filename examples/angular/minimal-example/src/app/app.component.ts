@@ -19,7 +19,7 @@ export class AppComponent implements AfterViewChecked {
         const publicKey = '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5';
         const formToken = 'DEMO-TOKEN-TO-BE-REPLACED';
 
-        KRGlue.loadLibrary("https://api.payzen.eu", publicKey).then((response):Response => {
+        KRGlue.loadLibrary("https://api.lyra.com", publicKey).then((response):Response => {
             return response.KR.setFormConfig({formToken});
         }).then((response):Response => {
             return response.KR.onSubmit((response:any) => {

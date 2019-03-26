@@ -60,9 +60,9 @@ Add them in src/index.html in the the HEAD section:
 ```javascript
 <!-- theme and plugins. should be loaded in the HEAD section -->º
 <link rel="stylesheet"
-href="https://api.payzen.eu/static/js/krypton-client/dev/ext/classic-reset.css">
+href="https://api.lyra.com/static/js/krypton-client/V4.0/ext/classic-reset.css">
 <script
-    src="https://api.payzen.eu/static/js/krypton-client/dev/ext/classic.js">
+    src="https://api.lyra.com/static/js/krypton-client/V4.0/ext/classic.js">
 </script>
 ```
 
@@ -143,7 +143,7 @@ export class AppComponent implements AfterViewChecked {
         const publicKey = '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5';
         const formToken = 'DEMO-TOKEN-TO-BE-REPLACED';
 
-        KRGlue.loadLibrary("https://api.payzen.eu", publicKey).then((response):Response => {
+        KRGlue.loadLibrary("https://api.lyra.com", publicKey).then((response):Response => {
             return response.KR.setFormConfig({formToken});
         }).then((response):Response => {
             return response.KR.onSubmit((response:any) => {
