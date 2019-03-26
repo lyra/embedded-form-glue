@@ -47,18 +47,18 @@ class App extends Component {
         const publicKey = '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5';
         const formToken = "DEMO-TOKEN-TO-BE-REPLACED";
 
-        KRGlue.loadLibrary(endpoint, publicKey).then(KR => {
+        KRGlue.loadLibrary(endpoint, publicKey).then(({KR, result}) => {
             return KR.setFormConfig({
                 formToken,
             });
-        }).then(KR => {
+        }).then(({KR, result}) => {
             KR.onSubmit(response => {
                 _this.setState({
                     response: JSON.stringify(response),
                 });
             });
             return KR.addForm("myPaymentForm");
-        }).then(KR => {
+        }).then(({KR, result}) => {
             return KR.showForm(KR.result.formId);
         }).catch(err => {
             console.log({err});

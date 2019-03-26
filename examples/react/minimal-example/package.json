@@ -11,7 +11,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "PUBLIC_URL='http://krypton.local/spareact/build' react-scripts build",
+    "build": "PUBLIC_URL='https://api.payzen.eu/spareact/build' react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

@@ -117,7 +117,6 @@ We need to create the payment form with KRGlue the next data:
 With this data, we can use the next code to create a new payment form
 inside the DOM element #myPaymentForm:
 
-
 Import the component and create the payment form adding the following in
 the componentDidMount method inside the App class:
 

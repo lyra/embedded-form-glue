@@ -16,44 +16,22 @@ export class AppComponent implements AfterViewChecked {
     response:any = null;
 
     ngAfterViewChecked() {
-        this.createKrypton();
-    }
+        const publicKey = '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5';
+        const formToken = 'DEMO-TOKEN-TO-BE-REPLACED';
 
-    createKrypton() {
-        const self:any = this;
-        const ref:ChangeDetectorRef = this.ref;
-        const getQuery:any = function() {
-            let queryString:any = window.location.href.split("?")[1];
-            let query:any = {};
-
-            let segments:any = queryString.split("&");
-            _.each(segments, segment => {
-                let splittedSegment = segment.split("=");
-                query[splittedSegment[0]] = splittedSegment[1];
+        KRGlue.loadLibrary("https://api.payzen.eu", publicKey).then((response):Response => {
+            return response.KR.setFormConfig({formToken});
+        }).then((response):Response => {
+            return response.KR.onSubmit((response:any) => {
+                // The payment response is here
+                let paymentResponse = response;
             });
-            return query;
-        };
 
-        let query:any = getQuery();
-        let formToken:string = query.formToken;
-        let endpoint:string = query.endpoint;
-        let publicKey:string = query.publicKey;
-
-        KRGlue.loadLibrary('http://krypton.local', publicKey)
-            .then(KR => KR.setFormConfig({
-                formToken,
-            }))
-            .then(KR => {
-                KR.onSubmit((response:any) => {
-                    self.response = JSON.stringify(response);
-                    ref.detectChanges();
-                });
-                return KR.addForm('#myPaymentForm');
-            })
-            .then(KR => {
-                KR.showForm(KR.result.formId);
-            }).catch(err => {
-                console.log(err);
-            });
+            return response.KR.addForm("#myPaymentForm");
+        }).then((response):Response => {
+            return response.KR.showForm(response.result.formId);
+        }).catch((err):any => {
+            // Any error will be thrown here
+        });
     }
 }
