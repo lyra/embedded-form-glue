@@ -112,8 +112,8 @@ following examples to see how to deal with:
 | Framework | Description                                                                |
 | --------- | -------------------------------------------------------------------------- |
 | vue.js    | [vue example using vue-cli](examples/vuejs/minimal-example)                |
-| react.js  | [react example using create-react-app](#)  (work in progress)              |
-| angular   | [angular example using Angular CLI](#)  (work in progress)                 |
+| react.js  | [react example using create-react-app](examples/react/minimal-example)     |
+| angular   | [angular example using Angular CLI](examples/angular/minimal-example)      |
 
 [JS Link]: https://lyra.com/fr/doc/rest/V4.0/javascript/
 [JS Reference]: https://lyra.com/fr/doc/rest/V4.0/javascript/features/reference.html
