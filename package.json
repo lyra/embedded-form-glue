@@ -21,6 +21,8 @@
     "url": "https://github.com/lyra/embedded-form-glue/issues"
   },
   "homepage": "https://github.com/lyra/embedded-form-glue#readme",
-  "devDependencies": {},
+  "devDependencies": {
+    "es6-promise": "^4.2.4"
+  },
   "dependencies": {}
 }

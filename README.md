@@ -115,6 +115,25 @@ following examples to see how to deal with:
 | react.js  | [react example using create-react-app](examples/react/minimal-example)     |
 | angular   | [angular example using Angular CLI](examples/angular/minimal-example)      |
 
+## Compilation
+
+To compile the library just run the next command to install the needed vendors for compilation:
+
+```
+# With NPM
+npm install
+# With Yarn
+yarn install
+```
+
+Install the webpack library following the official documentation [Webpack Library](https://webpack.js.org/)
+
+And then run the compilation command with webpack:
+
+```
+webpack
+```
+
 [JS Link]: https://lyra.com/fr/doc/rest/V4.0/javascript/
 [JS Reference]: https://lyra.com/fr/doc/rest/V4.0/javascript/features/reference.html
 [JS Themes]: https://lyra.com/fr/doc/rest/V4.0/javascript/features/themes.html
