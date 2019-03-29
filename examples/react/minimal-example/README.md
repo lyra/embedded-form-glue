@@ -56,7 +56,7 @@ First you have to add 2 theme files:
 Add them in public/index.html in the the HEAD section:
 
 ```javascript
-<!-- theme and plugins. should be loaded in the HEAD section -->º
+<!-- theme and plugins. should be loaded in the HEAD section -->
 <link rel="stylesheet"
 href="https://api.lyra.com/static/js/krypton-client/V4.0/ext/classic-reset.css">
 <script
@@ -132,8 +132,8 @@ class App extends Component {
         }).then(({KR, result}) => {
             return KR.onSubmit((response:any) => {
                 // The payment response is here
-                let paymentResponse = response;
             });
+        }).then(({KR, result}) => {
             return KR.addForm("#myPaymentForm");
         }).then(({KR, result}) => {
             return KR.showForm(result.formId);

@@ -58,7 +58,7 @@ First you have to add 2 theme files:
 Add them in src/index.html in the the HEAD section:
 
 ```javascript
-<!-- theme and plugins. should be loaded in the HEAD section -->º
+<!-- theme and plugins. should be loaded in the HEAD section -->
 <link rel="stylesheet"
 href="https://api.lyra.com/static/js/krypton-client/V4.0/ext/classic-reset.css">
 <script
@@ -72,7 +72,7 @@ Change the src/app/app.component.html template to:
 
 ```html
 <div class="form">
-<h1>{{ msg }}</h1>
+<h1>{{ title }}</h1>
   <div class="container">
     <div id="myPaymentForm"></div>
   </div>
@@ -150,7 +150,7 @@ export class AppComponent implements AfterViewChecked {
                 // The payment response is here
                 let paymentResponse = response;
             });
-
+        }).then((response):Response => {
             return response.KR.addForm("#myPaymentForm");
         }).then((response):Response => {
             return response.KR.showForm(response.result.formId);
