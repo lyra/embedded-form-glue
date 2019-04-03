@@ -60,7 +60,7 @@ First you have to add 2 theme files:
 Add them in public/index.html in the the HEAD section:
 
 ```javascript
-<!-- theme and plugins. should be loaded in the HEAD section -->º
+<!-- theme and plugins. should be loaded in the HEAD section -->
 <link rel="stylesheet"
 href="https://api.lyra.com/static/js/krypton-client/V4.0/ext/classic-reset.css">
 <script
@@ -127,7 +127,7 @@ export default {
                 formToken: 'DEMO-TOKEN-TO-BE-REPLACED',
               }))
               .then(({KR}) => KR.addForm('#myPaymentForm')) /* create a payment form */
-              .then(({KR}) => KR.showForm(result.formId));  /* show the payment form */
+              .then(({KR, result}) => KR.showForm(result.formId));  /* show the payment form */
     }
     (...)
 }
