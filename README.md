@@ -40,9 +40,9 @@ The **embedded-form-glue** glue library helps you to deal with:
 Add the following package to your library:
 
 ```bash
-npm install -g @vue/cli
+npm install -g @lyracom/embedded-form-glue
 # OR
-yarn global add @vue/cli
+yarn global add @lyracom/embedded-form-glue
 ```
 
 ## Basic usage
