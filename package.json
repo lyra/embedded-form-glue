@@ -1,9 +1,11 @@
 {
   "name": "@lyracom/embedded-form-glue",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Lyra embedded form glue",
-  "main": "src/app/index.js",
-  "scripts": {},
+  "main": "app/index.js",
+  "scripts": {
+    "build": "webpack"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lyra/embedded-form-glue.git"
@@ -22,7 +24,9 @@
   },
   "homepage": "https://github.com/lyra/embedded-form-glue#readme",
   "devDependencies": {
-    "es6-promise": "^4.2.4"
+    "es6-promise": "^4.2.4",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0"
   },
   "dependencies": {}
 }
