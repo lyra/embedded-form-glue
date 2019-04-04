@@ -40,7 +40,7 @@ The **embedded-form-glue** glue library helps you to deal with:
 Add the following package to your library:
 
 ```bash
-npm install -g @lyracom/embedded-form-glue
+npm install --save @lyracom/embedded-form-glue
 # OR
 yarn global add @lyracom/embedded-form-glue
 ```
