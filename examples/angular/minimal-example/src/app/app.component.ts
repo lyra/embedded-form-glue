@@ -11,6 +11,11 @@ import _ from "underscore";
     styleUrls: ['./app.component.css']
 })
 
+interface Response {
+    KR: any
+    result: any
+}
+
 export class AppComponent implements AfterViewChecked {
     called:boolean = false;
     response:any = null;
@@ -26,7 +31,7 @@ export class AppComponent implements AfterViewChecked {
                 // The payment response is here
                 let paymentResponse = response;
             });
-
+        }).then((response):Response => {
             return response.KR.addForm("#myPaymentForm");
         }).then((response):Response => {
             return response.KR.showForm(response.result.formId);
