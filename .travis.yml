@@ -1,0 +1,20 @@
+language: python
+python: 3.6
+
+env:
+  global:
+    - DISPLAY=:99.0
+    - MOZ_HEADLESS=1
+    - WEB_HOST: http://127.0.0.1:7000
+
+addons:
+  firefox: "45.0"
+
+before_script:
+  - "sh -e /etc/init.d/xvfb start"
+  - "python -m http.server 7000 &"
+  - sleep 4
+  - pip install selenium==2.53.6
+
+script: python tests/test_root.py
+
