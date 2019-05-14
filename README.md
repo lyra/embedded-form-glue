@@ -138,18 +138,7 @@ webpack
 
 ## Testing with Selenium
 
-To run the functional tests first you must bring up the Docker environment, Docker and docker-compose
-should be installed on your system:
-
-```
-docker-compose up -d
-```
-
-Just execute the next script to run all the functional tests:
-
-```
-sh run_tests.sh
-```
+see [tests/README.md].(tests/README.md)
 
 [JS Link]: https://lyra.com/fr/doc/rest/V4.0/javascript/
 [JS Reference]: https://lyra.com/fr/doc/rest/V4.0/javascript/features/reference.html

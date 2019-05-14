@@ -1,23 +1,15 @@
 version: "2"
 services:
-
-  glue_compile:
-    build: .
-    volumes:
-      - ./src:/opt/code
-      - ./dist:/opt/dist
-    container_name: glue_node
-
   web:
     image: nginx:1.14.0-alpine
     volumes:
       - ".:/usr/share/nginx/html:ro"
     ports:
-      - "172.17.0.1:7000:80"
+      - "7009:80"
     container_name: glue_nginx
 
   python:
-    build: ./docker/build/python/.
+    build: ./tests/docker/build/python/.
     container_name: glue_python
     links:
       - selenium
@@ -25,8 +17,10 @@ services:
       - ".:/opt/code:ro"
     environment:
       REMOTE_SELENIUM: selenium
-      WEB_HOST: http://172.17.0.1:7000
+      WEB_HOST: http://172.17.0.1:7009
 
   selenium:
-    image: selenium/standalone-firefox-debug:2.53.1
-    container_name: glue_firefox
+    image: selenium/standalone-chrome-debug:3.141.59
+    container_name: glue_chrome
+    ports:
+      - "0.0.0.0:4567:5900"

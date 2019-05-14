@@ -8,13 +8,13 @@ env:
     - WEB_HOST: http://127.0.0.1:7000
 
 addons:
-  firefox: "45.0"
+  chrome: stable
 
 before_script:
   - "sh -e /etc/init.d/xvfb start"
   - "python -m http.server 7000 &"
   - sleep 4
-  - pip install selenium==2.53.6
+  - pip install selenium==3.141.59
 
 script: python tests/test_root.py
 
