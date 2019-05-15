@@ -24,20 +24,16 @@ cd minimal-example
 Add the dependency with yarn:
 
 ```bash
-yarn add @lyracom/embedded-form-glue
-```
-
-Or with npm:
-
-```bash
+# with npm
 npm install --save @lyracom/embedded-form-glue
+# or with yarn
+yarn add @lyracom/embedded-form-glue
 ```
 
 Run and test it:
 
 ```sh
-cd mininal-example
-npm run serve
+npm run start
 ```
 
 see the result on http://localhost:3000/
@@ -66,26 +62,7 @@ href="https://api.lyra.com/static/js/krypton-client/V4.0/ext/classic-reset.css">
 
 For more information about theming, take a look to [Lyra theming documentation][JS Themes]
 
-Update the src/App.js template on the render method of the class to:
-
-```jsx
-class App extends Component {
-    render() {
-        return (
-          <div className="form">
-            <h1>Payment form</h1>
-              <div className="container">
-                <div id="myPaymentForm"></div>
-              </div>
-          </div>
-        )
-    }
-}
-````
-
-Your payment form will be added to #myPaymentForm element.
-
-Update the src/App.css styles to:
+Replace the src/App.css styles to:
 
 ```html
 h1 {
@@ -100,22 +77,13 @@ h1 {
 }
 ```
 
-## The Form on the component
+## Create the form component
 
 Add the next to the import section on the src/App.js:
 
 ```js
 import KRGlue from "@lyracom/embedded-form-glue";
 ```
-
-We need to create the payment form with KRGlue the next data:
-
-- **Endpoint**: Payment endpoint to use
-- **Public key**: Public key of your account
-- **Form token**: Form token created for the payment
-
-With this data, we can use the next code to create a new payment form
-inside the DOM element #myPaymentForm:
 
 Import the component and create the payment form adding the following in
 the componentDidMount method inside the App class:
@@ -145,34 +113,24 @@ class App extends Component {
 }
 ```
 
-**Parts of the call**
+Update the src/App.js template on the render method of the class to:
 
-### Loading the library
+```jsx
+class App extends Component {
+    render() {
+        return (
+          <div className="form">
+            <h1>Payment form</h1>
+              <div className="container">
+                <div id="myPaymentForm"></div>
+              </div>
+          </div>
+        )
+    }
+}
+````
 
-The promise **KRGlue.loadLibrary(endpoint, publicKey)** will load the
-library and resolve the promise with KR as response when the Krypton library
-is loaded and available on the view.
-
-### Configuring the library
-
-We call **KR.setFormConfig** with a configuration object to set the different
-options of the Krypton library. On the first boot, at least "formToke"
-should be configured.
-
-### Capturing response
-
-Before creating the form, the callback after the payment is created at this
-step with **KR.onSubmit**, after a successfull payment the payment response
-will be used as argument on the callback sent to KR.onSubmit function.
-
-### Adding a form to the view
-
-With **KR.addForm** we add a new form to the target container, on the
-example #myPaymentForm element. After this form is added, by default is not
-visible but present on the DOM.
-
-To be able to see the form we need to call the method **KR.showForm** adding
-with the form id returned on the KR.addForm call (KR.result.formId);
+Your payment form will be added to #myPaymentForm element.
 
 ## your first transaction
 
