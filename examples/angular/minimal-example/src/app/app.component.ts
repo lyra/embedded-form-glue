@@ -1,42 +1,24 @@
-declare var window:any;
-declare var JSON:any;
-
-import { Component, AfterViewChecked } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import KRGlue from "@lyracom/embedded-form-glue";
-import _ from "underscore";
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css']
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
+export class AppComponent implements OnInit {
+  title = 'minimal-example';
 
-interface Response {
-    KR: any
-    result: any
-}
+  ngOnInit() {
+    const publicKey = '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5';
+    const formToken = 'DEMO-TOKEN-TO-BE-REPLACED';
 
-export class AppComponent implements AfterViewChecked {
-    called:boolean = false;
-    response:any = null;
+    KRGlue.loadLibrary('https://api.lyra.com', publicKey) /* Load the remote library */
+          .then(({KR}) => KR.setFormConfig({                  /* set the minimal configuration */
+            formToken: formToken,
+          }))
+          .then(({KR}) => KR.addForm('#myPaymentForm'))             /* add a payment form  to myPaymentForm div*/
+          .then(({KR, result}) => KR.showForm(result.formId));      /* show the payment form */
+  }
 
-    ngAfterViewChecked() {
-        const publicKey = '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5';
-        const formToken = 'DEMO-TOKEN-TO-BE-REPLACED';
-
-        KRGlue.loadLibrary("https://api.lyra.com", publicKey).then((response):Response => {
-            return response.KR.setFormConfig({formToken});
-        }).then((response):Response => {
-            return response.KR.onSubmit((response:any) => {
-                // The payment response is here
-                let paymentResponse = response;
-            });
-        }).then((response):Response => {
-            return response.KR.addForm("#myPaymentForm");
-        }).then((response):Response => {
-            return response.KR.showForm(response.result.formId);
-        }).catch((err):any => {
-            // Any error will be thrown here
-        });
-    }
 }

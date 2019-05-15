@@ -19,7 +19,7 @@ More details on [angular-cli web-site](https://angular.io/guide/quickstart).
 
 ## Create the project
 
-First, create the angular-cli minimal-example project:
+First, create the angular-cli minimal-example project (with default options):
 
 ```sh
 ng new minimal-example
@@ -28,19 +28,16 @@ ng new minimal-example
 Add the dependency with yarn:
 
 ```bash
+cd minimal-example
+# with npm
+npm install --save @lyracom/embedded-form-glue
+# or with yarn
 yarn add @lyracom/embedded-form-glue
 ```
 
-Or with npm:
-
-```bash
-npm install --save @lyracom/embedded-form-glue
-```
-
-Run and test it:
+Run and test it (in minimal-example folder):
 
 ```sh
-cd mininal-example
 ng serve --open
 ```
 
@@ -96,100 +93,34 @@ h1 {
 }
 ```
 
-## The Form on the component
-
-We need to create the payment form with KRGlue the next data:
-
-- **Endpoint**: Payment endpoint to use
-- **Public key**: Public key of your account
-- **Form token**: Form token created for the payment
-
-With this data, we can use the next code to create a new payment form
-inside the DOM element #myPaymentForm:
-
-Implement the **AfterViewChecked** on your component to be able to
-create the form after the DOM has been rendered and load the KRGlue
-component.
-
-Add the next to the import section on the src/app/app.component.ts:
+Update the default component src/app/app.component.ts to:
 
 ```js
-import { AfterViewChecked } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import KRGlue from "@lyracom/embedded-form-glue";
-```
 
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent implements OnInit {
+  title = 'minimal-example';
 
-And add the interface to your component. Update the AppComponent class to
-extend from it:
+  ngOnInit() {
+    const publicKey = '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5';
+    const formToken = 'DEMO-TOKEN-TO-BE-REPLACED';
 
-```js
-export class AppComponent implements AfterViewChecked {
-    // ...
+    KRGlue.loadLibrary('https://api.lyra.com', publicKey) /* Load the remote library */
+          .then(({KR}) => KR.setFormConfig({                  /* set the minimal configuration */
+            formToken: formToken,
+          }))
+          .then(({KR}) => KR.addForm('#myPaymentForm'))             /* add a payment form  to myPaymentForm div*/
+          .then(({KR, result}) => KR.showForm(result.formId));      /* show the payment form */
+  }
+
 }
 ```
-
-Add the next block to create the block on the **ngAfterViewChecked** of
-your component class:
-
-```js
-interface Response {
-    KR: any
-    result: any
-}
-
-export class AppComponent implements AfterViewChecked {
-    // ...
-    ngAfterViewChecked() {
-        const publicKey = '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5';
-        const formToken = 'DEMO-TOKEN-TO-BE-REPLACED';
-
-        KRGlue.loadLibrary("https://api.lyra.com", publicKey).then((response):Response => {
-            return response.KR.setFormConfig({formToken});
-        }).then((response):Response => {
-            return response.KR.onSubmit((response:any) => {
-                // The payment response is here
-                let paymentResponse = response;
-            });
-        }).then((response):Response => {
-            return response.KR.addForm("#myPaymentForm");
-        }).then((response):Response => {
-            return response.KR.showForm(response.result.formId);
-        }).catch((err):any => {
-            // Any error will be thrown here
-        });
-    }
-    // ...
-}
-```
-
-**Parts of the call**
-
-### Loading the library
-
-The promise **KRGlue.loadLibrary(endpoint, publicKey)** will load the
-library and resolve the promise with KR as response when the Krypton library
-is loaded and available on the view.
-
-### Configuring the library
-
-We call **KR.setFormConfig** with a configuration object to set the different
-options of the Krypton library. On the first boot, at least "formToke"
-should be configured.
-
-### Capturing response
-
-Before creating the form, the callback after the payment is created at this
-step with **KR.onSubmit**, after a successfull payment the payment response
-will be used as argument on the callback sent to KR.onSubmit function.
-
-### Adding a form to the view
-
-With **KR.addForm** we add a new form to the target container, on the
-example #myPaymentForm element. After this form is added, by default is not
-visible but present on the DOM.
-
-To be able to see the form we need to call the method **KR.showForm** adding
-with the form id returned on the KR.addForm call (KR.result.formId);
 
 ## your first transaction
 
@@ -211,9 +142,9 @@ For more information, please take a look to:
 You can try the current example from the current github repository doing:
 
 ```sh
-cd examples/vuejs/minimal-example
+cd examples/angular/minimal-example
 npm install
-npm run server
+npm run start
 ```
 
 [JS Link]: https://lyra.com/fr/doc/rest/V4.0/javascript
