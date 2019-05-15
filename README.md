@@ -117,6 +117,16 @@ following examples to see how to deal with:
 | react.js  | [react example using create-react-app](examples/react/minimal-example)     |
 | angular   | [angular example using Angular CLI](examples/angular/minimal-example)      |
 
+## Cutomize your form
+
+**KR.addForm()** adds a default form. If you want to customize your payment form with:
+
+- different field order
+- add an additional field
+- update the HTML structure to your need
+
+You can add your own HTML and attach it with **KR.attachForm()**. see framework examples for more details.
+
 ## Compilation
 
 To compile the library just run the next command to install the needed vendors for compilation:
@@ -133,7 +143,7 @@ Install the webpack library following the official documentation [Webpack Librar
 And then run the compilation command with webpack:
 
 ```
-webpack
+npm run build
 ```
 
 ## Testing with Selenium

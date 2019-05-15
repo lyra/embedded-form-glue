@@ -51,6 +51,7 @@ class Glue {
 
             script.src = `${domain}static/js/krypton-client/V4.0/stable/kr-payment-form.min.js?formToken=${formToken}`;
             script.setAttribute("kr-public-key", publicKey);
+            script.setAttribute("kr-spa-mode", "true");
 
             // Append it to body
             window.__kr__script = script;
