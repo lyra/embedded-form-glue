@@ -16,5 +16,5 @@ before_script:
   - sleep 4
   - pip install selenium==3.141.59
 
-script: python tests/test_root.py
+script: python tests/main_test.py
 

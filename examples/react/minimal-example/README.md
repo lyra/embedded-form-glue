@@ -77,45 +77,14 @@ h1 {
 }
 ```
 
-## Create the form component
 
-Add the next to the import section on the src/App.js:
+Next, update **src/App.js** to:
 
 ```js
+import React, { Component } from 'react';
 import KRGlue from "@lyracom/embedded-form-glue";
-```
+import './App.css';
 
-Import the component and create the payment form adding the following in
-the componentDidMount method inside the App class:
-
-```javascript
-class App extends Component {
-    // ...
-    componentDidMount() {
-        const publicKey = '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5';
-        const formToken = 'DEMO-TOKEN-TO-BE-REPLACED';
-
-        KRGlue.loadLibrary("https://api.lyra.com", publicKey).then(({KR, result}) => {
-            return KR.setFormConfig({formToken});
-        }).then(({KR, result}) => {
-            return KR.onSubmit((response:any) => {
-                // The payment response is here
-            });
-        }).then(({KR, result}) => {
-            return KR.addForm("#myPaymentForm");
-        }).then(({KR, result}) => {
-            return KR.showForm(result.formId);
-        }).catch(err => {
-            // Any error will be thrown here
-        });
-    }
-    // ...
-}
-```
-
-Update the src/App.js template on the render method of the class to:
-
-```jsx
 class App extends Component {
     render() {
         return (
@@ -127,8 +96,22 @@ class App extends Component {
           </div>
         )
     }
+
+    componentDidMount() {
+        const publicKey = '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5';
+        const formToken = 'DEMO-TOKEN-TO-BE-REPLACED';
+
+        KRGlue.loadLibrary('https://api.lyra.com', publicKey) /* Load the remote library */
+              .then(({KR}) => KR.setFormConfig({              /* set the minimal configuration */
+                formToken: formToken,
+              }))
+              .then(({KR}) => KR.addForm('#myPaymentForm'))        /* add a payment form  to myPaymentForm div*/
+              .then(({KR, result}) => KR.showForm(result.formId)); /* show the payment form */
+    }
 }
-````
+
+export default App;
+```
 
 Your payment form will be added to #myPaymentForm element.
 

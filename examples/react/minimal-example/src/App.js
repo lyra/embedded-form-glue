@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import KRGlue from "@lyracom/embedded-form-glue";
+import KRGlue from '@lyracom/embedded-form-glue';
 import './App.css';
 
 class App extends Component {
