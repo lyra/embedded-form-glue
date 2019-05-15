@@ -28,19 +28,16 @@ vue create minimal-example
 Add the dependency with yarn:
 
 ```bash
-yarn add @lyracom/embedded-form-glue
-```
-
-Or with npm:
-
-```bash
+cd reate minimal-example
+# with npm
 npm install --save @lyracom/embedded-form-glue
+# or yarn
+yarn add @lyracom/embedded-form-glue
 ```
 
 Run and test it:
 
 ```sh
-cd mininal-example
 npm run serve
 ```
 

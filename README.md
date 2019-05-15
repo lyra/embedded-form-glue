@@ -132,9 +132,9 @@ You can add your own HTML and attach it with **KR.attachForm()**. see framework 
 To compile the library just run the next command to install the needed vendors for compilation:
 
 ```
-# With NPM
+# With npm
 npm install
-# With Yarn
+# With yarn
 yarn install
 ```
 

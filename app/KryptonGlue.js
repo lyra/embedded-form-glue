@@ -10,7 +10,7 @@ class Glue {
         this.publicKey = null;
     }
 
-    loadLibrary(domain, publicKey, formToken='01AayTWy5HTiOWMyKQFUiAfg186eyJhIjoxMDAwMCwiYyI6eyJiIjp7ImJjIjp7ImYiOnsidmFkQ2FyZFR5cGUiOnsidmFsdWUiOiJCQU5DT05UQUNUIn19fSwidmkiOnsiZiI6eyJ2YWRDYXJkVHlwZSI6eyJ2YWx1ZSI6IlZJU0EifX19LCJtYyI6eyJmIjp7InZhZENhcmRUeXBlIjp7InZhbHVlIjoiTUFTVEVSQ0FSRCJ9fX0sImFtIjp7ImYiOnsidmFkQ2FyZFR5cGUiOnsidmFsdWUiOiJBTUVYIn19fSwiY2IiOnsiZiI6eyJkZWJpdENyZWRpdCI6eyJ2YWx1ZSI6ImNyZWRpdCJ9fX19fSwibSI6IkVVUiIsIm8iOm51bGx90f02') {
+    loadLibrary(domain, publicKey, formToken=null) {
         if (typeof window.KR_CLIENT_LOADED != 'undefined') {
             return Promise.reject("Library KR already loaded");
         }
@@ -49,9 +49,13 @@ class Glue {
                 domain += "/";
             }
 
-            script.src = `${domain}static/js/krypton-client/V4.0/stable/kr-payment-form.min.js?formToken=${formToken}`;
+            script.src = `${domain}static/js/krypton-client/V4.0/stable/kr-payment-form.min.js`;
             script.setAttribute("kr-public-key", publicKey);
             script.setAttribute("kr-spa-mode", "true");
+
+            if (this.formToken) {
+                script.setAttribute("kr-form-token", this.formToken);
+            }
 
             // Append it to body
             window.__kr__script = script;

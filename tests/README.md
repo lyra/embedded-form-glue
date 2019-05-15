@@ -16,4 +16,4 @@ Next, to run all the functional tests, run:
 sh tests/run_tests.sh
 ```
 
-you can also 
+you can also see the testting view here: http://localhost:7009/tests/views/

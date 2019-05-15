@@ -1,4 +1,4 @@
-export default (context, variableName, cb, interval = 50) => {
+export default (context, variableName, cb, interval = 150) => {
     let checkVariable = () => {
         if (context[variableName]) {
             cb();
