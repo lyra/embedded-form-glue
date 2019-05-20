@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@lyracom/embedded-form-glue": "^0.2.3",
+    "@lyracom/embedded-form-glue": "^0.2.5",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.1"
