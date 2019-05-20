@@ -1,15 +1,13 @@
 import Head from 'next/head';
 import React from 'react';
-import dynamic from 'next/dynamic';
-
-
 
 class IndexPage extends React.Component {
 
   componentDidMount() {
-    import('@lyracom/embedded-form-glue').then(() => {
+    import('@lyracom/embedded-form-glue').then((glue) => {
     const publicKey = '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5';
     const formToken = 'DEMO-TOKEN-TO-BE-REPLACED';
+    const KRGlue = glue.default;
 
     KRGlue.loadLibrary('https://api.lyra.com', publicKey) /* Load the remote library */
           .then(({KR}) => KR.setFormConfig({              /* set the minimal configuration */

@@ -2,7 +2,7 @@
   "name": "@lyracom/embedded-form-glue",
   "version": "0.2.4",
   "description": "Lyra embedded form glue",
-  "main": "dist/js/kr-payment-form-glue.min.js",
+  "main": "app/index.js",
   "scripts": {
     "build": "webpack"
   },

@@ -5,7 +5,8 @@
     "start": "next start"
   },
   "dependencies": {
-    "@lyracom/embedded-form-glue": "^0.2.3",
+    "@babel/core": "^7.4.4",
+    "@lyracom/embedded-form-glue": "^0.2.4",
     "next": "^8.1.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"

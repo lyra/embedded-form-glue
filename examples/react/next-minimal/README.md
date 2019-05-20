@@ -23,26 +23,24 @@ and add **package.json** file with:
     "build": "next build",
     "start": "next start"
   }
-(...)
+}
 ```
 
-Install the deps:
+Install deps:
 
 ```bash
-npm install --save next react react-dom @lyracom/embedded-form-glue
-# OR
-yarn add next react react-dom @lyracom/embedded-form-glue
+npm install --save next react react-dom @babel/core @lyracom/embedded-form-glue
 ```
 
 and add **./pages/index.js**:
 
-´´´javascript
+```javascript
 function Home() {
   return <div>Welcome to Next.js!</div>;
 }
 
 export default Home;
-´´´
+```
 
 and then just run **npm run dev** and go to http://localhost:3000.
 For more details on [next.js web-site](https://nextjs.org/docs).
@@ -63,14 +61,13 @@ import Head from 'next/head';
 import React from 'react';
 import dynamic from 'next/dynamic';
 
-
-
 class IndexPage extends React.Component {
 
   componentDidMount() {
-    import('@lyracom/embedded-form-glue').then(() => {
+    import('@lyracom/embedded-form-glue').then((glue) => {
     const publicKey = '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5';
     const formToken = 'DEMO-TOKEN-TO-BE-REPLACED';
+    const KRGlue = glue.default;
 
     KRGlue.loadLibrary('https://api.lyra.com', publicKey) /* Load the remote library */
           .then(({KR}) => KR.setFormConfig({              /* set the minimal configuration */
