@@ -12,7 +12,7 @@ class Glue {
 
     loadLibrary(domain, publicKey, formToken=null) {
         if (typeof window.KR_CLIENT_LOADED != 'undefined') {
-            return Promise.reject("Library KR already loaded");
+            return Promise.resolve({KR: window.KR});
         }
 
         if (!domain) {
