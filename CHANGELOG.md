@@ -1,5 +1,10 @@
 # Change log
 
+## 0.2.5
+
+- back to EC6/ app/index.js as main entry point
+- fix multi-loading errors
+
 ## 0.2.4
 
 - add kr-spa-mode to true by default
