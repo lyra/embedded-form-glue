@@ -115,6 +115,7 @@ following examples to see how to deal with:
 | --------- | -------------------------------------------------------------------------- |
 | vue.js    | [vue example using vue-cli](examples/vuejs/minimal-example)                |
 | react.js  | [react example using create-react-app](examples/react/minimal-example)     |
+| next.js   | [react + nextjs example](examples/react/next-minimal)                      |
 | angular   | [angular example using Angular CLI](examples/angular/minimal-example)      |
 
 ## Cutomize your form
