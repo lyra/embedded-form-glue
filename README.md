@@ -1,7 +1,5 @@
 # embedded-form-glue Javascript library
 
-**note: The library it not yet published. It will be publicly available the third week of may. If you want to test it before, please post an issue.**
-
 The **embedded-form-glue** Javascript library helps you to integrate a payment
 form into your favorite framework easily using npm or any similar tools.
 
