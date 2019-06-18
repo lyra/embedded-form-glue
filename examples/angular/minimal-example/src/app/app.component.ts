@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
     KRGlue.loadLibrary('https://api.lyra.com', publicKey) /* Load the remote library */
           .then(({KR}) => KR.setFormConfig({                  /* set the minimal configuration */
             formToken: formToken,
+            'kr-language': 'en-US',                           /* to update initialization parameter */
           }))
           .then(({KR}) => KR.addForm('#myPaymentForm'))             /* add a payment form  to myPaymentForm div*/
           .then(({KR, result}) => KR.showForm(result.formId));      /* show the payment form */
