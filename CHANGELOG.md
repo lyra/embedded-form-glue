@@ -1,5 +1,10 @@
 # Change log
 
+## 0.2.6
+
+- add webpack rules to transpile en ES5
+- Update Glue class to singleton pattern
+
 ## 0.2.5
 
 - back to EC6/ app/index.js as main entry point
