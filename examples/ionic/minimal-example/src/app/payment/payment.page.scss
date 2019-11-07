@@ -1,0 +1,15 @@
+
+.form-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 1rem 0;
+  width: 100%;
+
+  #myPaymentForm {
+    padding: 1rem;
+    box-sizing: border-box;
+    background-color: #f7f7f7;
+  }
+}
