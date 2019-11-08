@@ -54,11 +54,12 @@ First you need to load the theme files in your HEAD section:
 ```javascript
 <!-- theme and plugins. should be loaded in the HEAD section -->
 <link rel="stylesheet"
-href="https://api.lyra.com/static/js/krypton-client/V4.0/ext/classic-reset.css">
+href="https://[CHANGE_ME: JAVASCRIPT ENDPOINT]/static/js/krypton-client/V4.0/ext/classic-reset.css">
 <script
-    src="https://api.lyra.com/static/js/krypton-client/V4.0/ext/classic.js">
+    src="https://[CHANGE_ME: JAVASCRIPT ENDPOINT]/static/js/krypton-client/V4.0/ext/classic.js">
 </script>
 ```
+**note**: Replace **[CHANGE_ME]** with your credentials and end-points.
 
 For more information about theming, take a look to [Lyra theming documentation][JS Themes]
 
@@ -69,10 +70,11 @@ Import the component:
 and Load the [Lyra Javascript library][JS Link]:
 
 ```javascript
-const publicKey = '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5';
+const publicKey = 'CHANGE_ME: YOUR PUBLIC KEY';
+const endPoint = 'CHANGE_ME: JAVASCRIPT ENDPOINT'; /* should include https:// */
 
 /* WARNING: You should always use promises chaining with KR method calls */
-KRGlue.loadLibrary('https://api.lyra.com', publicKey) /* Load the remote library */
+KRGlue.loadLibrary(endPoint, publicKey) /* Load the remote library */
       .then(({KR}) => KR.setFormConfig({              /* set the minimal configuration */
         formToken: 'DEMO-TOKEN-TO-BE-REPLACED',
         'kr-language': 'en-US',                       /* to update initialization parameter */
@@ -81,6 +83,7 @@ KRGlue.loadLibrary('https://api.lyra.com', publicKey) /* Load the remote library
       .then(({KR, result}) => KR.showForm(result.formId)); /* show the payment form */
 ```
 
+**note**: Replace **[CHANGE_ME]** with your credentials and end-points.
 **warning:** You should always use promises chaining with KR method calls
 
 ## your first transaction
