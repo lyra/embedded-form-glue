@@ -10,10 +10,11 @@ export class AppComponent implements OnInit {
   title = 'minimal-example';
 
   ngOnInit() {
-    const publicKey = '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5';
+    const endpoint = 'CHANGE_ME: JAVASCRIPT ENDPOINT'
+    const publicKey = 'CHANGE_ME: YOUR PUBLIC KEY'
     const formToken = 'DEMO-TOKEN-TO-BE-REPLACED';
 
-    KRGlue.loadLibrary('https://api.lyra.com', publicKey) /* Load the remote library */
+    KRGlue.loadLibrary(endpoint, publicKey) /* Load the remote library */
           .then(({KR}) => KR.setFormConfig({                  /* set the minimal configuration */
             formToken: formToken,
             'kr-language': 'en-US',                           /* to update initialization parameter */
