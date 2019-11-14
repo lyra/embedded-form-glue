@@ -1,5 +1,10 @@
 # Change log
 
+## 0.2.7
+
+- remove default credentials
+- trigger a console error log if credentials are not updated
+
 ## 0.2.6
 
 - add webpack rules to transpile en ES5
