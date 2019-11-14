@@ -65,6 +65,8 @@ href="https://[CHANGE_ME: JAVASCRIPT ENDPOINT]/static/js/krypton-client/V4.0/ext
 </script>
 ```
 
+**note**: Replace **[CHANGE_ME]** with your credentials and end-points.
+
 For more information about theming, take a look to [Lyra theming documentation][js themes]
 
 Update the src/App.vue template to:
