@@ -1,15 +1,15 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-      <div class="container">
-        <div id="myPaymentForm"></div>
-      </div>
+    <div class="container">
+      <div id="myPaymentForm"></div>
+    </div>
   </div>
 </template>
 
 <script>
 /* import embedded-form-glue library */
-import KRGlue from "@lyracom/embedded-form-glue";
+import KRGlue from '@lyracom/embedded-form-glue'
 
 export default {
   name: 'HelloWorld',
@@ -17,16 +17,24 @@ export default {
     msg: String
   },
   mounted() {
-    /* define the public key, you should use your personal key */
-    const publicKey = '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5';
+    const endpoint = 'CHANGE_ME: JAVASCRIPT ENDPOINT'
+    const publicKey = 'CHANGE_ME: YOUR PUBLIC KEY'
+    const formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
 
-    KRGlue.loadLibrary('https://api.lyra.com', publicKey) /* Load the remote library */
-      .then(({KR}) => KR.setFormConfig({                  /* set the minimal configuration */
-        formToken: 'DEMO-TOKEN-TO-BE-REPLACED',
-        'kr-language': 'en-US',                           /* to update initialization parameter */
-      }))
-      .then(({KR}) => KR.addForm('#myPaymentForm'))             /* create a payment form */
-      .then(({KR, result}) => KR.showForm(result.formId));      /* show the payment form */
+    KRGlue.loadLibrary(endpoint, publicKey) /* Load the remote library */
+      .then(({ KR }) =>
+        KR.setFormConfig({
+          /* set the minimal configuration */
+          formToken: formToken,
+          'kr-language': 'en-US' /* to update initialization parameter */
+        })
+      )
+      .then(({ KR }) =>
+        KR.addForm('#myPaymentForm')
+      ) /* create a payment form */
+      .then(({ KR, result }) =>
+        KR.showForm(result.formId)
+      ) /* show the payment form */
   }
 }
 </script>
