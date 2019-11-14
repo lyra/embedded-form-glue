@@ -60,6 +60,8 @@ href="https://[CHANGE_ME: JAVASCRIPT ENDPOINT]/static/js/krypton-client/V4.0/ext
 </script>
 ```
 
+**note**: Replace **[CHANGE_ME]** with your credentials and end-points.
+
 For more information about theming, take a look to [Lyra theming documentation][js themes]
 
 Replace the src/App.css styles to:
@@ -72,9 +74,9 @@ display: flex; justify-content: center; }
 Next, update **src/App.js** to:
 
 ```js
-import React, { Component } from 'react'
-import KRGlue from '@lyracom/embedded-form-glue'
-import './App.css'
+import React, { Component } from "react";
+import KRGlue from "@lyracom/embedded-form-glue";
+import "./App.css";
 
 class App extends Component {
   render() {
@@ -85,32 +87,32 @@ class App extends Component {
           <div id="myPaymentForm"></div>
         </div>
       </div>
-    )
+    );
   }
 
   componentDidMount() {
-    const endpoint = 'CHANGE_ME: JAVASCRIPT ENDPOINT'
-    const publicKey = 'CHANGE_ME: YOUR PUBLIC KEY'
-    const formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
+    const endpoint = "CHANGE_ME: JAVASCRIPT ENDPOINT";
+    const publicKey = "CHANGE_ME: YOUR PUBLIC KEY";
+    const formToken = "DEMO-TOKEN-TO-BE-REPLACED";
 
     KRGlue.loadLibrary(endpoint, publicKey) /* Load the remote library */
       .then(({ KR }) =>
         KR.setFormConfig({
           /* set the minimal configuration */
           formToken: formToken,
-          'kr-language': 'en-US' /* to update initialization parameter */
+          "kr-language": "en-US" /* to update initialization parameter */
         })
       )
       .then(({ KR }) =>
-        KR.addForm('#myPaymentForm')
+        KR.addForm("#myPaymentForm")
       ) /* add a payment form  to myPaymentForm div*/
       .then(({ KR, result }) =>
         KR.showForm(result.formId)
-      ) /* show the payment form */
+      ); /* show the payment form */
   }
 }
 
-export default App
+export default App;
 ```
 
 Your payment form will be added to #myPaymentForm element.

@@ -49,58 +49,70 @@ For more details on [next.js web-site](https://nextjs.org/docs).
 
 First you have to add 2 theme files:
 
-| File                  | Description
-| --------------------- | ---------------------
-| classic-reset.css     | default style applied before the [Lyra Javascript Library][JS Link] is loaded
-| classic.js            | theme logic, like waiting annimation on submit button, ...
+| File              | Description                                                                   |
+| ----------------- | ----------------------------------------------------------------------------- |
+| classic-reset.css | default style applied before the [Lyra Javascript Library][js link] is loaded |
+| classic.js        | theme logic, like waiting annimation on submit button, ...                    |
 
 Update **./pages/index.js**: to:
 
 ```javascript
-import Head from 'next/head';
-import React from 'react';
-import dynamic from 'next/dynamic';
+import Head from "next/head";
+import React from "react";
+import dynamic from "next/dynamic";
 
 class IndexPage extends React.Component {
-
   componentDidMount() {
-    import('@lyracom/embedded-form-glue').then((glue) => {
-    const publicKey = '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5';
-    const formToken = 'DEMO-TOKEN-TO-BE-REPLACED';
-    const KRGlue = glue.default;
+    import("@lyracom/embedded-form-glue").then(glue => {
+      const endpoint = "CHANGE_ME: JAVASCRIPT ENDPOINT";
+      const publicKey = "CHANGE_ME: YOUR PUBLIC KEY";
+      const formToken = "DEMO-TOKEN-TO-BE-REPLACED";
+      const KRGlue = glue.default;
 
-    KRGlue.loadLibrary('https://api.lyra.com', publicKey) /* Load the remote library */
-          .then(({KR}) => KR.setFormConfig({              /* set the minimal configuration */
+      KRGlue.loadLibrary(endpoint, publicKey) /* Load the remote library */
+        .then(({ KR }) =>
+          KR.setFormConfig({
+            /* set the minimal configuration */
             formToken: formToken,
-            'kr-language': 'en-US',                       /* to update initialization parameter */
-          }))
-          .then(({KR}) => KR.addForm('#myPaymentForm'))        /* add a payment form  to myPaymentForm div*/
-          .then(({KR, result}) => KR.showForm(result.formId)); /* show the payment form */
-        });
+            "kr-language": "en-US" /* to update initialization parameter */
+          })
+        )
+        .then(({ KR }) =>
+          KR.addForm("#myPaymentForm")
+        ) /* add a payment form  to myPaymentForm div*/
+        .then(({ KR, result }) =>
+          KR.showForm(result.formId)
+        ); /* show the payment form */
+    });
   }
 
   render() {
     return (
-          <div>
-            <Head>
-              <title>My page title</title>
-              <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-              <link rel="stylesheet"
-                href="https://api.lyra.com/static/js/krypton-client/V4.0/ext/classic-reset.css"/>
-              <script
-                  src="https://api.lyra.com/static/js/krypton-client/V4.0/ext/classic.js">
-              </script>  
-            </Head>
-            <div id="myPaymentForm"></div>
-          </div>
-    )
+      <div>
+        <Head>
+          <title>My page title</title>
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+          />
+          <link
+            rel="stylesheet"
+            href="https://[CHANGE_ME: JAVASCRIPT ENDPOINT]/static/js/krypton-client/V4.0/ext/classic-reset.css"
+          />
+          <script src="https://[CHANGE_ME: JAVASCRIPT ENDPOINT]/static/js/krypton-client/V4.0/ext/classic.js"></script>
+        </Head>
+        <div id="myPaymentForm"></div>
+      </div>
+    );
   }
 }
 
 export default IndexPage;
 ```
 
-For more information about theming, take a look to [Lyra theming documentation][JS Themes]
+**note**: Replace **[CHANGE_ME]** with your credentials and end-points.
+
+For more information about theming, take a look to [Lyra theming documentation][js themes]
 Your payment form will be added to #myPaymentForm element.
 
 ## your first transaction
@@ -114,9 +126,9 @@ It's because the **formToken** you have defined using **KR.setFormConfig** is se
 you have to create a **formToken** before displaying the payment form using Charge/CreatePayment web-service.
 For more information, please take a look to:
 
-* [Embedded form quick start][JS quick start]
-* [embedded form integration guide][JS integration guide]
-* [Payment REST API reference][REST API]
+- [Embedded form quick start][js quick start]
+- [embedded form integration guide][js integration guide]
+- [Payment REST API reference][rest api]
 
 ## Run it from github
 
@@ -125,11 +137,11 @@ You can try the current example from the current github repository doing:
 ```sh
 cd examples/vuejs/minimal-example
 npm install
-npm run serve
+npm run dev
 ```
 
-[JS Link]: https://lyra.com/fr/doc/rest/V4.0/javascript
-[JS Themes]: https://lyra.com/fr/doc/rest/V4.0/javascript/features/themes.html
-[JS quick start]: https://lyra.com/fr/doc/rest/V4.0/javascript/quick_start_js.html
-[JS integration guide]: https://lyra.com/fr/doc/rest/V4.0/javascript/guide/start.html
-[REST API]: https://lyra.com/fr/doc/rest/V4.0/api/reference.html
+[js link]: https://lyra.com/fr/doc/rest/V4.0/javascript
+[js themes]: https://lyra.com/fr/doc/rest/V4.0/javascript/features/themes.html
+[js quick start]: https://lyra.com/fr/doc/rest/V4.0/javascript/quick_start_js.html
+[js integration guide]: https://lyra.com/fr/doc/rest/V4.0/javascript/guide/start.html
+[rest api]: https://lyra.com/fr/doc/rest/V4.0/api/reference.html

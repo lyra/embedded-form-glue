@@ -1,29 +1,36 @@
-import Head from 'next/head'
-import React from 'react'
+import Head from "next/head";
+import React from "react";
 
 class IndexPage extends React.Component {
+  state = { promiseError: null };
+
   componentDidMount() {
-    import('@lyracom/embedded-form-glue').then(glue => {
-      const endpoint = 'CHANGE_ME: JAVASCRIPT ENDPOINT'
-      const publicKey = 'CHANGE_ME: YOUR PUBLIC KEY'
-      const formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
-      const KRGlue = glue.default
+    import("@lyracom/embedded-form-glue").then(glue => {
+      const endpoint = "CHANGE_ME: JAVASCRIPT ENDPOINT";
+      const publicKey = "CHANGE_ME: YOUR PUBLIC KEY";
+      const formToken = "DEMO-TOKEN-TO-BE-REPLACED";
+      const KRGlue = glue.default;
 
       KRGlue.loadLibrary(endpoint, publicKey) /* Load the remote library */
         .then(({ KR }) =>
           KR.setFormConfig({
             /* set the minimal configuration */
             formToken: formToken,
-            'kr-language': 'en-US' /* to update initialization parameter */
+            "kr-language": "en-US" /* to update initialization parameter */
           })
         )
         .then(({ KR }) =>
-          KR.addForm('#myPaymentForm')
+          KR.addForm("#myPaymentForm")
         ) /* add a payment form  to myPaymentForm div*/
         .then(({ KR, result }) =>
           KR.showForm(result.formId)
         ) /* show the payment form */
-    })
+        .catch(error =>
+          this.setState({
+            promiseError: error + " (see console for more details)"
+          })
+        );
+    });
   }
 
   render() {
@@ -42,9 +49,10 @@ class IndexPage extends React.Component {
           <script src="https://[CHANGE_ME: JAVASCRIPT ENDPOINT]/static/js/krypton-client/V4.0/ext/classic.js"></script>
         </Head>
         <div id="myPaymentForm"></div>
+        <div>{this.state.promiseError}</div>
       </div>
-    )
+    );
   }
 }
 
-export default IndexPage
+export default IndexPage;
