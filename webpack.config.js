@@ -1,6 +1,6 @@
-'use strict';
+'use strict'
 
-const path = require('path');
+const path = require('path')
 
 module.exports = {
   entry: './app/glue.js',
@@ -8,7 +8,7 @@ module.exports = {
   mode: 'production',
   output: {
     filename: 'kr-payment-form-glue.min.js',
-    path: path.resolve(__dirname + '/dist/js'),
+    path: path.resolve(__dirname + '/dist/js')
   },
   module: {
     rules: [
@@ -17,10 +17,10 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env'],
-          },
-        },
-      },
-    ],
-  },
-};
+            presets: ['@babel/preset-env']
+          }
+        }
+      }
+    ]
+  }
+}
