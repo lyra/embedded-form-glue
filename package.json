@@ -2,9 +2,10 @@
   "name": "@lyracom/embedded-form-glue",
   "version": "0.2.7",
   "description": "Lyra embedded form glue",
-  "main": "app/index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "prepublish": "babel app --out-dir lib"
   },
   "repository": {
     "type": "git",
@@ -31,5 +32,10 @@
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  }
 }
