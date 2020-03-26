@@ -25,12 +25,12 @@
   },
   "homepage": "https://github.com/lyra/embedded-form-glue#readme",
   "devDependencies": {
-    "es6-promise": "^4.2.4",
-    "webpack": "^4.29.6",
-    "webpack-cli": "^3.3.0",
-    "@babel/cli": "^7.4.4",
-    "@babel/core": "^7.4.5",
-    "@babel/preset-env": "^7.4.5"
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "es6-promise": "^4.2.8",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
   },
   "dependencies": {},
   "babel": {
