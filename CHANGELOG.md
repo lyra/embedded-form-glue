@@ -1,5 +1,10 @@
 # Change log
 
+## 0.2.8
+
+- Fix vulnerabilities
+- compiled target is not transpiled to ECMA5 (to avoid IE11 issues)
+
 ## 0.2.7
 
 - remove default credentials
