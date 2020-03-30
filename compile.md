@@ -18,7 +18,7 @@ if everything's fine, commit and tag:
 
     git commit -am"Bump to 0.2.8"
     git tag 0.2.8
-    push origin master --tag
+    git push origin master --tag
 
 When it's done, do not forget to update examples package.json files
 to the last version.
