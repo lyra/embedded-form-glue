@@ -5,7 +5,10 @@
   "main": "lib/index.js",
   "scripts": {
     "build": "webpack",
-    "prepublish": "babel app --out-dir lib"
+    "prepublish": "babel app --out-dir lib && prettier --write \"lib/**/*.js\"",
+    "lint": "eslint --ext .js app && eslint --ext .js lib",
+    "lintfix": "eslint --fix --ext .js app && eslint --fix --ext .js lib",
+    "prettier": "prettier --write \"app/**/*.js\""
   },
   "repository": {
     "type": "git",
@@ -28,7 +31,11 @@
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.0",
+    "babel-eslint": "^10.0.1",
     "es6-promise": "^4.2.8",
+    "eslint": "^6.8.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "prettier": "^1.19.1",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11"
   },

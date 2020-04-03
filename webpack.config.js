@@ -7,8 +7,8 @@ module.exports = {
   devtool: 'source-map',
   mode: 'production',
   output: {
-    filename: 'kr-payment-form-glue.min.js',
-    path: path.resolve(__dirname + '/dist/js')
+    path: path.resolve(__dirname, 'dist/js'),
+    filename: 'kr-payment-form-glue.min.js'
   },
   module: {
     rules: [
