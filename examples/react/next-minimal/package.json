@@ -7,7 +7,7 @@
   "dependencies": {
     "@babel/core": "^7.4.4",
     "@lyracom/embedded-form-glue": "^0.3.0",
-    "next": "^8.1.0",
+    "next": "^9.3.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   }
