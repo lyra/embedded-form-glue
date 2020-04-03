@@ -1,5 +1,9 @@
 # Change log
 
+## 0.3.0
+
+- Fix transpiling issue with nuxt.js
+
 ## 0.2.8
 
 - Fix vulnerabilities
