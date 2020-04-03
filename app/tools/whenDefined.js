@@ -1,11 +1,11 @@
 export default (context, variableName, cb, interval = 150) => {
-    let checkVariable = () => {
-        if (context[variableName]) {
-            cb();
-        } else {
-            setTimeout(checkVariable, interval);
-        }
-    };
+  let checkVariable = () => {
+    if (context[variableName]) {
+      cb()
+    } else {
+      setTimeout(checkVariable, interval)
+    }
+  }
 
-    setTimeout(checkVariable, 0);
-};
+  setTimeout(checkVariable, 0)
+}
