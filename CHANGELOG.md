@@ -1,5 +1,9 @@
 # Change log
 
+# 0.3.1
+
+- Fix 'es6-promise/auto' dependency error
+
 ## 0.3.0
 
 - Fix transpiling issue with nuxt.js
