@@ -81,14 +81,15 @@ class Glue {
         script.setAttribute('kr-form-token', this.formToken)
       }
 
-      // Append it to body
-      document.getElementsByTagName('body')[0].appendChild(script)
+      // Check if the library is already present
+      const $script = document.querySelector(`script[src="${script.src}"]`)
+
+      // Append it to body if it's not already loaded
+      if (!$script) document.getElementsByTagName('body')[0].appendChild(script)
 
       whenDefined(window, 'KR', () => {
-        whenDefined(window.KR, 'onFormReady', () => {
-          resolve({
-            KR: window.KR
-          })
+        resolve({
+          KR: window.KR
         })
       })
     })
