@@ -85,7 +85,11 @@ class Glue {
       const $script = document.querySelector(`script[src="${script.src}"]`)
 
       // Append it to body if it's not already loaded
-      if (!$script) document.getElementsByTagName('body')[0].appendChild(script)
+      if (!$script && document.body) {
+        document.body.appendChild(script)
+      } else if (!document.body) {
+        console.warn('document.body is undefined')
+      }
 
       whenDefined(window, 'KR', () => {
         resolve({
