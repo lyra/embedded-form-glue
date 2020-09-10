@@ -1,5 +1,9 @@
 # Change log
 
+# 0.3.3
+
+- Fix when the body is not inside the DOM (happen sometime with some frameworks)
+
 # 0.3.2
 
 - do not add script tag if already exits (when library is removed and re-added)
