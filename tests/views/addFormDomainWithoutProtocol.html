@@ -12,19 +12,19 @@
     <!-- theme and plugins. should be loaded in the HEAD section -->
     <link
       rel="stylesheet"
-      href="https://[CHANGE_ME: JAVASCRIPT ENDPOINT]/static/js/krypton-client/V4.0/ext/classic-reset.css"
+      href="https://api.lyra.com/static/js/krypton-client/V4.0/ext/classic-reset.css"
     />
-    <script src="https://[CHANGE_ME: JAVASCRIPT ENDPOINT]/static/js/krypton-client/V4.0/ext/classic.js"></script>
+    <script src="https://api.lyra.com/static/js/krypton-client/V4.0/ext/classic.js"></script>
 
     <!-- the component we want to test -->
     <script src="/dist/js/kr-payment-form-glue.min.js"></script>
 
     <script>
       document.addEventListener('DOMContentLoaded', event => {
-        const endpoint = 'CHANGE_ME: JAVASCRIPT ENDPOINT'
-        const publicKey = 'CHANGE_ME: YOUR PUBLIC KEY'
+        const publicKey =
+          '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5'
 
-        KRGlue.loadLibrary(endpoint, publicKey)
+        KRGlue.loadLibrary('api.lyra.com', publicKey)
           .then(({ KR }) =>
             KR.setFormConfig({
               formToken: 'DEMO-TOKEN-TO-BE-REPLACED'
