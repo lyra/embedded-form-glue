@@ -19,34 +19,23 @@ class Glue {
   }
 
   loadLibrary(domain, publicKey, formToken = null) {
-    let hasErrors = false
-    if (this.loaded) {
-      return Promise.resolve({ KR: window.KR })
+    const domainRegex = /^(?:http(s)?:\/\/)[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/g
+    const pubKeyRegex = /^\d{2,8}:(|test)publickey_.+$/g
+
+    if (this.loaded) return Promise.resolve({ KR: window.KR })
+
+    if (!domain) return Promise.reject('Domain not defined')
+    if (!publicKey) return Promise.reject('Public key not defined')
+
+    if (!domainRegex.test(domain)) {
+      console.error('Domain format should be https://domain.name')
+      return Promise.reject(`[${domain}] is not a valid endpoint domain`)
     }
 
-    if (!domain) {
-      return Promise.reject('Domain not defined')
+    if (!pubKeyRegex.test(publicKey)) {
+      console.error('Public key format should be shopId:[test]publickey_*')
+      return Promise.reject(`[${publicKey}] is not a valid public key`)
     }
-
-    if (!publicKey) {
-      return Promise.reject('Public key not defined')
-    }
-
-    if (
-      !/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/g.test(
-        domain
-      )
-    ) {
-      hasErrors = true
-      console.error(`[${domain}] is not a valid endpoint domain`)
-    }
-
-    if (!/^\d{2,8}:(|test)publickey_.+$/g.test(publicKey)) {
-      hasErrors = true
-      console.error(`[${publicKey}] is not a valid public key`)
-    }
-
-    if (hasErrors) return Promise.reject('Invalid endpoint or public key')
 
     this.domain = domain
     this.publicKey = publicKey
