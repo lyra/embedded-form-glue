@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@lyracom/embedded-form-glue": "^0.3.0",
+    "crypto-js": "^4.1.1",
     "vue": "^2.6.6"
   },
   "devDependencies": {
