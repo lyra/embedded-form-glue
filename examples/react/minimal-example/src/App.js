@@ -1,9 +1,10 @@
-import React, { Component } from "react";
-import KRGlue from "@lyracom/embedded-form-glue";
-import "./App.css";
+import React, { Component } from 'react'
+import KRGlue from '@lyracom/embedded-form-glue'
+import axios from 'axios'
+import './App.css'
 
 class App extends Component {
-  state = { promiseError: null };
+  state = { message: null }
 
   render() {
     return (
@@ -11,37 +12,59 @@ class App extends Component {
         <h1>Payment form</h1>
         <div className="container">
           <div id="myPaymentForm"></div>
-          <div>{this.state.promiseError}</div>
+          <div>{this.state.message}</div>
         </div>
       </div>
-    );
+    )
   }
 
   componentDidMount() {
-    const endpoint = "CHANGE_ME: JAVASCRIPT ENDPOINT";
-    const publicKey = "CHANGE_ME: YOUR PUBLIC KEY";
-    const formToken = "DEMO-TOKEN-TO-BE-REPLACED";
+    const endpoint = 'CHANGE_ME: JAVASCRIPT ENDPOINT'
+    const publicKey = 'CHANGE_ME: YOUR PUBLIC KEY'
+    let formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
 
-    KRGlue.loadLibrary(endpoint, publicKey) /* Load the remote library */
+    // Generate the form token
+    axios
+      .post('http://localhost:3000/createPayment', {
+        paymentConf: { amount: 10000, currency: 'USD' }
+      })
+      .then(resp => {
+        formToken = resp.data
+        return KRGlue.loadLibrary(
+          endpoint,
+          publicKey
+        ) /* Load the remote library */
+      })
       .then(({ KR }) =>
         KR.setFormConfig({
           /* set the minimal configuration */
           formToken: formToken,
-          "kr-language": "en-US" /* to update initialization parameter */
+          'kr-language': 'en-US' /* to update initialization parameter */
         })
       )
       .then(({ KR }) =>
-        KR.addForm("#myPaymentForm")
+        KR.onSubmit(paymentData => {
+          axios
+            .post('http://localhost:3000/validatePayment', paymentData)
+            .then(response => {
+              if (response.status === 200)
+                this.setState({ message: 'Payment successful!' })
+            })
+          return false // Return false to prevent the redirection
+        })
+      ) // Custom payment callback
+      .then(({ KR }) =>
+        KR.addForm('#myPaymentForm')
       ) /* add a payment form  to myPaymentForm div*/
       .then(({ KR, result }) =>
         KR.showForm(result.formId)
       ) /* show the payment form */
       .catch(error =>
         this.setState({
-          promiseError: error + " (see console for more details)"
+          message: error + ' (see console for more details)'
         })
-      );
+      )
   }
 }
 
-export default App;
+export default App

@@ -115,10 +115,10 @@ the following in src/components/HelloWorld.vue on the mounted property of the ap
 /* import embedded-form-glue library */
 import KRGlue from "@lyracom/embedded-form-glue";
 
-/* define the public key, you should use your personal key */
 export default {
     (...),
     mounted() {
+      /* Use your endpoint and personal public key */
       const endpoint = 'CHANGE_ME: JAVASCRIPT ENDPOINT'
       const publicKey = 'CHANGE_ME: YOUR PUBLIC KEY'
       const formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
@@ -153,37 +153,61 @@ For more information, please take a look to:
 
 ## Payment hash verification
 
-```js
-/* import crypto-js library */
-import hmacSHA256 from "crypto-js/hmac-sha256";
-import Hex from "crypto-js/enc-hex";
-/* import embedded-form-glue library */
-import KRGlue from "@lyracom/embedded-form-glue";
+Payment hash must be validated on the server side to prevent the exposure of your
+personal hash key.
 
-/* define the public key, you should use your personal key */
+On the server side:
+
+```js
+const express = require('express')
+const hmacSHA256 = require('crypto-js/hmac-sha256')
+const Hex = require('crypto-js/enc-hex')
+const app = express()
+
+(...)
+// Validates the given payment data (hash)
+app.post('/validatePayment', (req, res) => {
+  const answer = req.body.clientAnswer
+  const hash = req.body.hash
+  const answerHash = Hex.stringify(
+    hmacSHA256(JSON.stringify(answer), 'CHANGE_ME: HMAC SHA256 KEY')
+  )
+  if (hash === answerHash) res.status(200).send('Valid payment')
+  else res.status(500).send('Payment hash mismatch')
+})
+(...)
+```
+
+On the client side:
+
+```js
+/* import embedded-form-glue library */
+import KRGlue from '@lyracom/embedded-form-glue'
+import axios from 'axios'
+
 export default {
-    (...),
+  (...),
     mounted() {
+      /* Use your endpoint and personal public key */
       const endpoint = 'CHANGE_ME: JAVASCRIPT ENDPOINT'
       const publicKey = 'CHANGE_ME: YOUR PUBLIC KEY'
       const formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
 
       KRGlue.loadLibrary(endpoint, publicKey) /* Load the remote library */
-            .then(({KR}) => KR.setFormConfig({       /* set the minimal configuration */
-              formToken: formToken,
-              'kr-language': 'en-US',                       /* to update initialization parameter */
-            }))
-            .then(({KR}) => KR.onSubmit(resp => {
-              const answer = resp.clientAnswer
-              const hash = resp.hash
-              const answerHash = Hex.stringify(
-                hmacSHA256(JSON.stringify(answer), 'CHANGE_ME: HMAC SHA256 KEY')
-              )
-              if (hash === answerHash) console.log('Payment hash is valid');
-              return false
-            }))
-            .then(({KR}) => KR.addForm('#myPaymentForm')) /* create a payment form */
-            .then(({KR, result}) => KR.showForm(result.formId));  /* show the payment form */
+        .then(({KR}) => KR.setFormConfig({ /* set the minimal configuration */
+          formToken: formToken,
+          'kr-language': 'en-US',                       
+        })) /* to update initialization parameter */
+        .then(({KR}) => KR.onSubmit(resp => {
+          axios
+            .post('http://localhost:3000/validatePayment', paymentData)
+            .then(response => {
+              if (response.status === 200) this.message = 'Payment successful!'
+            })
+          return false
+        }))
+        .then(({KR}) => KR.addForm('#myPaymentForm')) /* create a payment form */
+        .then(({KR, result}) => KR.showForm(result.formId));  /* show the payment form */
     }
     (...)
 }
@@ -195,8 +219,16 @@ You can try the current example from the current github repository doing:
 
 ```sh
 cd examples/vuejs/minimal-example
-npm install
+npm i
 npm run serve
+```
+
+You can run the example node.js server by running:
+
+```sh
+cd examples/server
+npm i
+npm run start
 ```
 
 [js link]: https://lyra.com/fr/doc/rest/V4.0/javascript
