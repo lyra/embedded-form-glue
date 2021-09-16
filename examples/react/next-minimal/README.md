@@ -130,6 +130,72 @@ For more information, please take a look to:
 - [embedded form integration guide][js integration guide]
 - [Payment REST API reference][rest api]
 
+## Payment hash verification
+
+Payment hash must be validated on the server side to prevent the exposure of your
+personal hash key.
+
+On the server side:
+
+```js
+const express = require('express')
+const hmacSHA256 = require('crypto-js/hmac-sha256')
+const Hex = require('crypto-js/enc-hex')
+const app = express()
+
+(...)
+// Validates the given payment data (hash)
+app.post('/validatePayment', (req, res) => {
+  const answer = req.body.clientAnswer
+  const hash = req.body.hash
+  const answerHash = Hex.stringify(
+    hmacSHA256(JSON.stringify(answer), 'CHANGE_ME: HMAC SHA256 KEY')
+  )
+  if (hash === answerHash) res.status(200).send('Valid payment')
+  else res.status(500).send('Payment hash mismatch')
+})
+(...)
+```
+
+On the client side:
+
+```js
+import KRGlue from '@lyracom/embedded-form-glue'
+import axios from 'axios'
+import Head from "next/head";
+import React from "react";
+import dynamic from "next/dynamic";
+
+class IndexPage extends React.Component {
+  componentDidMount() {
+    import("@lyracom/embedded-form-glue").then(glue => {
+      const endpoint = "CHANGE_ME: JAVASCRIPT ENDPOINT";
+      const publicKey = "CHANGE_ME: YOUR PUBLIC KEY";
+      const formToken = "DEMO-TOKEN-TO-BE-REPLACED";
+      const KRGlue = glue.default;
+    
+
+      KRGlue.loadLibrary(endpoint, publicKey) /* Load the remote library */
+        .then(({KR}) => KR.setFormConfig({  /* set the minimal configuration */
+          formToken: formToken,
+          'kr-language': 'en-US',
+        })) /* to update initialization parameter */
+        .then(({KR}) => KR.onSubmit(resp => {
+          axios
+            .post('http://localhost:3000/validatePayment', paymentData)
+            .then(response => {
+              if (response.status === 200) this.message = 'Payment successful!'
+            })
+          return false
+        }))
+        .then(({KR}) => KR.addForm('#myPaymentForm')) /* create a payment form */
+        .then(({KR, result}) => KR.showForm(result.formId));  /* show the payment form */
+      }
+    }
+  (...)
+}
+```
+
 ## Run it from github
 
 You can try the current example from the current github repository doing:
@@ -138,6 +204,14 @@ You can try the current example from the current github repository doing:
 cd examples/vuejs/minimal-example
 npm install
 npm run dev
+```
+
+You can run the example node.js server by running:
+
+```sh
+cd examples/server
+npm i
+npm run start
 ```
 
 [js link]: https://lyra.com/fr/doc/rest/V4.0/javascript

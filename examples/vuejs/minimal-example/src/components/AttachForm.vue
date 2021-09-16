@@ -2,7 +2,15 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <div class="container">
-      <div id="myPaymentForm"></div>
+      <div id="myPaymentForm">
+        <div class="kr-embedded">
+          <div class="kr-pan"></div>
+          <div class="kr-expiry"></div>
+          <div class="kr-security-code"></div>
+          <div class="kr-form-error"></div>
+          <button class="kr-payment-button"></button>
+        </div>
+      </div>
     </div>
     <div>{{ message }}</div>
   </div>
@@ -14,7 +22,7 @@ import KRGlue from '@lyracom/embedded-form-glue'
 import axios from 'axios'
 
 export default {
-  name: 'HelloWorld',
+  name: 'AttachForm',
   props: {
     msg: String
   },
@@ -49,11 +57,12 @@ export default {
       )
       .then(({ KR }) => KR.onSubmit(this.validatePayment)) // Custom payment callback
       .then(({ KR }) =>
-        KR.addForm('#myPaymentForm')
+        KR.attachForm('#myPaymentForm')
       ) /* create a payment form */
-      .then(({ KR, result }) =>
+      .then(({ KR, result }) => {
         KR.showForm(result.formId)
-      ) /* show the payment form */
+        this.ready = true
+      }) /* show the payment form */
       .catch(
         error => (this.message = error + ' (see console for more details)')
       )
