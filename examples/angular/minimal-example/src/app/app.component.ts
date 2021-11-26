@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
         })
       )
       .then(({ KR }) =>
-        KR.onSubmit(paymentData => {
+        KR.onSubmit((paymentData: KRPaymentResponse) => {
           axios
             .post('http://localhost:3000/validatePayment', paymentData)
             .then(response => {

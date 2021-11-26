@@ -88,7 +88,6 @@ h1 {
   width: 100%;
   text-align: center;
 }
-
 .container {
   display: flex;
   justify-content: center;
@@ -100,7 +99,6 @@ Update the default component src/app/app.component.ts to:
 ```js
 import { Component, OnInit } from "@angular/core";
 import KRGlue from "@lyracom/embedded-form-glue";
-
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
@@ -108,12 +106,10 @@ import KRGlue from "@lyracom/embedded-form-glue";
 })
 export class AppComponent implements OnInit {
   title = "minimal-example";
-
   ngOnInit() {
     const endpoint = "CHANGE_ME: JAVASCRIPT ENDPOINT";
     const publicKey = "CHANGE_ME: YOUR PUBLIC KEY";
     const formToken = "DEMO-TOKEN-TO-BE-REPLACED";
-
     KRGlue.loadLibrary(endpoint, publicKey) /* Load the remote library */
       .then(({ KR }) =>
         KR.setFormConfig({
@@ -161,7 +157,6 @@ const express = require('express')
 const hmacSHA256 = require('crypto-js/hmac-sha256')
 const Hex = require('crypto-js/enc-hex')
 const app = express()
-
 (...)
 // Validates the given payment data (hash)
 app.post('/validatePayment', (req, res) => {
@@ -182,7 +177,6 @@ On the client side:
 import { Component, OnInit } from "@angular/core";
 import KRGlue from "@lyracom/embedded-form-glue";
 import axios from 'axios'
-
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
@@ -196,7 +190,6 @@ export class AppComponent implements OnInit {
       const endpoint = 'CHANGE_ME: JAVASCRIPT ENDPOINT'
       const publicKey = 'CHANGE_ME: YOUR PUBLIC KEY'
       const formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
-
       KRGlue.loadLibrary(endpoint, publicKey) /* Load the remote library */
         .then(({KR}) => KR.setFormConfig({  /* set the minimal configuration */
           formToken: formToken,
