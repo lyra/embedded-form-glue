@@ -1,6 +1,6 @@
 # embedded-form-glue Javascript library
 
-[![Build Status](https://circleci.com/gh/lyra/embedded-form-glue.svg?style=svg)](https://circleci.com/gh/lyra/embedded-form-glue)
+[![Build Status](https://circleci.com/gh/lyra/embedded-form-glue.svg?style=shield)](https://circleci.com/gh/lyra/embedded-form-glue)
 
 The **embedded-form-glue** Javascript library helps you to integrate a payment
 form into your favorite framework easily using npm or any similar tools.
