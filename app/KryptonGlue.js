@@ -19,7 +19,8 @@ class Glue {
   }
 
   loadLibrary(domain, publicKey, formToken = null) {
-    const domainRegex = /^(?:http(s)?:\/\/)[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/g
+    const domainRegex =
+      /^(?:http(s)?:\/\/)[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/g
     const pubKeyRegex = /^\d{2,8}:(|test)publickey_.+$/g
 
     if (this.loaded) return Promise.resolve({ KR: window.KR })
