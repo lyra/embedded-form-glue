@@ -11,12 +11,12 @@ jobs:
       - browser-tools/install-browser-tools
       - node/install-packages
       - run:
-          name: "Start http server"
+          name: 'Start http server'
           background: true
           command: npm run e2e-server
       - run:
-          name: "Run tests"
-          command: npm run test
+          name: 'Run tests'
+          command: npm run test-ci
       - store_test_results:
           path: /tmp/test-results
 workflows:
