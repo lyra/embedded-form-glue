@@ -1,5 +1,9 @@
 # Change log
 
+# 1.0.0
+
+- [chore] Stable version (0.3.4)
+
 # 0.3.4
 
 - Hash validation examples
