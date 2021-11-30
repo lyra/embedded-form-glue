@@ -18,7 +18,7 @@
     "@angular/platform-browser": "~13.0.0",
     "@angular/platform-browser-dynamic": "~13.0.0",
     "@angular/router": "~13.0.0",
-    "@lyracom/embedded-form-glue": "^0.3.4",
+    "@lyracom/embedded-form-glue": "^1.0.0",
     "axios": "^0.24.0",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",
