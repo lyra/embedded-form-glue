@@ -1,5 +1,14 @@
 # Change log
 
+# 0.3.4
+
+- Hash validation examples
+- Server side example
+- @types configuration for typescript
+- Error feedback improvements
+- Migration from Travis to CircleCI
+- Migration from selenium to TestCafe
+
 # 0.3.3
 
 - Fix when the body is not inside the DOM (happen sometime with some frameworks)
