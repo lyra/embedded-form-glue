@@ -1,27 +1,29 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-<head>
+  <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+      name="viewport"
+    />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Glue testing view</title>
 
     <!-- theme and plugins. should be loaded in the HEAD section -->
-    <link rel="stylesheet"
-        href="https://api.lyra.com/static/js/krypton-client/V4.0/ext/classic-reset.css">
-    <script
-        src="https://api.lyra.com/static/js/krypton-client/V4.0/ext/classic.js">
-    </script>
+    <link
+      rel="stylesheet"
+      href="https://api.lyra.com/static/js/krypton-client/V4.0/ext/classic-reset.css"
+    />
+    <script src="https://api.lyra.com/static/js/krypton-client/V4.0/ext/classic.js"></script>
 
     <!-- the component we want to test -->
     <script src="/dist/js/kr-payment-form-glue.min.js"></script>
 
     <script>
-    document.addEventListener("DOMContentLoaded", (event) => {
-
+      document.addEventListener("DOMContentLoaded", (event) => {
         function insertMyForm(KR) {
-            return new Promise((resolve, reject) => {
-                let myForm = `
+          return new Promise((resolve, reject) => {
+            let myForm = `
                 <!-- payment form -->
                 <div class="kr-embedded">
 
@@ -40,34 +42,35 @@
                     <button class="kr-payment-button">PAY ME NOW</button>                
                 </div>
                 `;
-                document.getElementById('myPaymentForm').innerHTML = myForm;
-                resolve({KR: KR,});
-            });
+            document.getElementById("myPaymentForm").innerHTML = myForm;
+            resolve({ KR: KR });
+          });
         }
-        
-        const publicKey = '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5';
 
-        KRGlue.loadLibrary('https://api.lyra.com', publicKey)
-            .then(({KR}) => insertMyForm(KR))
-            .then(({KR}) => KR.setFormConfig({        
-                    formToken: 'DEMO-TOKEN-TO-BE-REPLACED',
-                })
-            )
-            .then(({KR}) => KR.attachForm('#myPaymentForm'))
-            .then(({KR, result}) => KR.showForm(result.formId))
-            .then(() => {
-                KR.onFormReady( () => {
-                let el = document.createElement("div");
-                el.id = "test-ready";
-                document.body.appendChild(el); 
-                });
+        const publicKey =
+          "69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5";
+
+        KRGlue.loadLibrary("https://api.lyra.com", publicKey)
+          .then(({ KR }) => insertMyForm(KR))
+          .then(({ KR }) =>
+            KR.setFormConfig({
+              formToken: "DEMO-TOKEN-TO-BE-REPLACED",
+              language: "en-EN",
+            })
+          )
+          .then(({ KR }) => KR.attachForm("#myPaymentForm"))
+          .then(({ KR, result }) => KR.showForm(result.formId))
+          .then(() => {
+            KR.onFormReady(() => {
+              let el = document.createElement("div");
+              el.id = "test-ready";
+              document.body.appendChild(el);
             });
-
-    });
+          });
+      });
     </script>
-</head>
-<body>
-    <div id="myPaymentForm">
-    </div>
-</body>
+  </head>
+  <body>
+    <div id="myPaymentForm"></div>
+  </body>
 </html>

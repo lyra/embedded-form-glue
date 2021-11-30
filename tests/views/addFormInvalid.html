@@ -12,40 +12,41 @@
     <!-- theme and plugins. should be loaded in the HEAD section -->
     <link
       rel="stylesheet"
-      href="https://[CHANGE_ME: JAVASCRIPT ENDPOINT]/static/js/krypton-client/V4.0/ext/classic-reset.css"
+      href="https://api.lyra.com/static/js/krypton-client/V4.0/ext/classic-reset.css"
     />
-    <script src="https://[CHANGE_ME: JAVASCRIPT ENDPOINT]/static/js/krypton-client/V4.0/ext/classic.js"></script>
+    <script src="https://api.lyra.com/static/js/krypton-client/V4.0/ext/classic.js"></script>
 
     <!-- the component we want to test -->
     <script src="/dist/js/kr-payment-form-glue.min.js"></script>
 
     <script>
-      document.addEventListener('DOMContentLoaded', event => {
-        const endpoint = 'CHANGE_ME: JAVASCRIPT ENDPOINT'
-        const publicKey = 'CHANGE_ME: YOUR PUBLIC KEY'
+      document.addEventListener("DOMContentLoaded", (event) => {
+        const endpoint = "CHANGE_ME: JAVASCRIPT ENDPOINT";
+        const publicKey = "CHANGE_ME: YOUR PUBLIC KEY";
 
         KRGlue.loadLibrary(endpoint, publicKey)
           .then(({ KR }) =>
             KR.setFormConfig({
-              formToken: 'DEMO-TOKEN-TO-BE-REPLACED'
+              formToken: "DEMO-TOKEN-TO-BE-REPLACED",
+              language: "en-EN",
             })
           )
-          .then(({ KR }) => KR.addForm('#myPaymentForm'))
+          .then(({ KR }) => KR.addForm("#myPaymentForm"))
           .then(({ KR, result }) => KR.showForm(result.formId))
           .then(() => {
             KR.onFormReady(() => {
-              let el = document.createElement('div')
-              el.id = 'test-ready'
-              document.body.appendChild(el)
-            })
+              let el = document.createElement("div");
+              el.id = "test-ready";
+              document.body.appendChild(el);
+            });
           })
-          .catch(err => {
-            let el = document.createElement('div')
-            el.id = 'test-error'
-            el.innerHTML = err
-            document.body.appendChild(el)
-          })
-      })
+          .catch((err) => {
+            let el = document.createElement("div");
+            el.id = "test-error";
+            el.innerHTML = err;
+            document.body.appendChild(el);
+          });
+      });
     </script>
   </head>
   <body>

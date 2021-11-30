@@ -7,7 +7,7 @@ form into your favorite framework easily using npm or any similar tools.
 
 A simple payment form will look like:
 
-![payment form](/payment_form.png)
+![payment form](/assets/payment_form.png)
 
 ## Context
 
@@ -154,9 +154,14 @@ And then run the compilation command with webpack:
 npm run build
 ```
 
-## Testing with Selenium
+## Testing
 
-see [tests/README.md].(tests/README.md)
+To run the e2e tests (testcafe), first initialize the static server and execute the tests after that.
+
+```
+npm run e2e-server
+npm run test
+```
 
 [JS Link]: https://lyra.com/fr/doc/rest/V4.0/javascript/
 [JS Reference]: https://lyra.com/fr/doc/rest/V4.0/javascript/features/reference.html

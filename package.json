@@ -8,7 +8,10 @@
     "prepublish": "babel app --out-dir lib && prettier --write \"lib/**/*.js\"",
     "lint": "eslint --ext .js app && eslint --ext .js lib",
     "lintfix": "eslint --fix --ext .js app && eslint --fix --ext .js lib",
-    "prettier": "prettier --write \"app/**/*.js\""
+    "prettier": "prettier --write \"app/**/*.js\"",
+    "e2e-server": "http-server ./",
+    "test-ci": "testcafe chrome:headless tests/e2e/**/* -r xunit:/tmp/test-results/testcafe/results.xml",
+    "test": "testcafe chrome tests/e2e/**/*"
   },
   "repository": {
     "type": "git",
@@ -35,7 +38,10 @@
     "babel-loader": "^8.1.0",
     "eslint": "^6.8.0",
     "eslint-plugin-prettier": "^3.1.2",
+    "http-server": "^14.0.0",
     "prettier": "^1.19.1",
+    "testcafe": "^1.17.1",
+    "testcafe-reporter-xunit": "^2.1.0",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11"
   },
