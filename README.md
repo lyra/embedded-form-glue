@@ -1,4 +1,4 @@
-# embedded-form-glue Javascript library
+# Embedded Form Glue Javascript library
 
 [![Build Status](https://circleci.com/gh/lyra/embedded-form-glue.svg?style=shield)](https://circleci.com/gh/lyra/embedded-form-glue)
 
