@@ -76,6 +76,10 @@ declare interface KR {
      */
     onFocus: (callback: (field: KRField) => void) => Promise<{ KR: KR }>;
     /**
+     * @summary Blur event listener.
+     */
+    onBlur: (callback: (field: KRField) => void) => Promise<{ KR: KR }>;
+    /**
      * @summary Form created event listener.
      */
     onFormCreated: (callback: () => void) => Promise<{ KR: KR }>;
@@ -83,6 +87,14 @@ declare interface KR {
      * @summary Form ready event listener.
      */
     onFormReady: (callback: () => void) => Promise<{ KR: KR }>;
+    /**
+     * @summary Form valid event listener.
+     */
+    onFormValid: (callback: () => void) => Promise<{ KR: KR }>;
+    /**
+     * @summary Form invalid event listener.
+     */
+    onFormInvalid: (callback: () => void) => Promise<{ KR: KR }>;
     /**
      * @summary Form loaded event listener.
      */
