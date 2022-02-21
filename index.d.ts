@@ -120,6 +120,7 @@ declare interface KRButton {
      onClick: (callback: () => boolean) => Promise<{ KR: KR }>;
      /**
       * @summary Set payment button label.
+      * @param label - Template : Your label %amount-and-currency% for button
       */
      setLabel: (label: string) => Promise<{ KR: KR }>;
      /**
@@ -207,18 +208,23 @@ declare interface KRConfig {
      'kr-z-index'?: string;
     /**
      * @summary Installments field content label (singular)
+     * @param label - Template : Your label [COUNT] for singular installment with [CURRENCY] [AMOUNT]
+     *  
      */
      'kr-installments-label-singular'?: string;
     /**
      * @summary Installments field content label (plural)
+     * @param label - Template : Your label [COUNT] for plural installment with [CURRENCY] [AMOUNT]
      */
      'kr-installments-label-plural'?: string;
     /**
      * @summary First installment delay field content label (singular)
+     * @param label - Template : Your label [COUNT] for singular installment delay
      */
      'kr-first-installment-delay-label-singular'?: string;
     /**
      * @summary First installment delay field content label (plural)
+     * @param label - Template : Your label [COUNT] for plural installment delay
      */
      'kr-first-installment-delay-label-plural'?: string;
     /**
