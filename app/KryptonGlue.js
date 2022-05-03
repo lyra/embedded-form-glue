@@ -23,7 +23,9 @@ class Glue {
       /^(?:http(s)?:\/\/)[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/g
     const pubKeyRegex = /^\d{2,8}:(|test)publickey_.+$/g
 
-    if (this.loaded) return Promise.resolve({ KR: window.KR })
+    if (this.loaded) {
+      return this.getKrypton(publicKey)
+    }
 
     if (!domain) return Promise.reject('Domain not defined')
     if (!publicKey) return Promise.reject('Public key not defined')
@@ -86,6 +88,16 @@ class Glue {
           KR: window.KR
         })
       })
+    })
+  }
+
+  getKrypton(publicKey) {
+    return new Promise((resolve, reject) => {
+      if (publicKey && publicKey !== this.publicKey) {
+        window.KR.setFormConfig({ publicKey }).then(resolve).catch(reject)
+      } else {
+        resolve({ KR: window.KR })
+      }
     })
   }
 }
