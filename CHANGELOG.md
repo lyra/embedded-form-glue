@@ -1,5 +1,9 @@
 # Change log
 
+# 1.1.0
+
+- [feat] publicKey update with loadLibrary
+
 # 1.0.0
 
 - [chore] Stable version (0.3.4)
