@@ -1,5 +1,9 @@
 # Change log
 
+# 1.2.0
+
+- [fix] Wait for KR ready
+
 # 1.1.0
 
 - [feat] publicKey update with loadLibrary
