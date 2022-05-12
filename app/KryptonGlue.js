@@ -84,8 +84,10 @@ class Glue {
       }
 
       whenDefined(window, 'KR', () => {
-        resolve({
-          KR: window.KR
+        whenDefined(window.KR, 'ready', () => {
+          resolve({
+            KR: window.KR
+          })
         })
       })
     })
