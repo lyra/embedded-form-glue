@@ -126,3 +126,12 @@ test.page`http://127.0.0.1:8080/tests/views/addFormMinimal.html`(
     await t.expect(updatedPK).eql('INVALID_PUBLIC_KEY')
   }
 )
+
+test.page`http://127.0.0.1:8080/tests/views/loadLibrary.html`(
+  'KR.loadLibrary + mutliple times',
+  async t => {
+    const { error, log } = await t.getBrowserConsoleMessages();
+    await t.expect(error[0]).notOk();
+    await t.expect(log[0]).notOk();
+  }
+)
