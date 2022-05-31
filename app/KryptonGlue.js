@@ -13,20 +13,17 @@ class Glue {
     this.domain = null
     this.formToken = null
     this.publicKey = null
-    this.loaded = null
+    this.loaded = false
+    this.loading = false
 
     return this
   }
 
   loadLibrary(domain, publicKey, formToken = null) {
-    const domainRegex =
-      /^(?:http(s)?:\/\/)[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/g
+    const domainRegex = /^(?:http(s)?:\/\/)[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/g
     const pubKeyRegex = /^\d{2,8}:(|test)publickey_.+$/g
 
-    if (this.loaded) {
-      return this.getKrypton(publicKey)
-    }
-
+    if (this.loaded) return this.getKrypton(publicKey)
     if (!domain) return Promise.reject('Domain not defined')
     if (!publicKey) return Promise.reject('Public key not defined')
 
@@ -44,50 +41,43 @@ class Glue {
     this.publicKey = publicKey
     this.formToken = formToken
 
-    if (this.domain && this.publicKey) {
-      this.loaded = true
-      return this.loadKryptonClient()
-    }
+    if (this.domain && this.publicKey) return this.loadKryptonClient()
 
     return Promise.reject('The library cannot be loaded')
   }
 
-  loadKryptonClient() {
-    const publicKey = this.publicKey
-    let domain = this.domain
-
-    return new Promise((resolve, reject) => {
+  loadKryptonClient() {    
+    if (!this.loading) {
+      const publicKey = this.publicKey
+      let domain = this.domain
+      this.loading = true
+   
       const script = document.createElement('script')
       script.type = 'text/javascript'
 
       // Domain must end with slash
-      if (!/^.+\/$/.test(domain)) {
-        domain += '/'
-      }
+      if (!/^.+\/$/.test(domain)) domain += '/'
 
       script.src = `${domain}static/js/krypton-client/V4.0/stable/kr-payment-form.min.js`
       script.setAttribute('kr-public-key', publicKey)
       script.setAttribute('kr-spa-mode', 'true')
 
-      if (this.formToken) {
-        script.setAttribute('kr-form-token', this.formToken)
-      }
+      if (this.formToken) script.setAttribute('kr-form-token', this.formToken)
 
       // Check if the library is already present
       const $script = document.querySelector(`script[src="${script.src}"]`)
 
       // Append it to body if it's not already loaded
-      if (!$script && document.body) {
-        document.body.appendChild(script)
-      } else if (!document.body) {
-        console.warn('document.body is undefined')
-      }
-
+      if (!$script && document.body) document.body.appendChild(script)
+      else if (!document.body) console.warn('document.body is undefined')
+    }
+    
+    return new Promise((resolve) => {
       whenDefined(window, 'KR', () => {
         whenDefined(window.KR, 'ready', () => {
-          resolve({
-            KR: window.KR
-          })
+          this.loaded = true
+          this.loading = false
+          resolve({ KR: window.KR })
         })
       })
     })
