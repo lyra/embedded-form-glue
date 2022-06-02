@@ -34,11 +34,11 @@ declare interface KR {
     /**
      * @summary Add a form.
      */
-    addForm: (formSelector: string) => Promise<{ KR: KR, result: {formId: string} }>;
+    addForm: (formSelector: string, formType?: FormType) => Promise<{ KR: KR, result: {formId: string} }>;
     /**
      * @summary Attach a form to the given selector.
      */
-    attachForm: (formSelector: string) => Promise<{ KR: KR, result: {formId: string} }>;
+    attachForm: (formSelector: string, formType?: FormType) => Promise<{ KR: KR, result: {formId: string} }>;
     /**
      * @summary Show form.
      */
@@ -431,4 +431,9 @@ declare interface KRPaymentIPNResponse {
      * @summary Answer data.
      */
     'kr-answer': string;
+}
+
+declare enum FormType {
+    Cards = "cards",
+    All = "all"
 }
