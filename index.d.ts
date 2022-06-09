@@ -38,7 +38,7 @@ declare interface KR {
     /**
      * @summary Attach a form to the given selector.
      */
-    attachForm: (formSelector: string, formType?: FormType) => Promise<{ KR: KR, result: {formId: string} }>;
+    attachForm: (formSelector: string) => Promise<{ KR: KR, result: {formId: string} }>;
     /**
      * @summary Show form.
      */
