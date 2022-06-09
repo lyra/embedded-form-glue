@@ -1,5 +1,9 @@
 # Change log
 
+# 1.3.0
+
+- [feat] Multiple loadLibrary method calls securization
+  
 # 1.2.0
 
 - [fix] Wait for KR ready
