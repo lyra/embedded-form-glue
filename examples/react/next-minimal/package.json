@@ -5,11 +5,11 @@
     "start": "next start"
   },
   "dependencies": {
-    "@babel/core": "^7.4.4",
-    "@lyracom/embedded-form-glue": "^1.0.0",
-    "axios": "^0.21.4",
-    "next": "^12.1.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "@babel/core": "7.19.0",
+    "@lyracom/embedded-form-glue": "1.3.0",
+    "axios": "0.27.2",
+    "next": "12.3.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   }
 }
