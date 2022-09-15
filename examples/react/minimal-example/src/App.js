@@ -19,8 +19,8 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const endpoint = 'CHANGE_ME: JAVASCRIPT ENDPOINT'
-    const publicKey = 'CHANGE_ME: YOUR PUBLIC KEY'
+    const endpoint = '~~CHANGE_ME_ENDPOINT~~'
+    const publicKey = '~~CHANGE_ME_PUBLIC_KEY~~'
     let formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
 
     // Generate the form token

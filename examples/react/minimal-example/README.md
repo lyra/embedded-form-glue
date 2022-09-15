@@ -54,9 +54,9 @@ Add them in public/index.html in the the HEAD section:
 ```javascript
 <!-- theme and plugins. should be loaded in the HEAD section -->
 <link rel="stylesheet"
-href="https://[CHANGE_ME: JAVASCRIPT ENDPOINT]/static/js/krypton-client/V4.0/ext/classic-reset.css">
+href="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/classic-reset.css">
 <script
-    src="https://[CHANGE_ME: JAVASCRIPT ENDPOINT]/static/js/krypton-client/V4.0/ext/classic.js">
+    src="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/classic.js">
 </script>
 ```
 
@@ -91,8 +91,8 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const endpoint = "CHANGE_ME: JAVASCRIPT ENDPOINT";
-    const publicKey = "CHANGE_ME: YOUR PUBLIC KEY";
+    const endpoint = "~~CHANGE_ME_ENDPOINT~~";
+    const publicKey = "~~CHANGE_ME_PUBLIC_KEY~~";
     const formToken = "DEMO-TOKEN-TO-BE-REPLACED";
 
     KRGlue.loadLibrary(endpoint, publicKey) /* Load the remote library */
@@ -181,8 +181,8 @@ class App extends Component {
 
   componentDidMount() {
       /* Use your endpoint and personal public key */
-      const endpoint = 'CHANGE_ME: JAVASCRIPT ENDPOINT'
-      const publicKey = 'CHANGE_ME: YOUR PUBLIC KEY'
+      const endpoint = '~~CHANGE_ME_ENDPOINT~~'
+      const publicKey = '~~CHANGE_ME_PUBLIC_KEY~~'
       const formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
 
       KRGlue.loadLibrary(endpoint, publicKey) /* Load the remote library */

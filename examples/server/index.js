@@ -33,7 +33,7 @@ app.post('/validatePayment', (req, res) => {
   const answer = req.body.clientAnswer
   const hash = req.body.hash
   const answerHash = Hex.stringify(
-    hmacSHA256(JSON.stringify(answer), 'CHANGE_ME: HMAC SHA256 KEY')
+    hmacSHA256(JSON.stringify(answer), '~~CHANGE_ME_HMAC_SHA256_KEY~~')
   )
   if (hash === answerHash) res.status(200).send('Valid payment')
   else res.status(500).send('Payment hash mismatch')

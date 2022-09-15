@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:example": "ng build --output-path ../../../examples_build/angular",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

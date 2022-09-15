@@ -55,9 +55,9 @@ First you need to load the theme files in your HEAD section:
 ```javascript
 <!-- theme and plugins. should be loaded in the HEAD section -->
 <link rel="stylesheet"
-href="https://[CHANGE_ME: JAVASCRIPT ENDPOINT]/static/js/krypton-client/V4.0/ext/classic-reset.css">
+href="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/classic-reset.css">
 <script
-    src="https://[CHANGE_ME: JAVASCRIPT ENDPOINT]/static/js/krypton-client/V4.0/ext/classic.js">
+    src="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/classic.js">
 </script>
 ```
 **note**: Replace **[CHANGE_ME]** with your credentials and end-points.
@@ -71,8 +71,8 @@ Import the component:
 and Load the [Lyra Javascript library][JS Link]:
 
 ```javascript
-const publicKey = 'CHANGE_ME: YOUR PUBLIC KEY';
-const endPoint = 'CHANGE_ME: JAVASCRIPT ENDPOINT'; /* should include https:// */
+const publicKey = '~~CHANGE_ME_PUBLIC_KEY~~';
+const endPoint = '~~CHANGE_ME_ENDPOINT~~'; /* should include https:// */
 
 /* WARNING: You should always use promises chaining with KR method calls */
 KRGlue.loadLibrary(endPoint, publicKey) /* Load the remote library */

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 import { PaymentPage } from './payment.page';
 
@@ -16,7 +17,8 @@ import { PaymentPage } from './payment.page';
         path: '',
         component: PaymentPage
       }
-    ])
+    ]),
+    HttpClientModule
   ],
   declarations: [PaymentPage]
 })
