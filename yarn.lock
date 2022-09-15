@@ -3406,14 +3406,14 @@
     "v8flags" "^3.2.0"
     "yargs" "^7.1.0"
 
-"gulp-debug@^4.0.0":
-  "integrity" "sha512-cn/GhMD2nVZCVxAl5vWao4/dcoZ8wUJ8w3oqTvQaGDmC1vT7swNOEbhQTWJp+/otKePT64aENcqAQXDcdj5H1g=="
-  "resolved" "https://registry.npmjs.org/gulp-debug/-/gulp-debug-4.0.0.tgz"
-  "version" "4.0.0"
+"gulp-debug@^3.2.0":
+  "integrity" "sha512-2LZzP+ydczqz1rhqq/NYxvVvYTmOa0IgBl2B1sQTdkQgku9ayOUM/KHuGPjF4QA5aO1VcG+Sskw7iCcRUqHKkA=="
+  "resolved" "https://registry.npmjs.org/gulp-debug/-/gulp-debug-3.2.0.tgz"
+  "version" "3.2.0"
   dependencies:
     "chalk" "^2.3.0"
     "fancy-log" "^1.3.2"
-    "plur" "^3.0.0"
+    "plur" "^2.0.0"
     "stringify-object" "^3.0.0"
     "through2" "^2.0.0"
     "tildify" "^1.1.2"
@@ -3438,7 +3438,7 @@
     "lodash.template" "^4.0.2"
     "vinyl" "^0.4.6"
 
-"gulp@^4.0.2", "gulp@>=4":
+"gulp@^4.0.2":
   "integrity" "sha512-dvEs27SCZt2ibF29xYgmnwwCYZxdxhQ/+LFWlbAW8y7jt68L/65402Lz3+CKy0Ov4rOs+NERmDq7YlZaDqUIfA=="
   "resolved" "https://registry.npmjs.org/gulp/-/gulp-4.0.2.tgz"
   "version" "4.0.2"
@@ -3703,10 +3703,10 @@
   "resolved" "https://registry.npmjs.org/ip/-/ip-1.1.5.tgz"
   "version" "1.1.5"
 
-"irregular-plurals@^2.0.0":
-  "integrity" "sha512-Y75zBYLkh0lJ9qxeHlMjQ7bSbyiSqNW/UOPWDmzC7cXskL1hekSITh1Oc6JV0XCWWZ9DE8VYSB71xocLk3gmGw=="
-  "resolved" "https://registry.npmjs.org/irregular-plurals/-/irregular-plurals-2.0.0.tgz"
-  "version" "2.0.0"
+"irregular-plurals@^1.0.0":
+  "integrity" "sha512-kniTIJmaZYiwa17eTtWIfm0K342seyugl6vuC8DiiyiRAJWAVlLkqGCI0Im0neo0TkXw+pRcKaBPRdcKHnQJ6Q=="
+  "resolved" "https://registry.npmjs.org/irregular-plurals/-/irregular-plurals-1.4.0.tgz"
+  "version" "1.4.0"
 
 "is-absolute@^1.0.0":
   "integrity" "sha512-dOWoqflvcydARa360Gvv18DZ/gRuHKi2NU/wU5X1ZFzdYfH29nkiNZsF3mp4OJ3H4yo9Mx8A/uAGNzpzPN3yBA=="
@@ -5100,12 +5100,12 @@
   dependencies:
     "find-up" "^3.0.0"
 
-"plur@^3.0.0":
-  "integrity" "sha512-t1Ax8KUvV3FFII8ltczPn2tJdjqbd1sIzu6t4JL7nQ3EyeL/lTrj5PWKb06ic5/6XYDr65rQ4uzQEGN70/6X5w=="
-  "resolved" "https://registry.npmjs.org/plur/-/plur-3.1.1.tgz"
-  "version" "3.1.1"
+"plur@^2.0.0":
+  "integrity" "sha512-WhcHk576xg9y/iv6RWOuroZgsqvCbJN+XGvAypCJwLAYs2iWDp5LUmvaCdV6JR2O0SMBf8l6p7A94AyLCFVMlQ=="
+  "resolved" "https://registry.npmjs.org/plur/-/plur-2.1.2.tgz"
+  "version" "2.1.2"
   dependencies:
-    "irregular-plurals" "^2.0.0"
+    "irregular-plurals" "^1.0.0"
 
 "pngjs@^3.3.1":
   "integrity" "sha512-NCrCHhWmnQklfH4MtJMRjZ2a8c80qXeMlQMv2uVp9ISJMTt562SbGd6n2oq0PaPgKm7Z6pL9E2UlLIhC+SHL3w=="
