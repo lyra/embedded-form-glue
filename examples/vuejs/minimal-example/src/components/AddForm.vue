@@ -4,7 +4,7 @@
     <div class="container">
       <div id="myPaymentForm"></div>
     </div>
-    <div>{{ message }}</div>
+    <div data-test="payment-message">{{ message }}</div>
   </div>
 </template>
 

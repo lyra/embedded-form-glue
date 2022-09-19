@@ -12,7 +12,7 @@ class App extends Component {
         <h1>Payment form</h1>
         <div className="container">
           <div id="myPaymentForm"></div>
-          <div>{this.state.message}</div>
+          <div data-test="payment-message">{this.state.message}</div>
         </div>
       </div>
     )

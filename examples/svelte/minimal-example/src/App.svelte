@@ -40,7 +40,7 @@
   })
 
   /* Validate the payment data */
-  function validatePayment(paymentData) {
+  const validatePayment = paymentData => {
     axios
       .post('http://localhost:3000/validatePayment', paymentData)
       .then(response => {
@@ -53,7 +53,7 @@
   <div class="container">
     <h1>Svelte minimal example</h1>
     <div class="form-container" id="myPaymentForm" />
-    <div class="message">{message}</div>
+    <div class="message" data-test="payment-message">{message}</div>
   </div>
 </main>
 

@@ -57,7 +57,7 @@ test.page`http://127.0.0.1:8080/tests/views/addFormInvalid.html`(
       })
     await t
       .expect(Selector('#test-error').innerText)
-      .eql('~~CHANGE_ME_ENDPOINT~~ is not a valid endpoint domain')
+      .eql('[~~CHANGE_ME_ENDPOINT~~] is not a valid endpoint domain')
   }
 )
 

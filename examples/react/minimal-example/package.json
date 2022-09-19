@@ -12,7 +12,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "build:example": "react-scripts build && mv ./build/* ../../../examples_build/react/minimal/",
+    "build:example": "react-scripts build && mv ./build/* ../../../examples_build/react/",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

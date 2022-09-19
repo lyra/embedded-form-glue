@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Component, AfterViewInit} from "@angular/core";
+import { Component, AfterViewInit, ChangeDetectorRef} from "@angular/core";
 import KRGlue from "@lyracom/embedded-form-glue";
 import { firstValueFrom } from "rxjs";
 
@@ -13,7 +13,8 @@ export class AppComponent implements AfterViewInit{
   message: string = "";
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private chRef: ChangeDetectorRef
   ){}
 
   ngAfterViewInit(){
@@ -43,10 +44,13 @@ export class AppComponent implements AfterViewInit{
     );
   }
 
-  private onSubmit(paymentData: KRPaymentResponse){
-    this.http.post('http://localhost:3000/validatePayment', paymentData)
+  private onSubmit = (paymentData: KRPaymentResponse) => {
+    this.http.post('http://localhost:3000/validatePayment', paymentData, {responseType: "text" })
     .subscribe((response: any) => {
-      if (response.status === 200) this.message = 'Payment successful!'
+      if (response) {
+        this.message = 'Payment successful!';
+        this.chRef.detectChanges();
+      }
     })
   }
 }

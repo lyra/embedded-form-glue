@@ -12,7 +12,7 @@
         </div>
       </div>
     </div>
-    <div>{{ message }}</div>
+    <div data-test="payment-message">{{ message }}</div>
   </div>
 </template>
 

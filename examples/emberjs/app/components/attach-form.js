@@ -46,9 +46,7 @@ export default class AttachFormComponent extends Component {
         this.ready = true;
       }) /* show the payment form */
       .catch((error) => {
-        console.log(this.message);
         this.message = error + ' (see console for more details)';
-        console.log(this.message);
       });
   }
 }

@@ -1,7 +1,7 @@
 #!/bin/bash
 
-mkdir -p examples_build/react/minimal
-mkdir examples_build/react/next
+mkdir -p examples_build/react
+mkdir examples_build/next
 mkdir examples_build/server
 mkdir examples_build/svelte
 
@@ -19,5 +19,4 @@ wait
 
 cp -R server ../examples_build/
 
-echo "DONE!"
-
+gulp replaceKeys

@@ -35,8 +35,7 @@ export default function Home() {
         axios
           .post('http://localhost:3000/validatePayment', paymentData)
           .then(response => {
-            if (response.status === 200)
-              this.setState({ message: 'Payment successful!' })
+            if (response.status === 200) setMessage('Payment successful!')
           })
         return false // Return false to prevent the redirection
       })
@@ -62,8 +61,11 @@ export default function Home() {
         />
       </Head>
       <Script src="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/classic.js"></Script>
-      <div id="myPaymentForm"></div>
-      <div>{message}</div>
+      <div class="container">
+        <h1>Form:</h1>
+        <div id="myPaymentForm"></div>
+        <div data-test="payment-message">{message}</div>
+      </div>
     </div>
   )
 }
