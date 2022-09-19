@@ -15,38 +15,70 @@ examples.forEach(example => {
     .page`http://127.0.0.1:${example.port}/`
 
   test('Container for embedded form exists', async t => {
-    const selector = await Selector('#myPaymentForm')
-    await t.expect(selector.exists).ok()
+    await t
+      .expect(Selector('#myPaymentForm').exists)
+      .ok('#myPaymentForm exists', { timeout: 20000 })
   })
 
   test('Embedded form loads', async t => {
-    const selector = await Selector('.kr-embedded')
-    await t.expect(selector.exists).ok()
+    await t
+      .expect(Selector('[kr-form-ready]').exists)
+      .ok(`Form loading is slow (more than 60s)`, {
+        timeout: 60000
+      })
   })
 
   test('Test payment with correct card works properly', async t => {
+    await t
+      .expect(Selector('[kr-form-ready]').exists)
+      .ok(`Form loading is slow (more than 60s)`, {
+        timeout: 60000
+      })
+
     await selectTestCard(t, '.visa.accepted.card-accepted')
-    const buttonSelector = await Selector('.kr-payment-button')
+
+    const buttonSelector = await Selector('.kr-payment-button', {
+      timeout: 20000
+    })
+
     await t.click(buttonSelector)
-    const messageSelector = await Selector('[data-test="payment-message"]')
-    await t.expect(messageSelector.innerText).contains('Payment successful!')
+
+    await t
+      .expect(Selector('[data-test="payment-message"]').innerText)
+      .contains(
+        'Payment successful!',
+        'check [data-test="payment-message"] innerText',
+        {
+          timeout: 20000
+        }
+      )
   })
 
   test('Test payment with invalid card fails properly', async t => {
+    await t
+      .expect(Selector('[kr-form-ready]').exists)
+      .ok(`Form loading is slow (more than 60s)`, {
+        timeout: 60000
+      })
+
     await selectTestCard(t, '.visa.refused.card-refused')
-    const buttonSelector = await Selector('.kr-payment-button')
+
+    const buttonSelector = await Selector('.kr-payment-button', {
+      timeout: 20000
+    })
+
     await t.click(buttonSelector)
-    const messageSelector = await Selector(
-      '.kr-form-error.kr-form-error-visible'
-    )
-    await t.expect(messageSelector.exists).ok()
+
+    await t
+      .expect(Selector('.kr-form-error.kr-form-error-visible').exists)
+      .ok('check error is visible', { timeout: 20000 })
   })
 
   async function selectTestCard(t, cardClass) {
-    const hoverSelector = await Selector('#krcardsMenu')
+    const hoverSelector = await Selector('#krcardsMenu', { timeout: 20000 })
     await t.expect(hoverSelector.visible).ok()
     await t.hover(hoverSelector)
-    const clickSelector = await Selector(cardClass)
+    const clickSelector = await Selector(cardClass, { timeout: 20000 })
     await t.click(clickSelector)
   }
 })
