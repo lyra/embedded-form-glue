@@ -12,7 +12,7 @@
         </div>
       </div>
     </div>
-    <div>{{ message }}</div>
+    <div data-test="payment-message">{{ message }}</div>
   </div>
 </template>
 
@@ -32,8 +32,8 @@ export default {
     }
   },
   mounted() {
-    const endpoint = 'CHANGE_ME: JAVASCRIPT ENDPOINT'
-    const publicKey = 'CHANGE_ME: YOUR PUBLIC KEY'
+    const endpoint = '~~CHANGE_ME_ENDPOINT~~'
+    const publicKey = '~~CHANGE_ME_PUBLIC_KEY~~'
     let formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
 
     // Generate the form token

@@ -57,7 +57,7 @@ test.page`http://127.0.0.1:8080/tests/views/addFormInvalid.html`(
       })
     await t
       .expect(Selector('#test-error').innerText)
-      .eql('[CHANGE_ME: JAVASCRIPT ENDPOINT] is not a valid endpoint domain')
+      .eql('[~~CHANGE_ME_ENDPOINT~~] is not a valid endpoint domain')
   }
 )
 
@@ -130,8 +130,8 @@ test.page`http://127.0.0.1:8080/tests/views/addFormMinimal.html`(
 test.page`http://127.0.0.1:8080/tests/views/loadLibrary.html`(
   'KR.loadLibrary + mutliple times',
   async t => {
-    const { error, log } = await t.getBrowserConsoleMessages();
-    await t.expect(error[0]).notOk();
-    await t.expect(log[0]).notOk();
+    const { error, log } = await t.getBrowserConsoleMessages()
+    await t.expect(error[0]).notOk()
+    await t.expect(log[0]).notOk()
   }
 )

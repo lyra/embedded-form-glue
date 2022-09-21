@@ -10,10 +10,17 @@ jobs:
       - checkout
       - browser-tools/install-browser-tools
       - node/install-packages
+      # - run:
+      #     name: 'Start http server'
+      #     background: true
+      #     command: npm run e2e-server
       - run:
-          name: 'Start http server'
+          name: 'Build examples'
+          command: npm run build:examples
+      - run:
+          name: 'start servers'
           background: true
-          command: npm run e2e-server
+          command: npm run e2e-servers
       - run:
           name: 'Run tests'
           command: npm run test-ci

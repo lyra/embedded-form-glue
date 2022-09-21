@@ -1,3 +1,5 @@
 *.pyc
 node_modules
 .history
+examples_build
+.angular
