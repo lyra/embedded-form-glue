@@ -47,7 +47,7 @@
     "gulp-run": "^1.7.0",
     "http-server": "14.1.1",
     "prettier": "2.7.1",
-    "testcafe": "2.0.0",
+    "testcafe": "2.2.0",
     "testcafe-reporter-xunit": "2.2.1",
     "webpack": "5.74.0",
     "webpack-cli": "4.10.0"
