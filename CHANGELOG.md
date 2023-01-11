@@ -1,5 +1,10 @@
 # Change log
 
+# 1.3.1
+
+- [feat] Update d.ts file
+- [doc] Examples improvements
+
 # 1.3.0
 
 - [feat] Multiple loadLibrary method calls securization
