@@ -100,10 +100,6 @@ declare interface KR {
      */
     onSubmit: (callback: (response: KRPaymentResponse) => void | boolean | Promise<boolean>) => Promise<{ KR: KR }>;
     /**
-     * @summary Log event listener
-     */
-    onLog: (callback: (msg: string) => void) => Promise<{ KR: KR }>
-    /**
      * @summary Brand changed event listener
      */
     onBrandChanged: (callback: (data: BrandChangeCallBackProps) => void) => Promise<{ KR: KR }>
@@ -135,10 +131,6 @@ declare interface KR {
      * @summary Force the form validation
      */
     validate: () => void
-    /**
-     * @summary Sets the URL to be called on bin update and activates discounts by bin
-     */
-    setBinUpdateNotificationUrl: (url: string | null) => void
     /**
      * @summary Open the specified payment method
      */
