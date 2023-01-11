@@ -92,17 +92,57 @@ declare interface KR {
      */
     onFormValid: (callback: () => void) => Promise<{ KR: KR }>;
     /**
-     * @summary Form invalid event listener.
-     */
-    onFormInvalid: (callback: () => void) => Promise<{ KR: KR }>;
-    /**
      * @summary Form loaded event listener.
      */
     onLoaded: (callback: () => void) => Promise<{ KR: KR }>;
     /**
      * @summary Form submitted event listener.
      */
-    onSubmit: (callback: (response: KRPaymentResponse) => void) => Promise<{ KR: KR }>;
+    onSubmit: (callback: (response: KRPaymentResponse) => void | boolean | Promise<boolean>) => Promise<{ KR: KR }>;
+    /**
+     * @summary Log event listener
+     */
+    onLog: (callback: (msg: string) => void) => Promise<{ KR: KR }>
+    /**
+     * @summary Brand changed event listener
+     */
+    onBrandChanged: (callback: (data: BrandChangeCallBackProps) => void) => Promise<{ KR: KR }>
+    /**
+     * @summary Transaction created event listener
+     */
+    onTransactionCreated: (callback: (response: KRPaymentResponse)=> void | boolean | Promise<boolean>) => Promise<{ KR: KR }>
+    /**
+     * @summary 3ds secure abortion event listener
+     */
+    on3dSecureAbort: (callback: () => void) => Promise<{ KR: KR }>
+    /**
+     * @summary Popin closed event listener
+     */
+    onPopinClosed: (callback: () => void) => Promise<{ KR: KR }>
+    /**
+     * @summary Installment change event listener
+     */
+    onInstallmentChanged: (callback: (props: InstallmentChangeCallbackProps) => void) => Promise<{ KR: KR }> // TODO installmentInfo
+    /**
+     * @summary Remove event callbacks
+     */
+    removeEventCallbacks: (event: string) => void
+    /**
+     * @summary Sets brand
+     */
+    setBrand: (brand: string | null) => void
+    /**
+     * @summary Force the form validation
+     */
+    validate: () => void
+    /**
+     * @summary Sets the URL to be called on bin update and activates discounts by bin
+     */
+    setBinUpdateNotificationUrl: (url: string | null) => void
+    /**
+     * @summary Open the specified payment method
+     */
+    openPaymentMethod: (paymentMethod: string) => void
     /**
      * @summary Payment button.
      */
@@ -117,7 +157,7 @@ declare interface KRButton {
     /**
      * @summary Payment button click event listener.
      */
-     onClick: (callback: () => boolean) => Promise<{ KR: KR }>;
+     onClick: (callback: () => void | boolean | Promise<boolean>) => Promise<{ KR: KR }>;
      /**
       * @summary Set payment button label.
       * @param label - Template : Your label %amount-and-currency% for button
@@ -436,4 +476,22 @@ declare interface KRPaymentIPNResponse {
 declare enum FormType {
     Cards = "cards",
     All = "all"
+}
+
+declare interface BrandChangeCallBackProps {
+    KR: KR,
+    card: {
+        bin: string,
+        brand: string
+    }
+}
+
+declare interface InstallmentChangeCallbackProps {
+    KR: KR,
+    installmentInfo: {
+        installmentCount: number, 
+        totalAmount: number, 
+        hasInterests: boolean, 
+        brand: string
+    }
 }
