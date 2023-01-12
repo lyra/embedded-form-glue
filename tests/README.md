@@ -28,12 +28,36 @@ sh build.sh
 
 this will create the examples_build folder.
 
-Having the folder created you will need to start the server and the desired frontend framework using any http server. Alternatively you may start the tests the following way from the project root.
+Having the folder created you will need to start the server and the desired frontend framework using any http server. 
+
+Using the following command you will setup all the servers with the different frameworks in different ports (from 9000 ... 9007)
 
 ```bash
-npm run test:new
+npm run e2e-servers
+```
+
+This is used to run the e2e tests on each framework.
+You may start the tests the following way from the project root.
+
+```bash
+npm run test
 ```
 
 This will start every example (and the server) on different ports and start testcafe.
 
 specs file: /tests/e2e/specs/examples-tests.spec.js
+
+# Changes on the development environment
+If some example needs to be modified you can use the following gulp task to use a default key and endpoint to make the form work.
+
+```bash
+gulp devReplaceKeys
+```
+
+After this you may start the server and any of the frameworks in "development mode" and make the changes.
+
+Remember to restore the original strings before commiting any change
+
+```bash
+gulp devReplaceKeys --restore
+```
