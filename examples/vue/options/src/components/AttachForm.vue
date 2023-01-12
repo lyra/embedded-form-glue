@@ -61,7 +61,6 @@ export default {
       ) /* create a payment form */
       .then(({ KR, result }) => {
         KR.showForm(result.formId)
-        this.ready = true
       }) /* show the payment form */
       .catch(
         error => (this.message = error + ' (see console for more details)')
