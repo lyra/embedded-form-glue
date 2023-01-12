@@ -1,0 +1,22 @@
+{
+  "name": "next-minimal",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build && next export",
+    "build:example": "next build && next export && mv out/* ../../examples_build/next/",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@lyracom/embedded-form-glue": "1.3.0",
+    "next": "12.3.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "eslint": "8.23.1",
+    "eslint-config-next": "12.3.0"
+  }
+}

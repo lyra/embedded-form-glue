@@ -8,23 +8,25 @@ mkdir examples_build/svelte
 cd examples
 
 npm ci --prefix server && 
-npm ci --prefix angular/minimal-example && 
-npm ci --prefix emberjs && 
-npm ci --legacy-peer-deps --prefix ionic/minimal-example && 
-npm ci --prefix react/minimal-example && 
-npm ci --prefix react/next-minimal && 
-npm ci --prefix vuejs/minimal-example && 
-npm ci --prefix svelte/minimal-example 
+npm ci --prefix angular && 
+npm ci --prefix ember && 
+npm ci --legacy-peer-deps --prefix ionic && 
+npm ci --prefix next && 
+npm ci --prefix react && 
+npm ci --prefix vue/options && 
+npm ci --prefix vue/composition && 
+npm ci --prefix svelte 
 
 wait
 
-npm run build:example --prefix angular/minimal-example &&
-npm run build:example --prefix emberjs &&
-npm run build:example --prefix ionic/minimal-example &&
-npm run build:example --prefix react/minimal-example &&
-npm run build:example --prefix react/next-minimal &&
-npm run build:example --prefix vuejs/minimal-example &&
-npm run build:example --prefix svelte/minimal-example 
+npm run build:example --prefix angular &&
+npm run build:example --prefix ember &&
+npm run build:example --prefix ionic &&
+npm run build:example --prefix react &&
+npm run build:example --prefix next &&
+npm run build:example --prefix vue/options &&
+npm run build:example --prefix vue/composition &&
+npm run build:example --prefix svelte 
 
 wait
 
