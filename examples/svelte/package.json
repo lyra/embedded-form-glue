@@ -27,7 +27,6 @@
   },
   "dependencies": {
     "sirv-cli": "2.0.2",
-    "@lyracom/embedded-form-glue": "1.3.0",
-    "axios": "0.27.2"
+    "@lyracom/embedded-form-glue": "1.3.1"
   }
 }

@@ -16,74 +16,66 @@
   </div>
 </template>
 
-<script>
+<script setup>
 /* import embedded-form-glue library */
 import KRGlue from '@lyracom/embedded-form-glue'
+import { ref, onMounted } from "vue";
 
-export default {
-  name: 'AttachForm',
-  props: {
-    msg: String
-  },
-  data() {
-    return {
-      message: ''
-    }
-  },
-  mounted() {
-    const endpoint = '~~CHANGE_ME_ENDPOINT~~'
-    const publicKey = '~~CHANGE_ME_PUBLIC_KEY~~'
-    let formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
+const props = defineProps({ msg: String });
 
-    // Generate the form token
-    
-    fetch('http://localhost:3000/createPayment', {
-      method: "POST",
-      body: {
-        paymentConf: { amount: 10000, currency: 'USD' }
-      }
+let message = ref("")
+
+onMounted(()=>{
+  const endpoint = 'https://api.lyra.com'
+  const publicKey = '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5'
+  let formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
+
+  // Generate the form token
+  fetch('http://localhost:3000/createPayment', {
+    method: "POST",
+    headers: { 'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      paymentConf: { amount: 10000, currency: 'USD' }
     })
-    .then(res => res.json())
-    .then(resp => {
-      formToken = resp.data
-      return KRGlue.loadLibrary(
-        endpoint,
-        publicKey
-      ) /* Load the remote library */
+  })
+  .then(res => res.text())
+  .then(resp => {
+    formToken = resp
+    return KRGlue.loadLibrary(
+      endpoint,
+      publicKey
+    ) /* Load the remote library */
+  })
+  .then(({ KR }) =>
+    KR.setFormConfig({
+      /* set the minimal configuration */
+      formToken: formToken,
+      'kr-language': 'en-US' /* to update initialization parameter */
     })
-    .then(({ KR }) =>
-      KR.setFormConfig({
-        /* set the minimal configuration */
-        formToken: formToken,
-        'kr-language': 'en-US' /* to update initialization parameter */
-      })
-    )
-    .then(({ KR }) => KR.onSubmit(this.validatePayment)) // Custom payment callback
-    .then(({ KR }) =>
-      KR.attachForm('#myPaymentForm')
-    ) /* create a payment form */
-    .then(({ KR, result }) => {
-      KR.showForm(result.formId)
-      this.ready = true
-    }) /* show the payment form */
-    .catch(
-      error => (this.message = error + ' (see console for more details)')
-    )
-  },
-  methods: {
-    /* Validate the payment data */
-    validatePayment(paymentData) {
-      fetch('http://localhost:3000/validatePayment', {
-        method: "POST",
-        body: paymentData
-      })
-      .then(res => res.json)
-      .then(response => {
-        if (response.status === 200) this.message = 'Payment successful!'
-      })
-      return false // Return false to prevent the redirection
-    }
-  }
+  )
+  .then(({ KR }) => KR.onSubmit(validatePayment)) // Custom payment callback
+  .then(({ KR }) =>
+    KR.attachForm('#myPaymentForm')
+  ) /* create a payment form */
+  .then(({ KR, result }) =>
+    KR.showForm(result.formId)
+  ) /* show the payment form */
+  .catch(
+    error => (message.value = error + ' (see console for more details)')
+  )
+})
+
+/* Validate the payment data */
+function validatePayment(paymentData) {
+  fetch('http://localhost:3000/validatePayment', {
+    method: "POST",
+    headers: { 'Content-Type': 'application/json'},
+    body: JSON.stringify(paymentData)
+  })
+  .then(res => {
+    if (res.status === 200) message.value = 'Payment successful!'
+  })
+  return false // Return false to prevent the redirection
 }
 </script>
 

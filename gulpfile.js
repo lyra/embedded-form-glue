@@ -15,7 +15,7 @@ function replaceKeys() {
   let stream = src([
     './examples_build/**/*.html',
     './examples_build/**/*.js',
-    '!./examples_build/**/node_modules/**/*js'
+    '!./examples_build/**/node_modules/**/*.js'
   ])
   Object.entries(keyMap).forEach(([key, value]) => {
     stream = stream.pipe(replace(key, value))
@@ -23,4 +23,23 @@ function replaceKeys() {
   return stream.pipe(dest('./examples_build/'))
 }
 
+function devReplaceKeys(){
+  let reverse
+  if(~process.argv.indexOf("--restore")) {
+    reverse = true
+  }
+  let stream = src([
+    './examples/**/*.html',
+    './examples/**/*.js',
+    './examples/**/*.ts',
+    './examples/**/*.vue',
+    '!./examples/**/node_modules/**/*.js'
+  ])
+  Object.entries(keyMap).forEach(([key, value]) => {
+    stream = stream.pipe(reverse ? replace(value, key) : replace(key, value))
+  })
+  return stream.pipe(dest('./examples_build/'))
+}
+
 exports.replaceKeys = replaceKeys
+exports.devReplaceKeys = devReplaceKeys

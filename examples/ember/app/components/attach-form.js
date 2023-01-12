@@ -1,5 +1,4 @@
 import KRGlue from '@lyracom/embedded-form-glue';
-import axios from 'axios';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 
@@ -13,40 +12,46 @@ export default class AttachFormComponent extends Component {
     let formToken = 'DEMO-TOKEN-TO-BE-REPLACED';
 
     // Generate the form token
-    axios
-      .post('http://localhost:3000/createPayment', {
-        paymentConf: { amount: 10000, currency: 'USD' },
+    fetch('http://localhost:3000/createPayment', {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        paymentConf: { amount: 10000, currency: 'USD' }
       })
-      .then((resp) => {
-        formToken = resp.data;
-        return KRGlue.loadLibrary(endpoint, publicKey);
+    })
+    .then(res => res.text())
+    .then((resp) => {
+      formToken = resp;
+      return KRGlue.loadLibrary(endpoint, publicKey);
+    })
+    .then(({ KR }) =>
+      KR.setFormConfig({
+        /* set the minimal configuration */
+        formToken: formToken,
+        'kr-language': 'en-US' /* to update initialization parameter */,
       })
-      .then(({ KR }) =>
-        KR.setFormConfig({
-          /* set the minimal configuration */
-          formToken: formToken,
-          'kr-language': 'en-US' /* to update initialization parameter */,
+    )
+    .then(({ KR }) =>
+      KR.onSubmit((paymentData) => {
+        fetch('http://localhost:3000/validatePayment', {
+          method: "POST",
+          headers: { 'Content-Type': 'application/json'},
+          body: JSON.stringify(paymentData)
         })
-      )
-      .then(({ KR }) =>
-        KR.onSubmit((paymentData) => {
-          axios
-            .post('http://localhost:3000/validatePayment', paymentData)
-            .then((response) => {
-              if (response.status === 200) this.message = 'Payment successful!';
-            });
-          return false; // Return false to prevent the redirection
-        })
-      ) // Custom payment callback
-      .then(({ KR }) =>
-        KR.attachForm('#myPaymentForm')
-      ) /* create a payment form */
-      .then(({ KR, result }) => {
-        KR.showForm(result.formId);
-        this.ready = true;
-      }) /* show the payment form */
-      .catch((error) => {
-        this.message = error + ' (see console for more details)';
-      });
+        .then((response) => {
+          if (response.status === 200) this.message = 'Payment successful!';
+        });
+        return false; // Return false to prevent the redirection
+      })
+    ) // Custom payment callback
+    .then(({ KR }) =>
+      KR.attachForm('#myPaymentForm')
+    ) /* create a payment form */
+    .then(({ KR, result }) => {
+      KR.showForm(result.formId);
+    }) /* show the payment form */
+    .catch((error) => {
+      this.message = error + ' (see console for more details)';
+    });
   }
 }
