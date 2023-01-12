@@ -7,7 +7,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build:example": "ng build --output-path ../../../examples_build/ionic",
+    "build:example": "ng build --output-path ../../examples_build/ionic",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

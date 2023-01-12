@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build && next export",
-    "build:example": "next build && next export && mv out/* ../../../examples_build/next/",
+    "build:example": "next build && next export && mv out/* ../../examples_build/next/",
     "start": "next start",
     "lint": "next lint"
   },

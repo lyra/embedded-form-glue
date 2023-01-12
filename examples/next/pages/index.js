@@ -11,50 +11,49 @@ export default function Home() {
   let formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
 
   fetch('http://localhost:3000/createPayment', {
-    method: "POST",
-    headers: { 'Content-Type': 'application/json'},
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       paymentConf: { amount: 10000, currency: 'USD' }
     })
   })
-  .then(res => res.text())
-  .then(resp => {
-    formToken = resp
+    .then(res => res.text())
+    .then(resp => {
+      formToken = resp
 
-    return KRGlue.loadLibrary(
-      endpoint,
-      publicKey
-    ) /* Load the remote library */
-  })
-  .then(({ KR }) =>
-    KR.setFormConfig({
-      /* set the minimal configuration */
-      formToken: formToken,
-      'kr-language': 'en-US' /* to update initialization parameter */
+      return KRGlue.loadLibrary(
+        endpoint,
+        publicKey
+      ) /* Load the remote library */
     })
-  )
-  .then(({ KR }) =>
-    KR.onSubmit(paymentData => {
-      fetch('http://localhost:3000/validatePayment', {
-        method: "POST",
-        headers: { 'Content-Type': 'application/json'},
-        body: JSON.stringify(paymentData)
+    .then(({ KR }) =>
+      KR.setFormConfig({
+        /* set the minimal configuration */
+        formToken: formToken,
+        'kr-language': 'en-US' /* to update initialization parameter */
       })
-      .then(response => {
-        if (response.status === 200) setMessage('Payment successful!')
+    )
+    .then(({ KR }) =>
+      KR.onSubmit(paymentData => {
+        fetch('http://localhost:3000/validatePayment', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(paymentData)
+        }).then(response => {
+          if (response.status === 200) setMessage('Payment successful!')
+        })
+        return false // Return false to prevent the redirection
       })
-      return false // Return false to prevent the redirection
+    )
+    .then(({ KR }) =>
+      KR.addForm('#myPaymentForm')
+    ) /* add a payment form  to myPaymentForm div*/
+    .then(({ KR, result }) =>
+      KR.showForm(result.formId)
+    ) /* show the payment form */
+    .catch(error => {
+      setMessage(error + ' (see console for more details)')
     })
-  )
-  .then(({ KR }) =>
-    KR.addForm('#myPaymentForm')
-  ) /* add a payment form  to myPaymentForm div*/
-  .then(({ KR, result }) =>
-    KR.showForm(result.formId)
-  ) /* show the payment form */
-  .catch(error => {
-    setMessage(error + ' (see console for more details)')
-  })
 
   return (
     <div>

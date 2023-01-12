@@ -12,7 +12,7 @@
   },
   "scripts": {
     "build": "ember build --environment=production",
-    "build:example": "ember build --environment=production --output-path=../../examples_build/emberjs",
+    "build:example": "ember build --environment=production --output-path=../../examples_build/ember",
     "lint": "npm-run-all --aggregate-output --continue-on-error --parallel \"lint:!(fix)\"",
     "lint:fix": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*:fix",
     "lint:hbs": "ember-template-lint .",

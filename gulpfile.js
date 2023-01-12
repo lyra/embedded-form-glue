@@ -2,10 +2,10 @@ const replace = require('gulp-replace')
 const { src, dest } = require('gulp')
 
 const keyMap = {
+  '~~CHANGE_ME_PUBLIC_KEY~~':
+  '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5',
   '~~CHANGE_ME_USER~~': '69876357',
   '~~CHANGE_ME_PASSWORD~~': 'testpassword_DEMOPRIVATEKEY23G4475zXZQ2UA5x7M',
-  '~~CHANGE_ME_PUBLIC_KEY~~':
-    '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5',
   '~~CHANGE_ME_ENDPOINT~~': 'https://api.lyra.com',
   '~~CHANGE_ME_HMAC_SHA256_KEY~~': '38453613e7f44dc58732bad3dca2bca3',
   '~~CHANGE_ME_ENDPOINT_NO_HTTPS~~': 'api.lyra.com'
@@ -33,12 +33,13 @@ function devReplaceKeys(){
     './examples/**/*.js',
     './examples/**/*.ts',
     './examples/**/*.vue',
-    '!./examples/**/node_modules/**/*.js'
-  ])
+    './examples/**/*.svelte',
+    '!./examples/**/node_modules/**',
+  ], {base: './'})
   Object.entries(keyMap).forEach(([key, value]) => {
     stream = stream.pipe(reverse ? replace(value, key) : replace(key, value))
   })
-  return stream.pipe(dest('./examples_build/'))
+  return stream.pipe(dest('./'))
 }
 
 exports.replaceKeys = replaceKeys

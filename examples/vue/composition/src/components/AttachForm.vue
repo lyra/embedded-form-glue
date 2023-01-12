@@ -26,8 +26,8 @@ const props = defineProps({ msg: String });
 let message = ref("")
 
 onMounted(()=>{
-  const endpoint = 'https://api.lyra.com'
-  const publicKey = '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5'
+  const endpoint = '~~CHANGE_ME_ENDPOINT~~'
+  const publicKey = '~~CHANGE_ME_PUBLIC_KEY~~'
   let formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
 
   // Generate the form token

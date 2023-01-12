@@ -2,12 +2,13 @@ import { Selector } from 'testcafe'
 
 const examples = [
   { name: 'angular', port: '9000' },
-  { name: 'emberjs', port: '9001' },
+  { name: 'ember', port: '9001' },
   { name: 'ionic', port: '9002' },
   { name: 'react', port: '9003' },
   { name: 'next', port: '9004' },
   { name: 'svelte', port: '9005' },
-  { name: 'vue', port: '9006' }
+  { name: 'vue-options', port: '9006' },
+  { name: 'vue-composition', port: '9007' }
 ]
 
 examples.forEach(example => {
