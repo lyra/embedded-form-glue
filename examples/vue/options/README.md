@@ -28,11 +28,13 @@ vue create minimal-example
 Add the dependency with yarn:
 
 ```bash
-cd reate minimal-example
 # with npm
 npm install --save @lyracom/embedded-form-glue
+npm install --save axios
 # or yarn
 yarn add @lyracom/embedded-form-glue
+yarn add axios
+
 ```
 
 Run and test it:
@@ -51,17 +53,17 @@ First you have to add 2 theme files:
 
 | File              | Description                                                                   |
 | ----------------- | ----------------------------------------------------------------------------- |
-| classic-reset.css | default style applied before the [Lyra Javascript Library][js link] is loaded |
-| classic.js        | theme logic, like waiting annimation on submit button, ...                    |
+| neon-reset.css    | default style applied before the [Lyra Javascript Library][js link] is loaded |
+| neon.js           | theme logic, like waiting annimation on submit button, ...                    |
 
 Add them in public/index.html in the the HEAD section:
 
 ```javascript
 <!-- theme and plugins. should be loaded in the HEAD section -->
 <link rel="stylesheet"
-href="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/classic-reset.css">
+href="https://~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon-reset.css">
 <script
-    src="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/classic.js">
+    src="https://~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon.js">
 </script>
 ```
 
@@ -119,7 +121,7 @@ export default {
     (...),
     mounted() {
       /* Use your endpoint and personal public key */
-      const endpoint = '~~CHANGE_ME_ENDPOINT~~'
+      const endpoint = '~~CHANGE_ME_ENDPOINT_WITH_HTTPS~~'
       const publicKey = '~~CHANGE_ME_PUBLIC_KEY~~'
       const formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
 
@@ -128,7 +130,7 @@ export default {
               formToken: formToken,
               'kr-language': 'en-US',                       /* to update initialization parameter */
             }))
-            .then(({KR}) => KR.addForm('#myPaymentForm')) /* create a payment form */
+            .then(({KR}) => KR.attachForm('#myPaymentForm')) /* create a payment form */
             .then(({KR, result}) => KR.showForm(result.formId));  /* show the payment form */
     }
     (...)
@@ -189,11 +191,11 @@ export default {
   (...),
     mounted() {
       /* Use your endpoint and personal public key */
-      const endpoint = '~~CHANGE_ME_ENDPOINT~~'
+      const endpoint = '~~CHANGE_ME_ENDPOINT_WITH_HTTPS~~'
       const publicKey = '~~CHANGE_ME_PUBLIC_KEY~~'
       const formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
 
-      KRGlue.loadLibrary(endpoint, publicKey) /* Load the remote library */
+      KRGlue.loadLibrary(`https://${endpoint}`, publicKey) /* Load the remote library */
         .then(({KR}) => KR.setFormConfig({ /* set the minimal configuration */
           formToken: formToken,
           'kr-language': 'en-US',                       
@@ -206,7 +208,7 @@ export default {
             })
           return false
         }))
-        .then(({KR}) => KR.addForm('#myPaymentForm')) /* create a payment form */
+        .then(({KR}) => KR.attachForm('#myPaymentForm')) /* create a payment form */
         .then(({KR, result}) => KR.showForm(result.formId));  /* show the payment form */
     }
     (...)
@@ -218,7 +220,7 @@ export default {
 You can try the current example from the current github repository doing:
 
 ```sh
-cd examples/vuejs/minimal-example
+cd examples/vue/options
 npm i
 npm run serve
 ```

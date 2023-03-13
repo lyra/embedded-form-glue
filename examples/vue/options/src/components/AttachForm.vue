@@ -1,15 +1,8 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
     <div class="container">
       <div id="myPaymentForm">
-        <div class="kr-embedded">
-          <div class="kr-pan"></div>
-          <div class="kr-expiry"></div>
-          <div class="kr-security-code"></div>
-          <div class="kr-form-error"></div>
-          <button class="kr-payment-button"></button>
-        </div>
+        <div class="kr-smart-form" kr-card-form-expanded></div>
       </div>
     </div>
     <div data-test="payment-message">{{ message }}</div>
@@ -23,23 +16,20 @@ import axios from 'axios'
 
 export default {
   name: 'AttachForm',
-  props: {
-    msg: String
-  },
   data() {
     return {
       message: ''
     }
   },
   mounted() {
-    const endpoint = '~~CHANGE_ME_ENDPOINT~~'
-    const publicKey = '~~CHANGE_ME_PUBLIC_KEY~~'
-    let formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
+    const endpoint = '~~CHANGE_ME_ENDPOINT~~' // format: static.my.psp.domain
+    const publicKey = '~~CHANGE_ME_PUBLIC_KEY~~' // format: 999999999:testpublickey_XXXXXXXXXX
+    let formToken = null;
 
     // Generate the form token
     axios
       .post('http://localhost:3000/createPayment', {
-        paymentConf: { amount: 10000, currency: 'USD' }
+        paymentConf: { amount: 10000, currency: 'EUR' }
       })
       .then(resp => {
         formToken = resp.data
