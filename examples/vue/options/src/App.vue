@@ -1,17 +1,17 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
-    <AddForm msg="Welcome to Your Vue.js App" />
+    <AttachForm />
   </div>
 </template>
 
 <script>
-import AddForm from './components/AddForm.vue'
+import AttachForm from './components/AttachForm.vue'
 
 export default {
   name: 'app',
   components: {
-    AddForm
+    AttachForm
   }
 }
 </script>
