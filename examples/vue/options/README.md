@@ -89,7 +89,9 @@ Update the src/components/HelloWorld.vue template to:
   <div class="hello">
     <h1>{{ msg }}</h1>
     <div class="container">
-      <div id="myPaymentForm"></div>
+      <div id="myPaymentForm">
+        <div class="kr-smart-form" kr-card-form-expanded></div>
+      </div>
     </div>
   </div>
 </template>
