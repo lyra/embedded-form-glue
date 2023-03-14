@@ -2,6 +2,7 @@
   <div class="hello">
     <div class="container">
       <div id="myPaymentForm">
+        <!-- if you want only cards, replace kr-smart-form by kr-embedded -->
         <div class="kr-smart-form" kr-card-form-expanded></div>
       </div>
     </div>

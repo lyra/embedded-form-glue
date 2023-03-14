@@ -90,6 +90,7 @@ Update the src/components/HelloWorld.vue template to:
     <h1>{{ msg }}</h1>
     <div class="container">
       <div id="myPaymentForm">
+        <!-- if you want only cards, replace kr-smart-form by kr-embedded -->
         <div class="kr-smart-form" kr-card-form-expanded></div>
       </div>
     </div>
