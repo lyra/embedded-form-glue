@@ -7,21 +7,20 @@
     "build": "vue-cli-service build",
     "build:example": "vue-cli-service build --dest ../../../examples_build/vue-composition",
     "lint": "vue-cli-service lint"
-
   },
   "dependencies": {
     "@lyracom/embedded-form-glue": "1.3.1",
-    "core-js": "3.27.1",
-    "vue": "3.2.45"
+    "core-js": "3.29.1",
+    "vue": "3.2.47"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.16",
-    "@babel/eslint-parser": "^7.12.16",
-    "@vue/cli-plugin-babel": "~5.0.0",
-    "@vue/cli-plugin-eslint": "~5.0.0",
-    "@vue/cli-service": "~5.0.0",
-    "eslint": "^7.32.0",
-    "eslint-plugin-vue": "^8.0.3"
+    "@babel/core": "^7.21.3",
+    "@babel/eslint-parser": "^7.21.3",
+    "@vue/cli-plugin-babel": "~5.0.8",
+    "@vue/cli-plugin-eslint": "~5.0.8",
+    "@vue/cli-service": "~5.0.8",
+    "eslint": "^8.36.0",
+    "eslint-plugin-vue": "^9.9.0"
   },
   "eslintConfig": {
     "root": true,

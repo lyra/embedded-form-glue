@@ -12,7 +12,6 @@
 <script>
 /* import embedded-form-glue library */
 import KRGlue from '@lyracom/embedded-form-glue'
-import axios from 'axios'
 
 export default {
   name: 'AttachForm',
@@ -21,49 +20,49 @@ export default {
       message: ''
     }
   },
-  mounted() {
+  async mounted() {
     const endpoint = '~~CHANGE_ME_ENDPOINT~~' // format: static.my.psp.domain
     const publicKey = '~~CHANGE_ME_PUBLIC_KEY~~' // format: 999999999:testpublickey_XXXXXXXXXX
-    let formToken = null;
 
     // Generate the form token
-    axios
-      .post('http://localhost:3000/createPayment', {
-        paymentConf: { amount: 10000, currency: 'EUR' }
-      })
-      .then(resp => {
-        formToken = resp.data
-        return KRGlue.loadLibrary(
-          endpoint,
-          publicKey
-        ) /* Load the remote library */
-      })
-      .then(({ KR }) =>
-        KR.setFormConfig({
-          /* set the minimal configuration */
-          formToken: formToken,
-          'kr-language': 'en-US' /* to update initialization parameter */
+    try {
+      const res = await fetch('http://localhost:3000/createPayment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          paymentConf: { amount: 10000, currency: 'USD' }
         })
-      )
-      .then(({ KR }) => KR.onSubmit(this.validatePayment)) // Custom payment callback
-      .then(({ KR }) =>
-        KR.attachForm('#myPaymentForm')
-      ) /* create a payment form */
-      .then(({ KR, result }) => {
-        KR.showForm(result.formId)
-      }) /* show the payment form */
-      .catch(
-        error => (this.message = error + ' (see console for more details)')
-      )
+      })
+      const formToken = await res.text()
+      const { KR } = await KRGlue.loadLibrary(
+        endpoint,
+        publicKey
+      ) /* Load the remote library */
+      await KR.setFormConfig({
+        /* set the minimal configuration */
+        formToken: formToken,
+        'kr-language': 'en-US' /* to update initialization parameter */
+      })
+
+      await KR.onSubmit(this.validatePayment) // Custom payment callback
+
+      const { result } =
+        KR.attachForm('#myPaymentForm') /* create a payment form */
+
+      await KR.showForm(result.formId)
+    } catch (error) {
+      error => (this.message = error + ' (see console for more details)')
+    }
   },
   methods: {
     /* Validate the payment data */
-    validatePayment(paymentData) {
-      axios
-        .post('http://localhost:3000/validatePayment', paymentData)
-        .then(response => {
-          if (response.status === 200) this.message = 'Payment successful!'
-        })
+    async validatePayment(paymentData) {
+      const res = await fetch('http://localhost:3000/createPayment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ paymentData })
+      })
+      if (res.status === 200) this.message = 'Payment successful!'
       return false // Return false to prevent the redirection
     }
   }

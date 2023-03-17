@@ -32,8 +32,8 @@ test.page`http://127.0.0.1:8080/tests/views/attachFormMinimal.html`(
   }
 )
 
-test.page`http://127.0.0.1:8080/tests/views/addFormReload.html`(
-  'KR.addForm reload',
+test.page`http://127.0.0.1:8080/tests/views/attachFormReload.html`(
+  'KR.attachForm reload',
   async t => {
     await t
       .expect(Selector('[kr-form-ready]').exists)
@@ -47,8 +47,8 @@ test.page`http://127.0.0.1:8080/tests/views/addFormReload.html`(
   }
 )
 
-test.page`http://127.0.0.1:8080/tests/views/addFormInvalid.html`(
-  'KR.addForm invalid data',
+test.page`http://127.0.0.1:8080/tests/views/attachFormInvalid.html`(
+  'KR.attachForm invalid data',
   async t => {
     await t
       .expect(Selector('#test-error').exists)
@@ -61,8 +61,8 @@ test.page`http://127.0.0.1:8080/tests/views/addFormInvalid.html`(
   }
 )
 
-test.page`http://127.0.0.1:8080/tests/views/addFormInvalidPublicKey.html`(
-  'KR.addForm invalid public key',
+test.page`http://127.0.0.1:8080/tests/views/attachFormInvalidPublicKey.html`(
+  'KR.attachForm invalid public key',
   async t => {
     await t
       .expect(Selector('#test-error').exists)
@@ -77,8 +77,8 @@ test.page`http://127.0.0.1:8080/tests/views/addFormInvalidPublicKey.html`(
   }
 )
 
-test.page`http://127.0.0.1:8080/tests/views/addFormDomainWithoutProtocol.html`(
-  'KR.addForm + domain without protocol',
+test.page`http://127.0.0.1:8080/tests/views/attachFormDomainWithoutProtocol.html`(
+  'KR.attachForm + domain without protocol',
   async t => {
     await t
       .expect(Selector('#test-error').exists)
@@ -91,8 +91,8 @@ test.page`http://127.0.0.1:8080/tests/views/addFormDomainWithoutProtocol.html`(
   }
 )
 
-test.page`http://127.0.0.1:8080/tests/views/addFormMinimal.html`(
-  'KR.addForm minimal + publicKey update',
+test.page`http://127.0.0.1:8080/tests/views/attachFormMinimal.html`(
+  'KR.attachForm minimal + publicKey update',
   async t => {
     await t
       .expect(Selector('[kr-form-ready]').exists)

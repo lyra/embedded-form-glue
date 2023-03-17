@@ -5,60 +5,61 @@
 
   let message: string = ''
 
-  onMount(() => {
+  onMount(async () => {
     const endpoint = '~~CHANGE_ME_ENDPOINT~~'
     const publicKey = '~~CHANGE_ME_PUBLIC_KEY~~'
     let formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
 
-    fetch('http://localhost:3000/createPayment', {
-      method: "POST",
-      headers: { 'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        paymentConf: { amount: 10000, currency: 'USD' }
+    try {
+      const res = await fetch('http://localhost:3000/createPayment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          paymentConf: { amount: 10000, currency: 'USD' }
+        })
       })
-    })
-    .then(res => res.text())
-    .then(resp => {
-      formToken = resp
-      return KRGlue.loadLibrary(
+      formToken = await res.text()
+      const { KR } = await KRGlue.loadLibrary(
         endpoint,
         publicKey
       ) /* Load the remote library */
-    })
-    .then(({ KR }) =>
-      KR.setFormConfig({
+
+      await KR.setFormConfig({
         /* set the minimal configuration */
         formToken: formToken,
         'kr-language': 'en-US' /* to update initialization parameter */
       })
-    )
-    .then(({ KR }) => KR.onSubmit(validatePayment)) // Custom payment callback
-    .then(({ KR }) =>
-      KR.addForm('#myPaymentForm')
-    ) /* create a payment form */
-    .then(({ KR, result }) =>
-      KR.showForm(result.formId)
-    ) /* show the payment form */
-    .catch(error => (message = error + ' (see console for more details)'))
+
+      await KR.onSubmit(validatePayment) // Custom payment callback
+
+      const { result } = await KR.attachForm(
+        '#myPaymentForm'
+      ) /* create a payment form */
+
+      await KR.showForm(result.formId) /* show the payment form */
+    } catch (error) {
+      message = error + ' (see console for more details)'
+    }
   })
 
   /* Validate the payment data */
-  const validatePayment = paymentData => {
-    fetch('http://localhost:3000/validatePayment', {
-      method: "POST",
-      headers: { 'Content-Type': 'application/json'},
+  const validatePayment = async paymentData => {
+    const response = await fetch('http://localhost:3000/validatePayment', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(paymentData)
     })
-    .then(response => {
-      if (response.status === 200) message = 'Payment successful!'
-    })
+    if (response.status === 200) message = 'Payment successful!'
+    return false // Return false to prevent the redirection
   }
 </script>
 
 <main>
   <div class="container">
-    <h1>Svelte minimal example</h1>
-    <div class="form-container" id="myPaymentForm" />
+    <h1>Svelte + KR.attachForm</h1>
+    <div class="form-container" id="myPaymentForm">
+      <div class="kr-smart-form" kr-card-form-expanded />
+    </div>
     <div class="message" data-test="payment-message">{message}</div>
   </div>
 </main>

@@ -96,7 +96,7 @@ If you try to pay, you will have the following error: **CLIENT_998: Demo form, s
 It's because the **formToken** you have defined using **KR.setFormConfig** is set to **DEMO-TOKEN-TO-BE-REPLACED**.
 
 you have to create a **formToken** before displaying the payment form using Charge/CreatePayment web-service.
-For more information, please take a look to:
+For more information, please see:
 
 * [Embedded form quick start][JS quick start]
 * [embedded form integration guide][JS integration guide]

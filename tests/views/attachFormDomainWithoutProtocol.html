@@ -24,14 +24,14 @@
         const publicKey =
           '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5'
 
-        KRGlue.loadLibrary('https://api.lyra.com', publicKey)
+        KRGlue.loadLibrary('api.lyra.com', publicKey)
           .then(({ KR }) =>
             KR.setFormConfig({
               formToken: 'DEMO-TOKEN-TO-BE-REPLACED',
               language: 'en-EN'
             })
           )
-          .then(({ KR }) => KR.addForm('#myPaymentForm'))
+          .then(({ KR }) => KR.attachForm('#myPaymentForm'))
           .then(({ KR, result }) => KR.showForm(result.formId))
           .then(() => {
             KR.onFormReady(() => {
@@ -39,6 +39,12 @@
               el.id = 'test-ready'
               document.body.appendChild(el)
             })
+          })
+          .catch(err => {
+            let el = document.createElement('div')
+            el.id = 'test-error'
+            el.innerHTML = err
+            document.body.appendChild(el)
           })
       })
     </script>

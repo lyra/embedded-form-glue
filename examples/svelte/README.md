@@ -1,107 +1,151 @@
-# This repo is no longer maintained. Consider using `npm init vite` and selecting the `svelte` option or — if you want a full-fledged app framework and don't mind using pre-1.0 software — use [SvelteKit](https://kit.svelte.dev), the official application framework for Svelte.
+# Payment form + Svelte
 
----
+This page explains how to create a dynamic payment form from scratch using
+svelte and the embedded-form-glue library.
 
-# svelte app
+## Requirements
 
-This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.
+You need to install [node.js LTS version](https://nodejs.org/en/).
 
-To create a new project based on this template using [degit](https://github.com/Rich-Harris/degit):
+## Create the project
+
+Start a new svelte project with:
 
 ```bash
-npx degit sveltejs/template svelte-app
-cd svelte-app
+npm create svelte@latest project-name
 ```
 
-*Note that you will need to have [Node.js](https://nodejs.org) installed.*
-
-
-## Get started
-
-Install the dependencies...
+More information on [svelte getting started](https://svelte.dev/docs#getting-started).
 
 ```bash
-cd svelte-app
+cd project-name
 npm install
-```
-
-...then start [Rollup](https://rollupjs.org):
-
-```bash
+# Add the dependency to the project
+npm install --save @lyracom/embedded-form-glue
+# Run the project
 npm run dev
 ```
 
-Navigate to [localhost:8080](http://localhost:8080). You should see your app running. Edit a component file in `src`, save it, and reload the page to see your changes.
+## Add the payment form
 
-By default, the server will only respond to requests from localhost. To allow connections from other computers, edit the `sirv` commands in package.json to include the option `--host 0.0.0.0`.
+First you have to add 2 theme files:
 
-If you're using [Visual Studio Code](https://code.visualstudio.com/) we recommend installing the official extension [Svelte for VS Code](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode). If you are using other editors you may need to install a plugin in order to get syntax highlighting and intellisense.
+| File              | Description                                                                   |
+| ----------------- | ----------------------------------------------------------------------------- |
+| neon-reset.css    | default style applied before the [Lyra Javascript Library][js link] is loaded |
+| neon.js           | theme logic, like waiting annimation on submit button, ...                    |
 
-## Building and running in production mode
+Add them in public/index.html in the the HEAD section:
 
-To create an optimised version of the app:
+```javascript
+<!-- theme and plugins. should be loaded in the HEAD section -->
+<link rel="stylesheet"
+href="https://~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon-reset.css">
+<script
+    src="https://~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon.js">
+</script>
+```
+
+> **NOTE:** Replace **[CHANGE_ME]** with your credentials and endpoints.
+
+For more information about theming, take a look to [Lyra theming documentation][js themes]
+
+Update the src/App.svelte template to:
+
+```html
+<script lang="ts">
+  /* import embedded-form-glue library */
+  import KRGlue from '@lyracom/embedded-form-glue'
+  import { onMount } from 'svelte'
+
+  let message: string = ''
+
+  onMount(async () => {
+    const endpoint = '~~CHANGE_ME_ENDPOINT~~'
+    const publicKey = '~~CHANGE_ME_PUBLIC_KEY~~'
+    let formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
+
+    try {
+      const res = await fetch('http://localhost:3000/createPayment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          paymentConf: { amount: 10000, currency: 'USD' }
+        })
+      })
+      formToken = await res.text()
+      const { KR } = await KRGlue.loadLibrary(
+        endpoint,
+        publicKey
+      ) /* Load the remote library */
+
+      await KR.setFormConfig({ /* set the minimal configuration */
+        formToken: formToken,
+        'kr-language': 'en-US' /* to update initialization parameter */
+      })
+
+      const { result } = await KR.attachForm('#myPaymentForm') /* create a payment form */
+
+      await KR.showForm(result.formId) /* show the payment form */
+    } catch (error) {
+      message = error + ' (see console for more details)'
+    }
+  })
+</script>
+
+<main>
+  <div class="container">
+    <h1>Svelte + KR.attachForm</h1>
+    <div class="form-container" id="myPaymentForm">
+      <div class="kr-smart-form" kr-card-form-expanded />
+    </div>
+    <div class="message" data-test="payment-message">{message}</div>
+  </div>
+</main>
+```
+
+## Your first transaction
+
+The payment form is up and ready, you can try to make a transaction using
+a test card with the debug toolbar (at the bottom of the page).
+
+If you try to pay, you will have the following error: **CLIENT_998: Demo form, see the documentation**.
+It's because the **formToken** you have defined using **KR.setFormConfig** is set to **DEMO-TOKEN-TO-BE-REPLACED**.
+
+you have to create a **formToken** before displaying the payment form using Charge/CreatePayment web-service.
+For more information, please see:
+
+- [Embedded form quick start][js quick start]
+- [embedded form integration guide][js integration guide]
+- [Payment REST API reference][rest api]
+
+
+## Payment hash verification
+
+To learn how to verify the payment hash, please see the [payment hash verification information](../server/README.md).
+
+## Run this example
+
+You can try the current example from the current repository by cloning the repository and executing the following commands:
 
 ```bash
-npm run build
+cd examples/svelte
+npm i
+npm run dev
 ```
 
-You can run the newly built app with `npm run start`. This uses [sirv](https://github.com/lukeed/sirv), which is included in your package.json's `dependencies` so that the app will work when you deploy to platforms like [Heroku](https://heroku.com).
-
-
-## Single-page app mode
-
-By default, sirv will only respond to requests that match files in `public`. This is to maximise compatibility with static fileservers, allowing you to deploy your app anywhere.
-
-If you're building a single-page app (SPA) with multiple routes, sirv needs to be able to respond to requests for *any* path. You can make it so by editing the `"start"` command in package.json:
-
-```js
-"start": "sirv public --single"
-```
-
-## Using TypeScript
-
-This template comes with a script to set up a TypeScript development environment, you can run it immediately after cloning the template with:
+To run the example Node.js server, execute the following commands:
 
 ```bash
-node scripts/setupTypeScript.js
+cd examples/server
+npm i
+npm run start
 ```
 
-Or remove the script via:
+> Remember to replace the **[CHANGE_ME]** values with your credentials and endpoints before executing the project.
 
-```bash
-rm scripts/setupTypeScript.js
-```
-
-If you want to use `baseUrl` or `path` aliases within your `tsconfig`, you need to set up `@rollup/plugin-alias` to tell Rollup to resolve the aliases. For more info, see [this StackOverflow question](https://stackoverflow.com/questions/63427935/setup-tsconfig-path-in-svelte).
-
-## Deploying to the web
-
-### With [Vercel](https://vercel.com)
-
-Install `vercel` if you haven't already:
-
-```bash
-npm install -g vercel
-```
-
-Then, from within your project folder:
-
-```bash
-cd public
-vercel deploy --name my-project
-```
-
-### With [surge](https://surge.sh/)
-
-Install `surge` if you haven't already:
-
-```bash
-npm install -g surge
-```
-
-Then, from within your project folder:
-
-```bash
-npm run build
-surge public my-project.surge.sh
-```
+[js link]: https://lyra.com/fr/doc/rest/V4.0/javascript
+[js themes]: https://lyra.com/fr/doc/rest/V4.0/javascript/features/themes.html
+[js quick start]: https://lyra.com/fr/doc/rest/V4.0/javascript/quick_start_js.html
+[js integration guide]: https://lyra.com/fr/doc/rest/V4.0/javascript/guide/start.html
+[rest api]: https://lyra.com/fr/doc/rest/V4.0/api/reference.html

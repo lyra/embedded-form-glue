@@ -1,7 +1,7 @@
-# Payment form from scratch with react-cli
+# Payment form + React
 
-This page explains how-to create a dynamic payment form from scratch using
-React and react-cli and embedded-form-glue library.
+This page explains how to create a dynamic payment form from scratch using
+react, react-cli and the embedded-form-glue library.
 
 ## Requirements
 
@@ -9,45 +9,31 @@ You need to install [node.js LTS version](https://nodejs.org/en/).
 
 ## Create the project
 
-First, create the react app HelloWorld project:
-
-```sh
-npx create-react-app minimal-example
-```
-
-Enter on the project
-
-```sh
-cd minimal-example
-```
-
-Add the dependency with yarn:
+Start a new svelte project with:
 
 ```bash
-# with npm
-npm install --save @lyracom/embedded-form-glue
-# or with yarn
-yarn add @lyracom/embedded-form-glue
+npx create-react-app project-name
 ```
 
-Run and test it:
+More information on [react getting started](https://create-react-app.dev/docs/getting-started).
 
-```sh
+```bash
+cd project-name
+npm install
+# Add the dependency to the project
+npm install --save @lyracom/embedded-form-glue
+# Run the project
 npm run start
 ```
 
-see the result on http://localhost:3000/
-
-For more details, see https://cli.vuejs.org/guide/creating-a-project.html
-
-## add the payment form
+## Add the payment form
 
 First you have to add 2 theme files:
 
 | File              | Description                                                                   |
 | ----------------- | ----------------------------------------------------------------------------- |
-| classic-reset.css | default style applied before the [Lyra Javascript Library][js link] is loaded |
-| classic.js        | theme logic, like waiting annimation on submit button, ...                    |
+| neon-reset.css | default style applied before the [Lyra Javascript Library][js link] is loaded |
+| neon.js        | theme logic, like waiting annimation on submit button, ...                    |
 
 Add them in public/index.html in the the HEAD section:
 
@@ -74,45 +60,63 @@ display: flex; justify-content: center; }
 Next, update **src/App.js** to:
 
 ```js
-import React, { Component } from "react";
-import KRGlue from "@lyracom/embedded-form-glue";
-import "./App.css";
+import { useState, useEffect } from 'react'
+import KRGlue from '@lyracom/embedded-form-glue'
 
-class App extends Component {
-  render() {
-    return (
-      <div className="form">
-        <h1>Payment form</h1>
-        <div className="container">
-          <div id="myPaymentForm"></div>
-        </div>
-      </div>
-    );
-  }
+export default function MyComponent() {
+  const [message, setMessage] = useState('')
 
-  componentDidMount() {
-    const endpoint = "~~CHANGE_ME_ENDPOINT~~";
-    const publicKey = "~~CHANGE_ME_PUBLIC_KEY~~";
-    const formToken = "DEMO-TOKEN-TO-BE-REPLACED";
+  useEffect(() => {
+    async function setupPaymentForm() {
+      const endpoint = '~~CHANGE_ME_ENDPOINT~~'
+      const publicKey = '~~CHANGE_ME_PUBLIC_KEY~~'
+      let formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
 
-    KRGlue.loadLibrary(endpoint, publicKey) /* Load the remote library */
-      .then(({ KR }) =>
-        KR.setFormConfig({
-          /* set the minimal configuration */
-          formToken: formToken,
-          "kr-language": "en-US" /* to update initialization parameter */
+      try {
+        const res = await fetch('http://localhost:3000/createPayment', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            paymentConf: { amount: 10000, currency: 'USD' }
+          })
         })
-      )
-      .then(({ KR }) =>
-        KR.addForm("#myPaymentForm")
-      ) /* add a payment form  to myPaymentForm div*/
-      .then(({ KR, result }) =>
-        KR.showForm(result.formId)
-      ); /* show the payment form */
-  }
-}
+        formToken = await res.text()
 
-export default App;
+        const { KR } = await KRGlue.loadLibrary(
+          endpoint,
+          publicKey
+        ) /* Load the remote library */
+
+        await KR.setFormConfig({ /* set the minimal configuration */
+          formToken: formToken,
+          'kr-language': 'en-US' /* to update initialization parameter */
+        })
+
+        const { result } = await KR.attachForm(
+          '#myPaymentForm'
+        ) /* Attach a payment form  to myPaymentForm div*/
+
+        await KR.showForm(result.formId) /* show the payment form */
+      } catch (error) {
+        setMessage(error + ' (see console for more details)')
+      }
+    }
+
+    setupPaymentForm()
+  }, [])
+
+  return (
+    <div className="form">
+      <h1>React + KR.attachForm</h1>
+      <div className="container">
+        <div id="myPaymentForm">
+          <div className="kr-smart-form" kr-card-form-expanded></div>
+        </div>
+        <div data-test="payment-message">{message}</div>
+      </div>
+    </div>
+  )
+}
 ```
 
 Your payment form will be added to #myPaymentForm element.
@@ -126,7 +130,7 @@ If you try to pay, you will have the following error: **CLIENT_998: Demo form, s
 It's because the **formToken** you have defined using **KR.setFormConfig** is set to **DEMO-TOKEN-TO-BE-REPLACED**.
 
 you have to create a **formToken** before displaying the payment form using Charge/CreatePayment web-service.
-For more information, please take a look to:
+For more information, please see:
 
 - [Embedded form quick start][js quick start]
 - [embedded form integration guide][js integration guide]
@@ -134,83 +138,14 @@ For more information, please take a look to:
 
 ## Payment hash verification
 
-Payment hash must be validated on the server side to prevent the exposure of your
-personal hash key.
-
-On the server side:
-
-```js
-const express = require('express')
-const hmacSHA256 = require('crypto-js/hmac-sha256')
-const Hex = require('crypto-js/enc-hex')
-const app = express()
-
-(...)
-// Validates the given payment data (hash)
-app.post('/validatePayment', (req, res) => {
-  const answer = req.body.clientAnswer
-  const hash = req.body.hash
-  const answerHash = Hex.stringify(
-    hmacSHA256(JSON.stringify(answer), 'CHANGE_ME: HMAC SHA256 KEY')
-  )
-  if (hash === answerHash) res.status(200).send('Valid payment')
-  else res.status(500).send('Payment hash mismatch')
-})
-(...)
-```
-
-On the client side:
-
-```js
-import React, { Component } from "react";
-import KRGlue from "@lyracom/embedded-form-glue";
-import axios from 'axios'
-import "./App.css";
-
-class App extends Component {
-  render() {
-    return (
-      <div className="form">
-        <h1>Payment form</h1>
-        <div className="container">
-          <div id="myPaymentForm"></div>
-        </div>
-      </div>
-    );
-  }
-
-  componentDidMount() {
-      /* Use your endpoint and personal public key */
-      const endpoint = '~~CHANGE_ME_ENDPOINT~~'
-      const publicKey = '~~CHANGE_ME_PUBLIC_KEY~~'
-      const formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
-
-      KRGlue.loadLibrary(endpoint, publicKey) /* Load the remote library */
-        .then(({KR}) => KR.setFormConfig({  /* set the minimal configuration */
-          formToken: formToken,
-          'kr-language': 'en-US',
-        })) /* to update initialization parameter */
-        .then(({KR}) => KR.onSubmit(resp => {
-          axios
-            .post('http://localhost:3000/validatePayment', paymentData)
-            .then(response => {
-              if (response.status === 200) this.message = 'Payment successful!'
-            })
-          return false
-        }))
-        .then(({KR}) => KR.addForm('#myPaymentForm')) /* create a payment form */
-        .then(({KR, result}) => KR.showForm(result.formId));  /* show the payment form */
-    }
-    (...)
-}
-```
+To learn how to verify the payment hash, please see the [payment hash verification information](../server/README.md).
 
 ## Run it from github
 
 You can try the current example from the current github repository doing:
 
 ```sh
-cd examples/vuejs/minimal-example
+cd examples/react
 npm install
 npm run start
 ```

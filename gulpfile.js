@@ -3,7 +3,7 @@ const { src, dest } = require('gulp')
 
 const keyMap = {
   '~~CHANGE_ME_PUBLIC_KEY~~':
-  '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5',
+    '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5',
   '~~CHANGE_ME_USER~~': '69876357',
   '~~CHANGE_ME_PASSWORD~~': 'testpassword_DEMOPRIVATEKEY23G4475zXZQ2UA5x7M',
   '~~CHANGE_ME_ENDPOINT~~': 'https://api.lyra.com',
@@ -23,19 +23,22 @@ function replaceKeys() {
   return stream.pipe(dest('./examples_build/'))
 }
 
-function devReplaceKeys(){
+function devReplaceKeys() {
   let reverse
-  if(~process.argv.indexOf("--restore")) {
+  if (~process.argv.indexOf('--restore')) {
     reverse = true
   }
-  let stream = src([
-    './examples/**/*.html',
-    './examples/**/*.js',
-    './examples/**/*.ts',
-    './examples/**/*.vue',
-    './examples/**/*.svelte',
-    '!./examples/**/node_modules/**',
-  ], {base: './'})
+  let stream = src(
+    [
+      './examples/**/*.html',
+      './examples/**/*.js',
+      './examples/**/*.ts',
+      './examples/**/*.vue',
+      './examples/**/*.svelte',
+      '!./examples/**/node_modules/**'
+    ],
+    { base: './' }
+  )
   Object.entries(keyMap).forEach(([key, value]) => {
     stream = stream.pipe(reverse ? replace(value, key) : replace(key, value))
   })

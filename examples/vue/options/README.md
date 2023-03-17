@@ -1,53 +1,32 @@
-# Payment form from scratch with vue-cli
+# Payment form + Vue options API
 
-This page explains how-to create a dynamic payment form from scratch using
-vue.js and vue-cli and embedded-form-glue library.
+This page explains how to create a dynamic payment form from scratch using
+vue.js, vue-cli and the embedded-form-glue library.
 
 ## Requirements
 
 You need to install [node.js LTS version](https://nodejs.org/en/).
 
-Next ,install vue-cli:
-
-```bash
-npm install -g @vue/cli
-# OR
-yarn global add @vue/cli
-```
-
-More details on [vue-cli web-site](https://cli.vuejs.org/guide/installation.html).
-
 ## Create the project
 
-First, create the vue-cli HelloWorld project:
-
-```sh
-vue create minimal-example
-```
-
-Add the dependency with yarn:
+Start a new vue project with:
 
 ```bash
-# with npm
+npm create vue@3
+```
+
+More information on [vue-create repository](https://github.com/vuejs/create-vue).
+
+```bash
+cd project-name
+npm install
+# Add the dependency to the project
 npm install --save @lyracom/embedded-form-glue
-npm install --save axios
-# or yarn
-yarn add @lyracom/embedded-form-glue
-yarn add axios
-
+# Run the project
+npm run dev
 ```
 
-Run and test it:
-
-```sh
-npm run serve
-```
-
-see the result on http://localhost:8080/
-
-For more details, see https://cli.vuejs.org/guide/creating-a-project.html
-
-## add the payment form
+## Add the payment form
 
 First you have to add 2 theme files:
 
@@ -67,7 +46,7 @@ href="https://~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon-rese
 </script>
 ```
 
-**note**: Replace **[CHANGE_ME]** with your credentials and end-points.
+> **NOTE:** Replace **[CHANGE_ME]** with your credentials and endpoints.
 
 For more information about theming, take a look to [Lyra theming documentation][js themes]
 
@@ -121,25 +100,25 @@ import KRGlue from "@lyracom/embedded-form-glue";
 
 export default {
     (...),
-    mounted() {
+    async mounted() {
       /* Use your endpoint and personal public key */
       const endpoint = '~~CHANGE_ME_ENDPOINT_WITH_HTTPS~~'
       const publicKey = '~~CHANGE_ME_PUBLIC_KEY~~'
       const formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
 
-      KRGlue.loadLibrary(endpoint, publicKey) /* Load the remote library */
-            .then(({KR}) => KR.setFormConfig({       /* set the minimal configuration */
-              formToken: formToken,
-              'kr-language': 'en-US',                       /* to update initialization parameter */
-            }))
-            .then(({KR}) => KR.attachForm('#myPaymentForm')) /* create a payment form */
-            .then(({KR, result}) => KR.showForm(result.formId));  /* show the payment form */
+      const { KR } = await KRGlue.loadLibrary(endpoint, publicKey) /* Load the remote library */
+      await KR.setFormConfig({       /* set the minimal configuration */
+        formToken: formToken,
+        'kr-language': 'en-US',                       /* to update initialization parameter */
+      }))
+      const { result } = await KR.attachForm('#myPaymentForm')) /* create a payment form */
+      await KR.showForm(result.formId));  /* show the payment form */
     }
     (...)
 }
 ```
 
-## your first transaction
+## Your first transaction
 
 The payment form is up and ready, you can try to make a transaction using
 a test card with the debug toolbar (at the bottom of the page).
@@ -148,7 +127,7 @@ If you try to pay, you will have the following error: **CLIENT_998: Demo form, s
 It's because the **formToken** you have defined using **KR.setFormConfig** is set to **DEMO-TOKEN-TO-BE-REPLACED**.
 
 you have to create a **formToken** before displaying the payment form using Charge/CreatePayment web-service.
-For more information, please take a look to:
+For more information, please see:
 
 - [Embedded form quick start][js quick start]
 - [embedded form integration guide][js integration guide]
@@ -157,83 +136,27 @@ For more information, please take a look to:
 
 ## Payment hash verification
 
-Payment hash must be validated on the server side to prevent the exposure of your
-personal hash key.
+To learn how to verify the payment hash, please see the [payment hash verification information](../../server/README.md).
 
-On the server side:
+## Run this example
 
-```js
-const express = require('express')
-const hmacSHA256 = require('crypto-js/hmac-sha256')
-const Hex = require('crypto-js/enc-hex')
-const app = express()
+You can try the current example from the current repository by cloning the repository and executing the following commands:
 
-(...)
-// Validates the given payment data (hash)
-app.post('/validatePayment', (req, res) => {
-  const answer = req.body.clientAnswer
-  const hash = req.body.hash
-  const answerHash = Hex.stringify(
-    hmacSHA256(JSON.stringify(answer), 'CHANGE_ME: HMAC SHA256 KEY')
-  )
-  if (hash === answerHash) res.status(200).send('Valid payment')
-  else res.status(500).send('Payment hash mismatch')
-})
-(...)
-```
-
-On the client side:
-
-```js
-/* import embedded-form-glue library */
-import KRGlue from '@lyracom/embedded-form-glue'
-import axios from 'axios'
-
-export default {
-  (...),
-    mounted() {
-      /* Use your endpoint and personal public key */
-      const endpoint = '~~CHANGE_ME_ENDPOINT_WITH_HTTPS~~'
-      const publicKey = '~~CHANGE_ME_PUBLIC_KEY~~'
-      const formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
-
-      KRGlue.loadLibrary(`https://${endpoint}`, publicKey) /* Load the remote library */
-        .then(({KR}) => KR.setFormConfig({ /* set the minimal configuration */
-          formToken: formToken,
-          'kr-language': 'en-US',                       
-        })) /* to update initialization parameter */
-        .then(({KR}) => KR.onSubmit(resp => {
-          axios
-            .post('http://localhost:3000/validatePayment', paymentData)
-            .then(response => {
-              if (response.status === 200) this.message = 'Payment successful!'
-            })
-          return false
-        }))
-        .then(({KR}) => KR.attachForm('#myPaymentForm')) /* create a payment form */
-        .then(({KR, result}) => KR.showForm(result.formId));  /* show the payment form */
-    }
-    (...)
-}
-```
-
-## Run it from github
-
-You can try the current example from the current github repository doing:
-
-```sh
+```bash
 cd examples/vue/options
 npm i
 npm run serve
 ```
 
-You can run the example node.js server by running:
+To run the example Node.js server, execute the following commands:
 
-```sh
+```bash
 cd examples/server
 npm i
 npm run start
 ```
+
+> Remember to replace the **[CHANGE_ME]** values with your credentials and endpoints before executing the project.
 
 [js link]: https://lyra.com/fr/doc/rest/V4.0/javascript
 [js themes]: https://lyra.com/fr/doc/rest/V4.0/javascript/features/themes.html
