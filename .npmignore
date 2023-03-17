@@ -1,0 +1,10 @@
+*.pyc
+node_modules
+.history
+examples_build
+examples
+.angular
+.vscode
+.circleci
+assets
+tests
