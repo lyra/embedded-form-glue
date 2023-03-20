@@ -46,7 +46,9 @@ href="https://~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon-rese
 </script>
 ```
 
-> **NOTE:** Replace **[CHANGE_ME]** with your credentials and endpoints.
+> **NOTE:** 
+> 
+> Replace **[CHANGE_ME]** with your credentials and endpoints.
 
 For more information about theming, take a look to [Lyra theming documentation][js themes]
 

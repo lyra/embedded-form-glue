@@ -40,13 +40,15 @@ Add them in public/index.html in the the HEAD section:
 ```javascript
 <!-- theme and plugins. should be loaded in the HEAD section -->
 <link rel="stylesheet"
-href="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/classic-reset.css">
+href="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon-reset.css">
 <script
-    src="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/classic.js">
+    src="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon.js">
 </script>
 ```
 
-**note**: Replace **[CHANGE_ME]** with your credentials and end-points.
+> **Note**
+> 
+> Replace **[CHANGE_ME]** with your credentials and end-points.
 
 For more information about theming, take a look to [Lyra theming documentation][js themes]
 

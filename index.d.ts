@@ -111,12 +111,17 @@ declare interface KR {
    */
   onBlur: (callback: (field: KRField) => void) => Promise<{ KR: KR }>
   /**
-   * Form created event listener.
+   * Callback called when the payment form DOM elements are created.
    * @param callback - Callback
    */
   onFormCreated: (callback: () => void) => Promise<{ KR: KR }>
   /**
-   * Form ready event listener.
+   * Callback called when the payment form application is loaded.
+   * @param callback - Callback
+   */
+  onLoaded: (callback: () => void) => Promise<{ KR: KR }>
+  /**
+   * Callback called when the payment form is ready to be submitted.
    * @param callback - Callback
    */
   onFormReady: (callback: () => void) => Promise<{ KR: KR }>
@@ -125,11 +130,6 @@ declare interface KR {
    * @param callback - Callback
    */
   onFormValid: (callback: () => void) => Promise<{ KR: KR }>
-  /**
-   * Form loaded event listener.
-   * @param callback - Callback
-   */
-  onLoaded: (callback: () => void) => Promise<{ KR: KR }>
   /**
    * Form submitted event listener.
    * @param callback - Callback
