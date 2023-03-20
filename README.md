@@ -8,9 +8,8 @@
 [![Build][build-shield]][build-url]
 [![NPM][npm-shield]][npm-url]
 [![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
+[![Quality][quality-shield]][quality-url]
+[![Downloads][downloads-shield]][downloads-url]
 [![MIT License][license-shield]][license-url]
 
 </div>
@@ -87,7 +86,7 @@ First, define the theme files to load in the head section of your HTML page:
 
 > **Note**
 > 
-> Replace **[~\~CHANGE_ME_ENDPOINT~\~]** with your configuration endpoint.
+> Replace **`~~CHANGE_ME_ENDPOINT~~`** with your configuration endpoint.
 
 For more information about theming, please see [Lyra theming documentation][doc-themes]
 
@@ -136,8 +135,8 @@ await KR.showForm(result.formId));
 ```
 > **Note**
 > 
-> Replace **[~\~CHANGE_ME_PUBLIC_KEY~\~]** with your configuration public key.
-> Replace **[~\~CHANGE_ME_ENDPOINT~\~]** with your configuration endpoint.
+> Replace **`~~CHANGE_ME_PUBLIC_KEY~~`** with your configuration public key.
+> Replace **`~~CHANGE_ME_ENDPOINT~~`** with your configuration endpoint.
 
 > **Warning**
 > 
@@ -259,18 +258,16 @@ Distributed under the MIT License. See the [LICENSE file](./LICENCE.txt) for mor
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
-[build-shield]: https://img.shields.io/circleci/build/github/lyra/embedded-form-glue?style=for-the-badge&logo=circleci
+[build-shield]: https://img.shields.io/circleci/build/github/lyra/embedded-form-glue?style=for-the-badge&logo=github
 [build-url]: https://circleci.com/gh/lyra/embedded-form-glue
 [npm-shield]: https://img.shields.io/npm/v/@lyracom/embedded-form-glue?style=for-the-badge&logo=npm
 [npm-url]: https://www.npmjs.com/package/@lyracom/embedded-form-glue
 [contributors-shield]: https://img.shields.io/github/contributors/lyra/embedded-form-glue.svg?style=for-the-badge&logo=github
 [contributors-url]: https://github.com/othneildrew/lyra/embedded-form-glue/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/lyra/embedded-form-glue.svg?style=for-the-badge&logo=github
-[forks-url]: https://github.com/lyra/embedded-form-glue/network/members
-[stars-shield]: https://img.shields.io/github/stars/lyra/embedded-form-glue.svg?style=for-the-badge&logo=github
-[stars-url]: https://github.com/lyra/embedded-form-glue/stargazers
-[issues-shield]: https://img.shields.io/github/issues/lyra/embedded-form-glue.svg?style=for-the-badge&logo=github
-[issues-url]: https://github.com/lyra/embedded-form-glue/issues
+[quality-shield]: https://img.shields.io/npms-io/quality-score/@lyracom/embedded-form-glue?style=for-the-badge&logo=npm
+[quality-url]: https://npms.io/search?q=%40lyracom%2Fembedded-form-glue
+[downloads-shield]: https://img.shields.io/npm/dm/@lyracom/embedded-form-glue?style=for-the-badge&logo=npm
+[downloads-url]: https://www.npmjs.com/package/@lyracom/embedded-form-glue
 [license-shield]: https://img.shields.io/github/license/lyra/embedded-form-glue.svg?style=for-the-badge&logo=github
 [license-url]: https://github.com/lyra/embedded-form-glue/blob/master/LICENSE.txt
 

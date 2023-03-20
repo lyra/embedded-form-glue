@@ -15,17 +15,18 @@ jobs:
           node-version: 18
       - name: Install dependencies
         run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
       - name: Prepare the examples
         run: npm run examples:prepare
       - name: Run example servers in background
         run: |
           npm run examples:serve &
       - name: Run E2E tests
-        run: npm run test:ci
-      - name: Store test results
-        uses: actions/upload-artifact@v3
+        run: npx playwright test tests/e2e/specs
+      - uses: actions/upload-artifact@v3
         if: always()
         with:
-          name: test-results
-          path: /tmp/test-results
+          name: playwright-report
+          path: playwright-report/
           retention-days: 30
