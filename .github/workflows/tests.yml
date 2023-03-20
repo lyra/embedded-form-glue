@@ -1,0 +1,31 @@
+name: E2E Tests
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm ci
+      - name: Prepare the examples
+        run: npm run examples:prepare
+      - name: Run example servers in background
+        run: |
+          npm run examples:serve &
+      - name: Run E2E tests
+        run: npm run test:ci
+      - name: Store test results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: test-results
+          path: /tmp/test-results
+          retention-days: 30
