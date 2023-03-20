@@ -1,5 +1,6 @@
 <template>
   <div class="hello">
+    <h1>Vue Options API + KR.attachForm</h1>
     <div class="container">
       <div id="myPaymentForm">
         <div class="kr-smart-form" kr-card-form-expanded></div>
@@ -34,21 +35,21 @@ export default {
         })
       })
       const formToken = await res.text()
-      const { KR } = await KRGlue.loadLibrary(
-        endpoint,
-        publicKey
-      ) /* Load the remote library */
+      // Load the remote library
+      const { KR } = await KRGlue.loadLibrary(endpoint, publicKey)
+      // Set the minimal configuration
       await KR.setFormConfig({
-        /* set the minimal configuration */
         formToken: formToken,
-        'kr-language': 'en-US' /* to update initialization parameter */
+        'kr-language': 'en-US'
       })
 
-      await KR.onSubmit(this.validatePayment) // Custom payment callback
+      // Custom payment callback
+      await KR.onSubmit(async paymentData => {
+        await this.validatePayment(paymentData)
+      })
 
-      const { result } =
-        KR.attachForm('#myPaymentForm') /* create a payment form */
-
+      // Create a payment form
+      const { result } = await KR.attachForm('#myPaymentForm')
       await KR.showForm(result.formId)
     } catch (error) {
       error => (this.message = error + ' (see console for more details)')
@@ -57,10 +58,10 @@ export default {
   methods: {
     /* Validate the payment data */
     async validatePayment(paymentData) {
-      const res = await fetch('http://localhost:3000/createPayment', {
+      const res = await fetch('http://localhost:3000/validatePayment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ paymentData })
+        body: JSON.stringify(paymentData)
       })
       if (res.status === 200) this.message = 'Payment successful!'
       return false // Return false to prevent the redirection

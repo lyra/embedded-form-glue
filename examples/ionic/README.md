@@ -123,21 +123,9 @@ export class PaymentPage implements AfterViewInit {
 }
 ```
 
-## Your first transaction
+## The first transaction
 
-The payment form is up and ready, you can try to make a transaction using
-a test card with the debug toolbar (at the bottom of the page).
-
-If you try to pay, you will have the following error: **CLIENT_998: Demo form, see the documentation**.
-It's because the **formToken** you have defined using **payment.page.ts** is set to **DEMO-TOKEN-TO-BE-REPLACED**.
-
-you have to create a **formToken** before displaying the payment form using Charge/CreatePayment web-service.
-For more information, please see:
-
-- [Embedded form quick start][js quick start]
-- [embedded form integration guide][js integration guide]
-- [Payment REST API reference][rest api]
-
+To make the first transaction, please see the [first transaction guide](../../README.md).
 ## Payment hash verification
 
 To learn how to verify the payment hash, please see the [payment hash verification information](../server/README.md).
