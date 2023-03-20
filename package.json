@@ -9,11 +9,11 @@
     "lint": "eslint --ext .js app && eslint --ext .js lib",
     "lintfix": "eslint --fix --ext .js app && eslint --fix --ext .js lib",
     "prettier": "prettier --write \"app/**/*.js\"",
-    "e2e-server": "http-server ./",
-    "e2e-servers": "sh tests/scripts/start_examples.sh",
-    "test-ci": "testcafe chrome:headless tests/e2e/**/*.spec.js -r xunit:/tmp/test-results/testcafe/results.xml",
+    "test:ci": "testcafe chrome:headless tests/e2e/**/*.spec.js -r xunit:/tmp/test-results/testcafe/results.xml",
     "test": "testcafe chrome tests/e2e/**/*.spec.js",
-    "build:examples": "sh build.sh"
+    "examples:build": "sh tests/scripts/build_examples.sh",
+    "examples:prepare": "sh tests/scripts/prepare_examples.sh",
+    "examples:serve": "sh tests/scripts/start_examples.sh"
   },
   "repository": {
     "type": "git",
