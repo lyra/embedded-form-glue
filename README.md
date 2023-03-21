@@ -18,7 +18,7 @@
 <br />
 <div align="center" style="margin-bottom:30px;">
   <a href="https://github.com/lyra/embedded-form-glue">
-    <img style="width:80px;height:80px;background-color:#fff;margin-bottom:15px;box-shadow:rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;margin-left:30%;margin-right:30%" src="assets/lyra.svg" alt="Logo">
+    <img style="width:80px!important;height:80px!important;max-width:80px!important;max-height:80px!important;background-color:#fff;margin-bottom:15px;box-shadow:rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;margin-left:30%;margin-right:30%" src="assets/lyra.svg" alt="Logo">
   </a>
 
   <h3 align="center">Embedded Form Glue - JavaScript Library</h3>
