@@ -1,5 +1,9 @@
 # Change log
 
+# 1.3.4
+
+- [feat] Removes promise polyfill
+
 # 1.3.3
 
 - [doc] Readme update
