@@ -133,6 +133,7 @@ await KR.showForm(result.formId));
 > **Note**
 > 
 > Replace **`~~CHANGE_ME_PUBLIC_KEY~~`** with your configuration public key.
+> 
 > Replace **`~~CHANGE_ME_ENDPOINT~~`** with your configuration endpoint.
 
 > **Warning**
@@ -158,7 +159,7 @@ information:
 Once you have a **formToken**, you can set it in the payment form with the following code:
 
 ```javascript
-await KR.setFormConfig({ formToken: '~~CHANGE_ME_FORM_TOKEN~~' }))
+await KR.setFormConfig({ formToken: '~~CHANGE_ME_FORM_TOKEN~~' })
 ```
 
 > **Note**
@@ -209,7 +210,7 @@ Please find integration examples for some of the main javascript frameworks in t
 
 ## Customization
 
-The payment form can be customized in many ways like:
+The payment form can be customized in many ways. Some of them in the following examples:
 
 - [Use a custom field order](./docs/customization#use-a-custom-field-order)
 - [Add additional fields](./docs/customization#add-additional-fields)
@@ -238,14 +239,14 @@ npm run build
 
 ### Testing
 
-To run the e2e tests (testcafe), first build the examples with:
+To run the e2e tests, first build the examples with:
 
 ```bash
 npm run examples:build
 npm run examples:prepare
 ```
 
-On a separated thread, initialize the servers with:
+On a separated instance, initialize the servers with:
 
 ```bash
 npm run examples:serve
