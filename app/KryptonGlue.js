@@ -1,4 +1,3 @@
-import 'es6-promise/auto'
 import whenDefined from './tools/whenDefined'
 
 class Glue {
