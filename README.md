@@ -50,7 +50,7 @@ website. This library will load the [Javacript library][doc-home] from Lyra serv
 automatically each sensitive field (pan, security code, ...) into an IFrame, allowing to comply with 
 all regulations.
 
-The **embedded-form-glue** glue library provides a set of utilities to easily integrate the Payment 
+The **embedded-form-glue** library provides a set of utilities to easily integrate the Payment 
 form into any we application made with Javascript frameworks like React, Vue, Angular, Svelte, 
 Ionic, etc.
 
