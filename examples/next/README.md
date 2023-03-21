@@ -1,34 +1,160 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Payment form + Next.js
 
-## Getting Started
+This page explains how to create a dynamic payment form from scratch using
+next.js and the embedded-form-glue library.
 
-First, run the development server:
+## Requirements
+
+You need to install [node.js LTS version](https://nodejs.org/en/).
+
+## Create the project
+
+Start a new next.js project with:
 
 ```bash
-npm run dev
-# or
-yarn dev
+npx create-next-app@latest
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+More information on [next.js getting started](https://nextjs.org/docs/getting-started).
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+```bash
+cd project-name
+npm install
+# Add the dependency to the project
+npm install --save @lyracom/embedded-form-glue
+# Run the project
+npm run dev
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## Add the payment form
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+First you have to add 2 theme files:
 
-## Learn More
+| File              | Description                                                                   |
+| ----------------- | ----------------------------------------------------------------------------- |
+| neon-reset.css | default style applied before the [Lyra Javascript Library][js link] is loaded |
+| neon.js        | theme logic, like waiting annimation on submit button, ...                    |
 
-To learn more about Next.js, take a look at the following resources:
+Add them in public/index.html in the the HEAD section:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```javascript
+<!-- theme and plugins. should be loaded in the HEAD section -->
+<link rel="stylesheet"
+href="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon-reset.css">
+<script
+    src="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon.js">
+</script>
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+> **Note**
+> 
+> Replace **[CHANGE_ME]** with your credentials and end-points.
 
-## Deploy on Vercel
+For more information about theming, take a look to [Lyra theming documentation][js themes]
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Next, update **pages/mypage.js** to:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```js
+import Head from 'next/head'
+import KRGlue from '@lyracom/embedded-form-glue'
+import { useState, useEffect } from 'react'
+import Script from 'next/script'
+
+export default function MyPage() {
+  const [message, setMessage] = useState('')
+
+  useEffect(() => {
+    async function setupPaymentForm() {
+      const endpoint = '~~CHANGE_ME_ENDPOINT~~'
+      const publicKey = '~~CHANGE_ME_PUBLIC_KEY~~'
+      let formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
+
+      try {
+        const res = await fetch('http://localhost:3000/createPayment', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            paymentConf: { amount: 10000, currency: 'USD' }
+          })
+        })
+        formToken = await res.text()
+
+        const { KR } = await KRGlue.loadLibrary(
+          endpoint,
+          publicKey
+        ) /* Load the remote library */
+
+        await KR.setFormConfig({ /* set the minimal configuration */
+          formToken: formToken,
+          'kr-language': 'en-US' /* to update initialization parameter */
+        })
+
+        const { result } = await KR.attachForm(
+          '#myPaymentForm'
+        ) /* Attach a payment form  to myPaymentForm div*/
+
+        await KR.showForm(result.formId) /* show the payment form */
+      } catch (error) {
+        setMessage(error + ' (see console for more details)')
+      }
+    }
+
+    setupPaymentForm()
+  }, [])
+
+  return (
+    <div>
+      <Head>
+        <title>NextJS</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <link
+          rel="stylesheet"
+          href="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon-reset.css"
+        />
+      </Head>
+      <Script src="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon.js"></Script>
+      <div className="container">
+        <h1>NextJS + KR.attachForm</h1>
+        <div id="myPaymentForm">
+          <div className="kr-smart-form" kr-card-form-expanded="true" />
+        </div>
+        <div data-test="payment-message">{message}</div>
+      </div>
+    </div>
+  )
+}
+```
+
+Your payment form will be added to #myPaymentForm element.
+
+## The first transaction
+
+To make the first transaction, please see the [first transaction guide](../../README.md).
+
+## Payment hash verification
+
+To learn how to verify the payment hash, please see the [payment hash verification information](../server/README.md).
+
+## Run it from github
+
+You can try the current example from the current github repository doing:
+
+```sh
+cd examples/next
+npm install
+npm run dev
+```
+
+You can run the example node.js server by running:
+
+```sh
+cd examples/server
+npm i
+npm run start
+```
+
+[js link]: https://lyra.com/fr/doc/rest/V4.0/javascript
+[js themes]: https://lyra.com/fr/doc/rest/V4.0/javascript/features/themes.html
+[js quick start]: https://lyra.com/fr/doc/rest/V4.0/javascript/quick_start_js.html
+[js integration guide]: https://lyra.com/fr/doc/rest/V4.0/javascript/guide/start.html
+[rest api]: https://lyra.com/fr/doc/rest/V4.0/api/reference.html

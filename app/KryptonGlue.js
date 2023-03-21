@@ -20,7 +20,8 @@ class Glue {
   }
 
   loadLibrary(domain, publicKey, formToken = null) {
-    const domainRegex = /^(?:http(s)?:\/\/)[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/g
+    const domainRegex =
+      /^(?:http(s)?:\/\/)[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/g
     const pubKeyRegex = /^\d{2,8}:(|test)publickey_.+$/g
 
     if (this.loaded) return this.getKrypton(publicKey)
@@ -46,12 +47,12 @@ class Glue {
     return Promise.reject('The library cannot be loaded')
   }
 
-  loadKryptonClient() {    
+  loadKryptonClient() {
     if (!this.loading) {
       const publicKey = this.publicKey
       let domain = this.domain
       this.loading = true
-   
+
       const script = document.createElement('script')
       script.type = 'text/javascript'
 
@@ -71,8 +72,8 @@ class Glue {
       if (!$script && document.body) document.body.appendChild(script)
       else if (!document.body) console.warn('document.body is undefined')
     }
-    
-    return new Promise((resolve) => {
+
+    return new Promise(resolve => {
       whenDefined(window, 'KR', () => {
         whenDefined(window.KR, 'ready', () => {
           this.loaded = true

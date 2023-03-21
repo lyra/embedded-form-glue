@@ -1,232 +1,158 @@
-# Payment form from scratch with angular-cli
+# Payment form + Angular
 
-This page explains how-to create a dynamic payment form from scratch using
-Angular and angular-cli and embedded-form-glue library.
+This page explains how to create a dynamic payment form from scratch using
+Angular and the embedded-form-glue library.
 
 ## Requirements
 
 You need to install [node.js LTS version](https://nodejs.org/en/).
 
-Next, install vue-cli:
+## Create the project
+
+Start a new vue project with:
 
 ```bash
 npm install -g @angular/cli
-# OR
-yarn global add @angular/cli
+ng new project-name
 ```
 
-More details on [angular-cli web-site](https://angular.io/guide/quickstart).
-
-## Create the project
-
-First, create the angular-cli minimal-example project (with default options):
-
-```sh
-ng new minimal-example
-```
-
-Add the dependency with yarn:
+More information on [Angular docs](https://angular.io/docs).
 
 ```bash
-cd minimal-example
-# with npm
+cd project-name
+npm install
+# Add the dependency to the project
 npm install --save @lyracom/embedded-form-glue
-# or with yarn
-yarn add @lyracom/embedded-form-glue
+# Run the project
+npm run start
 ```
 
-Run and test it (in minimal-example folder):
-
-```sh
-ng serve --open
-```
-
-see the result on http://localhost:4200/
-
-## add the payment form
+## Add the payment form
 
 First you have to add 2 theme files:
 
 | File              | Description                                                                   |
 | ----------------- | ----------------------------------------------------------------------------- |
-| classic-reset.css | default style applied before the [Lyra Javascript Library][js link] is loaded |
-| classic.js        | theme logic, like waiting annimation on submit button, ...                    |
+| neon-reset.css    | default style applied before the [Lyra Javascript Library][js link] is loaded |
+| neon.js           | theme logic, like waiting annimation on submit button, ...                    |
 
-Add them in src/index.html in the the HEAD section:
+Add them in public/index.html in the the HEAD section:
 
 ```javascript
 <!-- theme and plugins. should be loaded in the HEAD section -->
 <link rel="stylesheet"
-href="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/classic-reset.css">
+href="https://~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon-reset.css">
 <script
-    src="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/classic.js">
+    src="https://~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon.js">
 </script>
 ```
 
-**note**: Replace **[CHANGE_ME]** with your credentials and end-points.
+> **Note**
+> 
+> Replace **[CHANGE_ME]** with your credentials and end-points.
 
 For more information about theming, take a look to [Lyra theming documentation][js themes]
 
-Change the src/app/app.component.html template to:
+reate the src/app/mycomponent/mycomponent.html with:
 
 ```html
+(...)
 <div class="form">
   <h1>{{ title }}</h1>
   <div class="container">
-    <div id="myPaymentForm"></div>
+    <div id="myPaymentForm">
+      <div class="kr-smart-form" kr-card-form-expanded></div>
+    </div>
+    <div data-test="payment-message">{{ message }}</div>
   </div>
 </div>
 ```
 
-Your payment form will be added to #myPaymentForm element.
+Then, create the src/app/mycomponent/mycomponent.ts with:
 
-Update the src/app/app.component.css styles to:
+```javascript
+import { HttpClient } from '@angular/common/http'
+import { Component, AfterViewInit, ChangeDetectorRef } from '@angular/core'
+import KRGlue from '@lyracom/embedded-form-glue'
+import { firstValueFrom } from 'rxjs'
 
-```css
-h1 {
-  margin: 40px 0 20px 0;
-  width: 100%;
-  text-align: center;
-}
-.container {
-  display: flex;
-  justify-content: center;
-}
-```
-
-Update the default component src/app/app.component.ts to:
-
-```js
-import { Component, OnInit } from "@angular/core";
-import KRGlue from "@lyracom/embedded-form-glue";
 @Component({
-  selector: "app-root",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.css"]
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
-  title = "minimal-example";
-  ngOnInit() {
-    const endpoint = "~~CHANGE_ME_ENDPOINT~~";
-    const publicKey = "~~CHANGE_ME_PUBLIC_KEY~~";
-    const formToken = "DEMO-TOKEN-TO-BE-REPLACED";
-    KRGlue.loadLibrary(endpoint, publicKey) /* Load the remote library */
+export class AppComponent implements AfterViewInit {
+  title: string = 'Angular + KR.attachForm'
+  message: string = ''
+
+  constructor(private http: HttpClient, private chRef: ChangeDetectorRef) {}
+
+  ngAfterViewInit() {
+    const endpoint = '~~CHANGE_ME_ENDPOINT~~'
+    const publicKey = '~~CHANGE_ME_PUBLIC_KEY~~'
+    let formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
+
+    const observable = this.http.post(
+      'http://localhost:3000/createPayment',
+      { paymentConf: { amount: 10000, currency: 'USD' } },
+      { responseType: 'text' }
+    )
+    firstValueFrom(observable)
+      .then((resp: any) => {
+        formToken = resp
+        return KRGlue.loadLibrary(
+          endpoint,
+          publicKey
+        ) /* Load the remote library */
+      })
       .then(({ KR }) =>
         KR.setFormConfig({
           /* set the minimal configuration */
           formToken: formToken,
-          "kr-language": "en-US" /* to update initialization parameter */
+          'kr-language': 'en-US' /* to update initialization parameter */
         })
       )
       .then(({ KR }) =>
-        KR.addForm("#myPaymentForm")
-      ) /* add a payment form  to myPaymentForm div*/
+        KR.attachForm('#myPaymentForm')
+      ) /* Attach a payment form  to myPaymentForm div*/
       .then(({ KR, result }) =>
         KR.showForm(result.formId)
-      ); /* show the payment form */
+      ) /* show the payment form */
+      .catch(error => {
+        this.message = error.message + ' (see console for more details)'
+      })
   }
 }
+
 ```
 
-**note**: Replace **[CHANGE_ME]** with your credentials and end-points.
+## The first transaction
 
-## your first transaction
+To make the first transaction, please see the [first transaction guide](../../README.md).
 
-The payment form is up and ready, you can try to make a transaction using
-a test card with the debug toolbar (at the bottom of the page).
-
-If you try to pay, you will have the following error: **CLIENT_998: Demo form, see the documentation**.
-It's because the **formToken** you have defined using **KR.setFormConfig** is set to **DEMO-TOKEN-TO-BE-REPLACED**.
-
-you have to create a **formToken** before displaying the payment form using Charge/CreatePayment web-service.
-For more information, please take a look to:
-
-- [Embedded form quick start][js quick start]
-- [embedded form integration guide][js integration guide]
-- [Payment REST API reference][rest api]
 
 ## Payment hash verification
 
-Payment hash must be validated on the server side to prevent the exposure of your
-personal hash key.
+To learn how to verify the payment hash, please see the [payment hash verification information](../server/README.md).
 
-On the server side:
+## Run this example
 
-```js
-const express = require('express')
-const hmacSHA256 = require('crypto-js/hmac-sha256')
-const Hex = require('crypto-js/enc-hex')
-const app = express()
-(...)
-// Validates the given payment data (hash)
-app.post('/validatePayment', (req, res) => {
-  const answer = req.body.clientAnswer
-  const hash = req.body.hash
-  const answerHash = Hex.stringify(
-    hmacSHA256(JSON.stringify(answer), 'CHANGE_ME: HMAC SHA256 KEY')
-  )
-  if (hash === answerHash) res.status(200).send('Valid payment')
-  else res.status(500).send('Payment hash mismatch')
-})
-(...)
-```
+You can try the current example from the current repository by cloning the repository and executing the following commands:
 
-On the client side:
-
-```js
-import { Component, OnInit } from "@angular/core";
-import KRGlue from "@lyracom/embedded-form-glue";
-import axios from 'axios'
-@Component({
-  selector: "app-root",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.css"]
-})
-export class AppComponent implements OnInit {
-  title = "minimal-example";
-  (...),
-    ngOnInit() {
-      /* Use your endpoint and personal public key */
-      const endpoint = '~~CHANGE_ME_ENDPOINT~~'
-      const publicKey = '~~CHANGE_ME_PUBLIC_KEY~~'
-      const formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
-      KRGlue.loadLibrary(endpoint, publicKey) /* Load the remote library */
-        .then(({KR}) => KR.setFormConfig({  /* set the minimal configuration */
-          formToken: formToken,
-          'kr-language': 'en-US',
-        })) /* to update initialization parameter */
-        .then(({KR}) => KR.onSubmit(resp => {
-          axios
-            .post('http://localhost:3000/validatePayment', paymentData)
-            .then(response => {
-              if (response.status === 200) this.message = 'Payment successful!'
-            })
-          return false
-        }))
-        .then(({KR}) => KR.addForm('#myPaymentForm')) /* create a payment form */
-        .then(({KR, result}) => KR.showForm(result.formId));  /* show the payment form */
-    }
-    (...)
-}
-```
-
-## Run it from github
-
-You can try the current example from the current github repository doing:
-
-```sh
-cd examples/angular/minimal-example
-npm install
+```bash
+cd examples/angular
 npm run start
 ```
 
-You can run the example node.js server by running:
+To run the example Node.js server, execute the following commands:
 
-```sh
+```bash
 cd examples/server
 npm i
 npm run start
 ```
+
+> Remember to replace the **[CHANGE_ME]** values with your credentials and endpoints before executing the project.
 
 [js link]: https://lyra.com/fr/doc/rest/V4.0/javascript
 [js themes]: https://lyra.com/fr/doc/rest/V4.0/javascript/features/themes.html

@@ -2,13 +2,13 @@ const axios = require('axios').default
 
 exports.createFormToken = async paymentConf => {
   // format: 123456789
-  const username = "~~CHANGE_ME_USER~~";
+  const username = '~~CHANGE_ME_USER~~'
 
   // format: testprivatekey_XXXXXXX
-  const password = "~~CHANGE_ME_PASSWORD~~";
+  const password = '~~CHANGE_ME_PASSWORD~~'
 
   // format: api.my.psp.domain.name without https
-  const endpoint = "~~CHANGE_ME_ENDPOINT_NO_HTTPS~~";
+  const endpoint = '~~CHANGE_ME_ENDPOINT_NO_HTTPS~~'
 
   const createPaymentEndpoint = `https://${username}:${password}@${endpoint}/api-payment/V4/Charge/CreatePayment`
 

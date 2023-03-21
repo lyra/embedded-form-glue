@@ -2,488 +2,544 @@
 // Project: https://github.com/lyra/embedded-form-glue
 // TypeScript Version: 4.5.2
 
-declare module "@lyracom/embedded-form-glue" {
-    const KRGlue: KRGlue;
-    export default KRGlue;
+declare module '@lyracom/embedded-form-glue' {
+  const KRGlue: KRGlue
+  export default KRGlue
 }
 
 declare interface KRGlue {
-    /**
-     * @summary Loads kr-payment-form library
-     */
-    loadLibrary: (endpoint: string, key: string, formToken?: string) => Promise<{ KR: KR }>;
+  /**
+   * Load kr-payment-form library
+   * @param endpoint - API endpoint
+   * @param publicKey - Public key
+   * @param formToken? - Form token
+   */
+  loadLibrary: (
+    endpoint: string,
+    publicKey: string,
+    formToken?: string
+  ) => Promise<{ KR: KR }>
 }
 
 declare interface KR {
-    /**
-     * @summary Set form configuration.
-     */
-    setFormConfig: (config: KRConfig) => Promise<{ KR: KR }>;
-    /**
-     * @summary Set form token.
-     */
-    setFormToken: (formToken: string) => Promise<{ KR: KR }>;
-    /**
-     * @summary Set shop name.
-     */
-    setShopName: (shopName: string) => Promise<{ KR: KR }>;
-    /**
-     * @summary Set help buttons visibility.
-     */
-    setHelpVisibility: (formId: string, visibility: boolean) => Promise<{ KR: KR }>;
-    /**
-     * @summary Add a form.
-     */
-    addForm: (formSelector: string, formType?: FormType) => Promise<{ KR: KR, result: {formId: string} }>;
-    /**
-     * @summary Attach a form to the given selector.
-     */
-    attachForm: (formSelector: string) => Promise<{ KR: KR, result: {formId: string} }>;
-    /**
-     * @summary Show form.
-     */
-    showForm: (formId: string) => Promise<{ KR: KR }>;
-    /**
-     * @summary Hide form.
-     */
-    hideForm: (formId: string) => Promise<{ KR: KR }>;
-    /**
-     * @summary Open popin form.
-     */
-    openPopin: (formId: string) => Promise<{ KR: KR }>;
-    /**
-     * @summary Close popin form.
-     */
-    closePopin: (formId: string) => Promise<{ KR: KR }>;
-    /**
-     * @summary Validate form.
-     */
-    validateForm: (formId: string) => Promise<{ KR: KR, result: KRError }>;
-    /**
-     * @summary Remove all forms.
-     */
-    removeForms: () => Promise<{ KR: KR }>;
-    /**
-     * @summary Submit a form.
-     */
-    submit: () => Promise<{ KR: KR }>;
-    /**
-     * @summary Error event listener.
-     */
-    onError: (callback: (error: KRError) => void) => Promise<{ KR: KR }>;
-    /**
-     * @summary Focus event listener.
-     */
-    onFocus: (callback: (field: KRField) => void) => Promise<{ KR: KR }>;
-    /**
-     * @summary Blur event listener.
-     */
-    onBlur: (callback: (field: KRField) => void) => Promise<{ KR: KR }>;
-    /**
-     * @summary Form created event listener.
-     */
-    onFormCreated: (callback: () => void) => Promise<{ KR: KR }>;
-    /**
-     * @summary Form ready event listener.
-     */
-    onFormReady: (callback: () => void) => Promise<{ KR: KR }>;
-    /**
-     * @summary Form valid event listener.
-     */
-    onFormValid: (callback: () => void) => Promise<{ KR: KR }>;
-    /**
-     * @summary Form loaded event listener.
-     */
-    onLoaded: (callback: () => void) => Promise<{ KR: KR }>;
-    /**
-     * @summary Form submitted event listener.
-     */
-    onSubmit: (callback: (response: KRPaymentResponse) => void | boolean | Promise<boolean>) => Promise<{ KR: KR }>;
-    /**
-     * @summary Brand changed event listener
-     */
-    onBrandChanged: (callback: (data: BrandChangeCallBackProps) => void) => Promise<{ KR: KR }>
-    /**
-     * @summary Transaction created event listener
-     */
-    onTransactionCreated: (callback: (response: KRPaymentResponse)=> void | boolean | Promise<boolean>) => Promise<{ KR: KR }>
-    /**
-     * @summary 3ds secure abortion event listener
-     */
-    on3dSecureAbort: (callback: () => void) => Promise<{ KR: KR }>
-    /**
-     * @summary Popin closed event listener
-     */
-    onPopinClosed: (callback: () => void) => Promise<{ KR: KR }>
-    /**
-     * @summary Installment change event listener
-     */
-    onInstallmentChanged: (callback: (props: InstallmentChangeCallbackProps) => void) => Promise<{ KR: KR }> // TODO installmentInfo
-    /**
-     * @summary Remove event callbacks
-     */
-    removeEventCallbacks: (event: string) => void
-    /**
-     * @summary Sets brand
-     */
-    setBrand: (brand: string | null) => void
-    /**
-     * @summary Force the form validation
-     */
-    validate: () => void
-    /**
-     * @summary Open the specified payment method
-     */
-    openPaymentMethod: (paymentMethod: string) => void
-    /**
-     * @summary Payment button.
-     */
-    button: KRButton;
-    wallet: KRWallet;
+  /**
+   * Set form configuration
+   * @param config - Form configuration
+   */
+  setFormConfig: (config: KRConfig) => Promise<{ KR: KR }>
+  /**
+   * Set form token.
+   * @param formToken - Form token
+   */
+  setFormToken: (formToken: string) => Promise<{ KR: KR }>
+  /**
+   * Set shop name.
+   * @param shopName - Shop name
+   */
+  setShopName: (shopName: string) => Promise<{ KR: KR }>
+  /**
+   * Set help buttons visibility.
+   * @param formId - Form id
+   * @param visibility - Visibility
+   */
+  setHelpVisibility: (
+    formId: string,
+    visibility: boolean
+  ) => Promise<{ KR: KR }>
+  /**
+   * Add a form.
+   * @param formSelector - Form selector
+   * @param formType? - Form type
+   */
+  addForm: (
+    formSelector: string,
+    formType?: FormType
+  ) => Promise<{ KR: KR; result: { formId: string } }>
+  /**
+   * Attach a form to the given selector.
+   * @param formSelector - Form selector
+   */
+  attachForm: (
+    formSelector: string
+  ) => Promise<{ KR: KR; result: { formId: string } }>
+  /**
+   * Show form.
+   * @param formId - Form id
+   */
+  showForm: (formId: string) => Promise<{ KR: KR }>
+  /**
+   * Hide form.
+   * @param formId - Form id
+   */
+  hideForm: (formId: string) => Promise<{ KR: KR }>
+  /**
+   * Open popin form.
+   * @param formId - Form id
+   */
+  openPopin: (formId: string) => Promise<{ KR: KR }>
+  /**
+   * Close popin form.
+   * @param formId - Form id
+   */
+  closePopin: (formId: string) => Promise<{ KR: KR }>
+  /**
+   * Validate form.
+   * @param formId - Form id
+   */
+  validateForm: (formId: string) => Promise<{ KR: KR; result: KRError }>
+  /**
+   * Remove all forms.
+   */
+  removeForms: () => Promise<{ KR: KR }>
+  /**
+   * Submit a form.
+   */
+  submit: () => Promise<{ KR: KR }>
+  /**
+   * Error event listener.
+   * @param callback - Callback
+   */
+  onError: (callback: (error: KRError) => void) => Promise<{ KR: KR }>
+  /**
+   * Focus event listener.
+   * @param callback - Callback
+   */
+  onFocus: (callback: (field: KRField) => void) => Promise<{ KR: KR }>
+  /**
+   * Blur event listener.
+   * @param callback - Callback
+   */
+  onBlur: (callback: (field: KRField) => void) => Promise<{ KR: KR }>
+  /**
+   * Callback called when the payment form DOM elements are created.
+   * @param callback - Callback
+   */
+  onFormCreated: (callback: () => void) => Promise<{ KR: KR }>
+  /**
+   * Callback called when the payment form application is loaded.
+   * @param callback - Callback
+   */
+  onLoaded: (callback: () => void) => Promise<{ KR: KR }>
+  /**
+   * Callback called when the payment form is ready to be submitted.
+   * @param callback - Callback
+   */
+  onFormReady: (callback: () => void) => Promise<{ KR: KR }>
+  /**
+   * Form valid event listener.
+   * @param callback - Callback
+   */
+  onFormValid: (callback: () => void) => Promise<{ KR: KR }>
+  /**
+   * Form submitted event listener.
+   * @param callback - Callback
+   */
+  onSubmit: (
+    callback: (response: KRPaymentResponse) => void | boolean | Promise<boolean>
+  ) => Promise<{ KR: KR }>
+  /**
+   * Brand changed event listener
+   * @param callback - Callback
+   */
+  onBrandChanged: (
+    callback: (data: BrandChangeCallBackProps) => void
+  ) => Promise<{ KR: KR }>
+  /**
+   * Transaction created event listener
+   * @param callback - Callback
+   */
+  onTransactionCreated: (
+    callback: (response: KRPaymentResponse) => void | boolean | Promise<boolean>
+  ) => Promise<{ KR: KR }>
+  /**
+   * 3ds secure abortion event listener
+   * @param callback - Callback
+   */
+  on3dSecureAbort: (callback: () => void) => Promise<{ KR: KR }>
+  /**
+   * Popin closed event listener
+   * @param callback - Callback
+   */
+  onPopinClosed: (callback: () => void) => Promise<{ KR: KR }>
+  /**
+   * Installment change event listener
+   * @param callback - Callback
+   */
+  onInstallmentChanged: (
+    callback: (props: InstallmentChangeCallbackProps) => void
+  ) => Promise<{ KR: KR }> // TODO installmentInfo
+  /**
+   * Remove event callbacks
+   * @param event - Event name
+   */
+  removeEventCallbacks: (event: string) => void
+  /**
+   * Sets brand
+   * @param brand - Brand name
+   */
+  setBrand: (brand: string | null) => void
+  /**
+   * Force the form validation
+   */
+  validate: () => void
+  /**
+   * Open the specified payment method
+   * @param paymentMethod - Payment method name
+   */
+  openPaymentMethod: (paymentMethod: string) => void
+  /**
+   * Payment button.
+   */
+  button: KRButton
+  wallet: KRWallet
 }
 
 /**
- * @summary Payment button
+ * Payment button
  */
 declare interface KRButton {
-    /**
-     * @summary Payment button click event listener.
-     */
-     onClick: (callback: () => void | boolean | Promise<boolean>) => Promise<{ KR: KR }>;
-     /**
-      * @summary Set payment button label.
-      * @param label - Template : Your label %amount-and-currency% for button
-      */
-     setLabel: (label: string) => Promise<{ KR: KR }>;
-     /**
-      * @summary Show payment button spinner.
-      */
-     showSpinner: () => Promise<{ KR: KR }>;
- 
-     /**
-      * @summary Hide payment button spinner.
-      */
-     hideSpinner: () => Promise<{ KR: KR }>;
- 
-     /**
-      * @summary Disable payment button.
-      */
-     disable: () => Promise<{ KR: KR }>;
- 
-     /**
-      * @summary Enable payment buttons.
-      */
-     enable: () => Promise<{ KR: KR }>;
+  /**
+   * Payment button click event listener.
+   * @param callback - Callback
+   */
+  onClick: (
+    callback: () => void | boolean | Promise<boolean>
+  ) => Promise<{ KR: KR }>
+  /**
+   * Set payment button label.
+   * @param label - Template : Your label %amount-and-currency% for button
+   */
+  setLabel: (label: string) => Promise<{ KR: KR }>
+  /**
+   * Show payment button spinner.
+   */
+  showSpinner: () => Promise<{ KR: KR }>
+
+  /**
+   * Hide payment button spinner.
+   */
+  hideSpinner: () => Promise<{ KR: KR }>
+
+  /**
+   * Disable payment button.
+   */
+  disable: () => Promise<{ KR: KR }>
+
+  /**
+   * Enable payment buttons.
+   */
+  enable: () => Promise<{ KR: KR }>
 }
 
 /**
- * @summary Form wallet
+ * Form wallet
  */
 declare interface KRWallet {
-    /**
-     * @summary Tab changed form button event listener.
-     */
-     onTabChange: (callback: (tabName: string) => void) => Promise<{KR: KR}>;
+  /**
+   * Tab changed form button event listener.
+   * @param callback - Callback
+   */
+  onTabChange: (callback: (tabName: string) => void) => Promise<{ KR: KR }>
 }
 
 /**
- * @summary Form configuration
+ * Form configuration
  */
 declare interface KRConfig {
-    /**
-     * @summary Form token.
-     */
-    formToken?: string;
-    /**
-     * @summary Public key.
-     */
-    'kr-public-key'?: string;
-    /**
-     * @summary Language used to display the form in Culture format (en-US).
-     */
-    'kr-language'?: string;
-    /**
-     * @summary URL to which the form is submitted (POST method) in case of success.
-     */
-    'kr-post-url-success'?: string;
-    /**
-     * @summary URL to which the form is submitted (GET method) in case of success.
-     */
-    'kr-get-url-success'?: string;
-    /**
-     * @summary URL called when there are no attempts left (POST method).
-     */
-    'kr-post-url-refused'?: string;
-    /**
-     * @summary URL called when there are no attempts left (GET method).
-     */
-    'kr-get-url-refused'?: string;
-    /**
-     * @summary CVV clean in case of rejected transaction.
-     */
-    'kr-clear-on-error'?: boolean;
-    /**
-     * @summary Hide the debug toolbar.
-     */
-    'kr-hide-debug-toolbar'?: boolean;
-    /**
-     * @summary Form's read only mode.
-     */
-    'kr-read-only'?: boolean;
-    /**
-     * @summary Disables auto initialization for SPA mode.
-     */
-    'kr-spa-mode'?: boolean;
-    /**
-     * @summary Form's z-index style.
-     */
-     'kr-z-index'?: string;
-    /**
-     * @summary Installments field content label (singular)
-     * @param label - Template : Your label [COUNT] for singular installment with [CURRENCY] [AMOUNT]
-     *  
-     */
-     'kr-installments-label-singular'?: string;
-    /**
-     * @summary Installments field content label (plural)
-     * @param label - Template : Your label [COUNT] for plural installment with [CURRENCY] [AMOUNT]
-     */
-     'kr-installments-label-plural'?: string;
-    /**
-     * @summary First installment delay field content label (singular)
-     * @param label - Template : Your label [COUNT] for singular installment delay
-     */
-     'kr-first-installment-delay-label-singular'?: string;
-    /**
-     * @summary First installment delay field content label (plural)
-     * @param label - Template : Your label [COUNT] for plural installment delay
-     */
-     'kr-first-installment-delay-label-plural'?: string;
-    /**
-     * @summary First installment delay field content label (without)
-     */
-     'kr-first-installment-delay-label-without'?: string;
-    /**
-     * @summary Pan field placeholder (card number).
-     */
-    'kr-placeholder-pan'?: string;
-    /**
-     * @summary Expiry field placeholder (expiry date).
-     */
-    'kr-placeholder-expiry'?: string;
-    /**
-     * @summary Security code field placeholder (CVV).
-     */
-    'kr-placeholder-security-code'?: string;
-    /**
-     * @summary ID document type field placeholder.
-     */
-    'kr-placeholder-identity-document-type'?: string;
-    /**
-     * @summary ID document number field placeholder.
-     */
-    'kr-placeholder-identity-document-number'?: string;
-    /**
-     * @summary Installments field placeholder (default).
-     */
-    'kr-placeholder-installments-default'?: string;
-    /**
-     * @summary Installments field placeholder (single payment).
-     */
-    'kr-placeholder-installments-single-payment'?: string;
-    /**
-     * @summary Installments field placeholder (single payment and credit card).
-     */
-    'kr-placeholder-installments-single-payment-credit'?: string;
-    /**
-     * @summary First installment delay field placeholder.
-     */
-    'kr-placeholder-first-installment-delay'?: string;
-    /**
-     * @summary Card holder email field placeholder.
-     */
-    'kr-placeholder-card-holder-mail'?: string;
-    /**
-     * @summary Card holder name field placeholder.
-     */
-    'kr-placeholder-card-holder-name'?: string;
-    /**
-     * @summary Pan field label (card number).
-     */
-    'kr-label-pan'?: string;
-    /**
-     * @summary Expiry field label (expiry date).
-     */
-    'kr-label-expiry'?: string;
-    /**
-     * @summary Security code field label (CVV).
-     */
-    'kr-label-security-code'?: string;
-    /**
-     * @summary ID document type field label.
-     */
-    'kr-label-identity-document-type'?: string;
-    /**
-     * @summary ID document number field label.
-     */
-    'kr-label-identity-document-number'?: string;
-    /**
-     * @summary Installments field label.
-     */
-    'kr-label-installment-number'?: string;
-    /**
-     * @summary Card holder email field label.
-     */
-    'kr-label-card-holder-mail'?: string;
-    /**
-     * @summary Card holder name field label.
-     */
-    'kr-label-card-holder-name'?: string;
-    /**
-     * @summary Card register checkbox field label.
-     */
-    'kr-label-register'?: string;
+  /**
+   * Form token.
+   */
+  formToken?: string
+  /**
+   * Public key.
+   */
+  'kr-public-key'?: string
+  /**
+   * Language used to display the form in Culture format (en-US).
+   */
+  'kr-language'?: string
+  /**
+   * URL to which the form is submitted (POST method) in case of success.
+   */
+  'kr-post-url-success'?: string
+  /**
+   * URL to which the form is submitted (GET method) in case of success.
+   */
+  'kr-get-url-success'?: string
+  /**
+   * URL called when there are no attempts left (POST method).
+   */
+  'kr-post-url-refused'?: string
+  /**
+   * URL called when there are no attempts left (GET method).
+   */
+  'kr-get-url-refused'?: string
+  /**
+   * CVV clean in case of rejected transaction.
+   */
+  'kr-clear-on-error'?: boolean
+  /**
+   * Hide the debug toolbar.
+   */
+  'kr-hide-debug-toolbar'?: boolean
+  /**
+   * Form's read only mode.
+   */
+  'kr-read-only'?: boolean
+  /**
+   * Disables auto initialization for SPA mode.
+   */
+  'kr-spa-mode'?: boolean
+  /**
+   * Form's z-index style.
+   */
+  'kr-z-index'?: string
+  /**
+   * Installments field content label (singular)
+   * @param label - Template : Your label [COUNT] for singular installment with [CURRENCY] [AMOUNT]
+   *
+   */
+  'kr-installments-label-singular'?: string
+  /**
+   * Installments field content label (plural)
+   * @param label - Template : Your label [COUNT] for plural installment with [CURRENCY] [AMOUNT]
+   */
+  'kr-installments-label-plural'?: string
+  /**
+   * First installment delay field content label (singular)
+   * @param label - Template : Your label [COUNT] for singular installment delay
+   */
+  'kr-first-installment-delay-label-singular'?: string
+  /**
+   * First installment delay field content label (plural)
+   * @param label - Template : Your label [COUNT] for plural installment delay
+   */
+  'kr-first-installment-delay-label-plural'?: string
+  /**
+   * First installment delay field content label (without)
+   */
+  'kr-first-installment-delay-label-without'?: string
+  /**
+   * Pan field placeholder (card number).
+   */
+  'kr-placeholder-pan'?: string
+  /**
+   * Expiry field placeholder (expiry date).
+   */
+  'kr-placeholder-expiry'?: string
+  /**
+   * Security code field placeholder (CVV).
+   */
+  'kr-placeholder-security-code'?: string
+  /**
+   * ID document type field placeholder.
+   */
+  'kr-placeholder-identity-document-type'?: string
+  /**
+   * ID document number field placeholder.
+   */
+  'kr-placeholder-identity-document-number'?: string
+  /**
+   * Installments field placeholder (default).
+   */
+  'kr-placeholder-installments-default'?: string
+  /**
+   * Installments field placeholder (single payment).
+   */
+  'kr-placeholder-installments-single-payment'?: string
+  /**
+   * Installments field placeholder (single payment and credit card).
+   */
+  'kr-placeholder-installments-single-payment-credit'?: string
+  /**
+   * First installment delay field placeholder.
+   */
+  'kr-placeholder-first-installment-delay'?: string
+  /**
+   * Card holder email field placeholder.
+   */
+  'kr-placeholder-card-holder-mail'?: string
+  /**
+   * Card holder name field placeholder.
+   */
+  'kr-placeholder-card-holder-name'?: string
+  /**
+   * Pan field label (card number).
+   */
+  'kr-label-pan'?: string
+  /**
+   * Expiry field label (expiry date).
+   */
+  'kr-label-expiry'?: string
+  /**
+   * Security code field label (CVV).
+   */
+  'kr-label-security-code'?: string
+  /**
+   * ID document type field label.
+   */
+  'kr-label-identity-document-type'?: string
+  /**
+   * ID document number field label.
+   */
+  'kr-label-identity-document-number'?: string
+  /**
+   * Installments field label.
+   */
+  'kr-label-installment-number'?: string
+  /**
+   * Card holder email field label.
+   */
+  'kr-label-card-holder-mail'?: string
+  /**
+   * Card holder name field label.
+   */
+  'kr-label-card-holder-name'?: string
+  /**
+   * Card register checkbox field label.
+   */
+  'kr-label-register'?: string
 }
 
 /**
- * @summary Form error
+ * Form error
  */
 declare interface KRError {
-    /**
-     * @summary Error code.
-     */
-    errorCode: string;
-    /**
-     * @summary Error message.
-     */
-    errorMessage: string;
-    /**
-     * @summary Detailed error code.
-     */
-     detailedErrorCode?: string;
-     /**
-      * @summary Detailed error message.
-      */
-     detailedErrorMessage?: string;
-    /**
-     * @summary Field with the error.
-     */
-    field?: string;
-    /**
-     * @summary Child errors.
-     */
-    children?: Array<KRError>;
-    /**
-     * @summary Error metadata.
-     */
-     metadata?: Record<string, any>;
+  /**
+   * Error code.
+   */
+  errorCode: string
+  /**
+   * Error message.
+   */
+  errorMessage: string
+  /**
+   * Detailed error code.
+   */
+  detailedErrorCode?: string
+  /**
+   * Detailed error message.
+   */
+  detailedErrorMessage?: string
+  /**
+   * Field with the error.
+   */
+  field?: string
+  /**
+   * Child errors.
+   */
+  children?: Array<KRError>
+  /**
+   * Error metadata.
+   */
+  metadata?: Record<string, any>
 }
 
 /**
- * @summary Field.
+ * Field.
  */
 declare interface KRField {
-    formId: string;
-    field: string;
+  formId: string
+  field: string
 }
 
 /**
- * @summary Payment response object.
+ * Payment response object.
  */
 declare interface KRPaymentResponse {
-    /**
-     * @summary Response type.
-     */
-     _type: string;
-    /**
-     * @summary Hash of the JSON object stored in kr-answer. It allows to verify the authenticity of the response.
-     */
-    hash: string;
-    /**
-     * @summary Algorithm used to calculate the hash.
-     */
-    hashAlgorithm: string;
-    /**
-     * @summary Type of key used to sign kr-answer. Can be set to sha256_hmac (browser return) or password (IPN).
-     */
-    hashKey: string;
-    /**
-     * @summary Server date.
-     */
-    serverDate: string;
-    /**
-     * @summary Object containing the payment result in JSON format.
-     */
-    clientAnswer: KRClientAnswer;
-    /**
-     * @summary Object containing the payment result in JSON format.
-     */
-    post: () => KRPaymentIPNResponse;
+  /**
+   * Response type.
+   */
+  _type: string
+  /**
+   * Hash of the JSON object stored in kr-answer. It allows to verify the authenticity of the response.
+   */
+  hash: string
+  /**
+   * Algorithm used to calculate the hash.
+   */
+  hashAlgorithm: string
+  /**
+   * Type of key used to sign kr-answer. Can be set to sha256_hmac (browser return) or password (IPN).
+   */
+  hashKey: string
+  /**
+   * Server date.
+   */
+  serverDate: string
+  /**
+   * Object containing the payment result in JSON format.
+   */
+  clientAnswer: KRClientAnswer
+  /**
+   * Object containing the payment result in JSON format.
+   */
+  post: () => KRPaymentIPNResponse
 }
 
 /**
- * @summary Client answer object.
+ * Client answer object.
  */
 declare interface KRClientAnswer {
-    /**
-     * @summary Shop identifier.
-     */
-    shopId: string;
-    /**
-     * @summary Payment cycle (CLOSED or OPEN).
-     */
-    orderCycle: string;
-    /**
-     * @summary Payment status (PAID, UNPAID... ).
-     */
-    orderStatus: string;
-    /**
-     * @summary Server date.
-     */
-    serverDate: string;
+  /**
+   * Shop identifier.
+   */
+  shopId: string
+  /**
+   * Payment cycle (CLOSED or OPEN).
+   */
+  orderCycle: string
+  /**
+   * Payment status (PAID, UNPAID... ).
+   */
+  orderStatus: string
+  /**
+   * Server date.
+   */
+  serverDate: string
 }
 
 /**
- * @summary Payment object in IPN format.
+ * Payment object in IPN format.
  */
 declare interface KRPaymentIPNResponse {
-    /**
-     * @summary Hash of the response object.
-     */
-    'kr-hash': string;
-    /**
-     * @summary Hash algorithm of the response object.
-     */
-    'kr-hash-algorithm': string;
-    /**
-     * @summary Answer type.
-     */
-    'kr-answer-type': string;
-    /**
-     * @summary Answer data.
-     */
-    'kr-answer': string;
+  /**
+   * Hash of the response object.
+   */
+  'kr-hash': string
+  /**
+   * Hash algorithm of the response object.
+   */
+  'kr-hash-algorithm': string
+  /**
+   * Answer type.
+   */
+  'kr-answer-type': string
+  /**
+   * Answer data.
+   */
+  'kr-answer': string
 }
 
 declare enum FormType {
-    Cards = "cards",
-    All = "all"
+  Cards = 'cards',
+  All = 'all'
 }
 
 declare interface BrandChangeCallBackProps {
-    KR: KR,
-    card: {
-        bin: string,
-        brand: string
-    }
+  KR: KR
+  card: {
+    bin: string
+    brand: string
+  }
 }
 
 declare interface InstallmentChangeCallbackProps {
-    KR: KR,
-    installmentInfo: {
-        installmentCount: number, 
-        totalAmount: number, 
-        hasInterests: boolean, 
-        brand: string
-    }
+  KR: KR
+  installmentInfo: {
+    installmentCount: number
+    totalAmount: number
+    hasInterests: boolean
+    brand: string
+  }
 }

@@ -1,74 +1,80 @@
 import Head from 'next/head'
 import KRGlue from '@lyracom/embedded-form-glue'
-import React from 'react'
+import { useState, useEffect } from 'react'
 import Script from 'next/script'
 
-export default function Home() {
-  const [message, setMessage] = React.useState('')
+export default function Index() {
+  const [message, setMessage] = useState('')
 
-  const endpoint = '~~CHANGE_ME_ENDPOINT~~'
-  const publicKey = '~~CHANGE_ME_PUBLIC_KEY~~'
-  let formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
+  useEffect(() => {
+    async function setupPaymentForm() {
+      const endpoint = '~~CHANGE_ME_ENDPOINT~~'
+      const publicKey = '~~CHANGE_ME_PUBLIC_KEY~~'
+      let formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
 
-  fetch('http://localhost:3000/createPayment', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      paymentConf: { amount: 10000, currency: 'USD' }
-    })
-  })
-    .then(res => res.text())
-    .then(resp => {
-      formToken = resp
-
-      return KRGlue.loadLibrary(
-        endpoint,
-        publicKey
-      ) /* Load the remote library */
-    })
-    .then(({ KR }) =>
-      KR.setFormConfig({
-        /* set the minimal configuration */
-        formToken: formToken,
-        'kr-language': 'en-US' /* to update initialization parameter */
-      })
-    )
-    .then(({ KR }) =>
-      KR.onSubmit(paymentData => {
-        fetch('http://localhost:3000/validatePayment', {
+      try {
+        const res = await fetch('http://localhost:3000/createPayment', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(paymentData)
-        }).then(response => {
-          if (response.status === 200) setMessage('Payment successful!')
+          body: JSON.stringify({
+            paymentConf: { amount: 10000, currency: 'USD' }
+          })
         })
-        return false // Return false to prevent the redirection
-      })
-    )
-    .then(({ KR }) =>
-      KR.addForm('#myPaymentForm')
-    ) /* add a payment form  to myPaymentForm div*/
-    .then(({ KR, result }) =>
-      KR.showForm(result.formId)
-    ) /* show the payment form */
-    .catch(error => {
-      setMessage(error + ' (see console for more details)')
-    })
+        formToken = await res.text()
+
+        const { KR } = await KRGlue.loadLibrary(
+          endpoint,
+          publicKey
+        ) /* Load the remote library */
+
+        await KR.setFormConfig({
+          /* set the minimal configuration */
+          formToken: formToken,
+          'kr-language': 'en-US' /* to update initialization parameter */
+        })
+
+        await KR.onSubmit(async paymentData => {
+          const response = await fetch(
+            'http://localhost:3000/validatePayment',
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(paymentData)
+            }
+          )
+          if (response.status === 200) setMessage('Payment successful!')
+          return false // Return false to prevent the redirection
+        })
+
+        const { result } = await KR.attachForm(
+          '#myPaymentForm'
+        ) /* Attach a payment form  to myPaymentForm div*/
+
+        await KR.showForm(result.formId) /* show the payment form */
+      } catch (error) {
+        setMessage(error + ' (see console for more details)')
+      }
+    }
+
+    setupPaymentForm()
+  }, [])
 
   return (
     <div>
       <Head>
-        <title>NextJS glue example</title>
+        <title>NextJS</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <link
           rel="stylesheet"
-          href="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/classic-reset.css"
+          href="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon-reset.css"
         />
       </Head>
-      <Script src="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/classic.js"></Script>
-      <div class="container">
-        <h1>Form:</h1>
-        <div id="myPaymentForm"></div>
+      <Script src="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon.js"></Script>
+      <div className="container">
+        <h1>NextJS + KR.attachForm</h1>
+        <div id="myPaymentForm">
+          <div className="kr-smart-form" kr-card-form-expanded="true" />
+        </div>
         <div data-test="payment-message">{message}</div>
       </div>
     </div>
