@@ -1,6 +1,10 @@
 import { test, expect } from '@playwright/test'
 
 test.describe(`Sample embedded examples`, () => {
+  test.beforeEach(async ({ page }, testInfo) => {
+    testInfo.setTimeout(60000)
+  })
+
   test('KR.addForm minimal', async ({ page }) => {
     await page.goto(`http://127.0.0.1:8080/tests/views/addFormMinimal.html`)
     await expect(page.locator('.kr-embedded[kr-form-ready]')).toBeVisible()

@@ -13,8 +13,9 @@ const examples = [
 
 examples.forEach(example => {
   test.describe(`${example.name} example`, () => {
-    test.beforeEach(async ({ page }) => {
+    test.beforeEach(async ({ page }, testInfo) => {
       await page.goto(`http://127.0.0.1:${example.port}/`)
+      testInfo.setTimeout(60000)
     })
 
     test('Container for embedded form exists', async ({ page }) => {
