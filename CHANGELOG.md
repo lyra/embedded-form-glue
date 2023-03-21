@@ -1,5 +1,14 @@
 # Change log
 
+# 1.3.2
+
+- [feat] Update d.ts file
+- [doc] Readme update
+- [doc] Examples refactor
+- [ci] Moved to Github Actions
+- [ci] Moved to Playwright
+- [doc] Licence
+
 # 1.3.1
 
 - [feat] Update d.ts file
