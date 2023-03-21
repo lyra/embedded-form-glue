@@ -1,5 +1,8 @@
 # Change log
 
+# 1.3.3
+
+- [doc] Readme update
 # 1.3.2
 
 - [feat] Update d.ts file
