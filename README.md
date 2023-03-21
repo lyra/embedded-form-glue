@@ -29,7 +29,7 @@
     <a href="https://docs.lyra.com/en/rest/V4.0/javascript/"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/embedded-form-glue/issues">Quick Start</a>
+    <a href="https://github.com/lyra/embedded-form-glue#getting-started">Quick Start</a>
     ·
     <a href="https://github.com/lyra/embedded-form-glue/issues">Report Bug</a>
     ·
