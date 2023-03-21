@@ -123,11 +123,8 @@ const endPoint = '~~CHANGE_ME_ENDPOINT~~';
 
 /* Load the remote library and get the KR object */
 const { KR } = await KRGlue.loadLibrary(endPoint, publicKey) 
-/* Setting demo configuration */
-await KR.setFormConfig({             
-  formToken: 'DEMO-TOKEN-TO-BE-REPLACED',
-  'kr-language': 'en-US',
-}))
+/* Setting configuration */
+await KR.setFormConfig({ 'kr-language': 'en-US' }))
 /* Attach a payment form to a given DOM selector */
 const { result } = await KR.attachForm('#myPaymentForm'))
 /* Show the payment form */
@@ -146,20 +143,30 @@ await KR.showForm(result.formId));
 
 ## First transaction
 
-Once the payment form is up and ready, open the card form, select a test card from the list on the 
-debug toolbar (at the bottom of the page) and click on the pay button.
+Once the payment form is set up, you will see the skeleton animation. This is because the form is
+using the default demo token. To make a real transaction, you need to get a real **formToken**.
 
-After that, the following error will be displayed: **CLIENT_998: Demo form, see the documentation**.
-The reason is that the defined **formToken** set with the method **KR.setFormConfig** is a demo 
-token **DEMO-TOKEN-TO-BE-REPLACED**.
-
-To get a proper test **formToken**, make a request to the Charge/CreatePayment web service. Please 
-see the [NodeJS server example](examples/server/README.md), or visit the following links for more 
+To get a proper test **formToken**, make a request to the Charge/CreatePayment web service. To not
+expose your credentials, it is mandatory to do that from a server. Please see the 
+[NodeJS server example](examples/server/README.md), or visit the following links for more 
 information:
 
 - [Embedded form quick start][doc-quick-start]
 - [embedded form integration guide][doc-integration-guide]
 - [Payment REST API reference][doc-api-reference]
+
+Once you have a **formToken**, you can set it in the payment form with the following code:
+
+```javascript
+await KR.setFormConfig({ formToken: '~~CHANGE_ME_FORM_TOKEN~~' }))
+```
+
+> **Note**
+>
+> Replace **`~~CHANGE_ME_FORM_TOKEN~~`** with your form token.
+
+After setting the real **formToken**, the payment form will be displayed with the available payment
+methods.
 
 ## Methods
 
