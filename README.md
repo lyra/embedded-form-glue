@@ -159,6 +159,11 @@ information:
 Once you have a **formToken**, you can set it in the payment form with the following code:
 
 ```javascript
+// Use the loadLibrary to set the form token
+const { KR } = await KRGlue.loadLibrary(endPoint, publicKey, '~~CHANGE_ME_FORM_TOKEN~~')
+
+// Or set the form token once the library is loaded
+const { KR } = await KRGlue.loadLibrary(endPoint, publicKey) 
 await KR.setFormConfig({ formToken: '~~CHANGE_ME_FORM_TOKEN~~' })
 ```
 
