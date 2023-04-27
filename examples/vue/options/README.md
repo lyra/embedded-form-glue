@@ -113,9 +113,9 @@ export default {
       await KR.setFormConfig({       /* set the minimal configuration */
         formToken: formToken,
         'kr-language': 'en-US',                       /* to update initialization parameter */
-      }))
-      const { result } = await KR.attachForm('#myPaymentForm')) /* create a payment form */
-      await KR.showForm(result.formId));  /* show the payment form */
+      })
+      const { result } = await KR.attachForm('#myPaymentForm') /* create a payment form */
+      await KR.showForm(result.formId);  /* show the payment form */
     }
     (...)
 }
