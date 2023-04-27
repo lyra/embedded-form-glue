@@ -20,6 +20,45 @@ const hmacSHA256 = require('crypto-js/hmac-sha256')
 const Hex = require('crypto-js/enc-hex')
 const app = express()
 
+// In a separate file
+exports.createFormToken = async paymentConf => {
+  // format: 123456789
+  const username = '~~CHANGE_ME_USER~~'
+
+  // format: testprivatekey_XXXXXXX
+  const password = '~~CHANGE_ME_PASSWORD~~'
+
+  // format: api.my.psp.domain.name without https
+  const endpoint = '~~CHANGE_ME_ENDPOINT_NO_HTTPS~~'
+
+  const createPaymentEndpoint = `https://${username}:${password}@${endpoint}/api-payment/V4/Charge/CreatePayment`
+
+  try {
+    const response = await axios.post(createPaymentEndpoint, paymentConf, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    if (!response?.data?.answer?.formToken) throw response
+    return response.data.answer.formToken
+  } catch (error) {
+    throw error
+  }
+}
+/**
+ * Generates a payment token for the given configuration
+ */
+app.post('/createPayment', async (req, res) => {
+  const paymentConf = req.body.paymentConf
+
+  try {
+    const formToken = await createFormToken(paymentConf)
+    res.send(formToken)
+  } catch (error) {
+    res.status(500).send(error)
+  }
+})
+
 (...)
 // Validates the given payment data (hash)
 app.post('/validatePayment', (req, res) => {
