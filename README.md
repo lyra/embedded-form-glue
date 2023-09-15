@@ -200,7 +200,7 @@ The available methods and callbacks are described in the following sections.
 
 ## JavaScript frameworks integration
 
-Please find integration examples for some of the main javascript frameworks in the following links:
+Find integration examples for some of the main javascript frameworks in the following links:
 
 | **Framework** | **Description**                                         |
 | ------------- | ------------------------------------------------------- |
