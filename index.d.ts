@@ -63,6 +63,13 @@ declare interface KR {
     formSelector: string
   ) => Promise<{ KR: KR; result: { formId: string } }>
   /**
+   * Renders KR  in the given selector or HTML element.
+   * @param $elements - Form query selector or HTML element or array of HTML elements or undefined
+   */
+  renderElements: (
+    $elements: string | HTMLElement | Array<HTMLElement> | undefined
+  ) => Promise<void>
+  /**
    * Show form.
    * @param formId - Form id
    */

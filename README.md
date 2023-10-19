@@ -124,11 +124,11 @@ const endPoint = '~~CHANGE_ME_ENDPOINT~~';
 /* Load the remote library and get the KR object */
 const { KR } = await KRGlue.loadLibrary(endPoint, publicKey) 
 /* Setting configuration */
-await KR.setFormConfig({ 'kr-language': 'en-US' }))
+await KR.setFormConfig({ 'kr-language': 'en-US' })
 /* Attach a payment form to a given DOM selector */
-const { result } = await KR.attachForm('#myPaymentForm'))
+const { result } = await KR.attachForm('#myPaymentForm')
 /* Show the payment form */
-await KR.showForm(result.formId));
+await KR.showForm(result.formId);
 ```
 > **Note**
 > 
