@@ -73,5 +73,6 @@ examples.forEach(example => {
 
 async function selectTestCard(page, cardClass) {
   await page.locator('#krcardsMenu').hover()
+  if (cardClass.includes('visa')) await page.locator(`span.visa`).click()
   await page.locator(`tr.${cardClass}`).click()
 }
