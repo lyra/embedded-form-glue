@@ -45,6 +45,9 @@
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */
+// Disabling promise rejection wrapping because it can cause some bugs
+//https://github.com/angular/angular/issues/31680
+import './zone-flags'
 import 'zone.js';  // Included with Angular CLI.
 
 
