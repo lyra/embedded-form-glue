@@ -1,5 +1,5 @@
 <template>
-  <h1>Vue Composition API + KR.attachForm</h1>
+  <h1>Vue Composition API Example</h1>
   <div class="hello">
     <div class="container">
       <div id="myPaymentForm">
@@ -45,11 +45,7 @@ onMounted(async () => {
     })
     await KR.onSubmit(validatePayment) // Custom payment callback
 
-    const { result } = await KR.attachForm(
-      '#myPaymentForm'
-    ) /* create a payment form */
-
-    await KR.showForm(result.formId) /* show the payment form */
+    await KR.renderElements('#myPaymentForm') /* create a payment form */
   } catch (error) {
     message.value = error + ' (see console for more details)'
   }

@@ -8,7 +8,8 @@ export default function MyComponent() {
   useEffect(() => {
     async function setupPaymentForm() {
       const endpoint = '~~CHANGE_ME_ENDPOINT~~'
-      const publicKey = '~~CHANGE_ME_PUBLIC_KEY~~'
+      const publicKey =
+        '~~CHANGE_ME_PUBLIC_KEY~~'
       let formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
 
       try {
@@ -45,11 +46,9 @@ export default function MyComponent() {
           return false // Return false to prevent the redirection
         })
 
-        const { result } = await KR.attachForm(
+        await KR.renderElements(
           '#myPaymentForm'
-        ) /* Attach a payment form  to myPaymentForm div*/
-
-        await KR.showForm(result.formId) /* show the payment form */
+        ) /* Render the payment form into myPaymentForm div */
       } catch (error) {
         setMessage(error + ' (see console for more details)')
       }
@@ -60,7 +59,7 @@ export default function MyComponent() {
 
   return (
     <div className="form">
-      <h1>React + KR.attachForm</h1>
+      <h1>React Example</h1>
       <div className="container">
         <div id="myPaymentForm">
           <div className="kr-smart-form" kr-card-form-expanded></div>

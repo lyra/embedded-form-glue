@@ -46,11 +46,9 @@ export default function Index() {
           return false // Return false to prevent the redirection
         })
 
-        const { result } = await KR.attachForm(
+        await KR.renderElements(
           '#myPaymentForm'
-        ) /* Attach a payment form  to myPaymentForm div*/
-
-        await KR.showForm(result.formId) /* show the payment form */
+        ) /* Render the payment form into myPaymentForm div*/
       } catch (error) {
         setMessage(error + ' (see console for more details)')
       }
@@ -71,7 +69,7 @@ export default function Index() {
       </Head>
       <Script src="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon.js"></Script>
       <div className="container">
-        <h1>NextJS + KR.attachForm</h1>
+        <h1>NextJS Example</h1>
         <div id="myPaymentForm">
           <div className="kr-smart-form" kr-card-form-expanded="true" />
         </div>

@@ -1,17 +1,17 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
-    <AttachForm />
+    <RenderElements />
   </div>
 </template>
 
 <script>
-import AttachForm from './components/AttachForm.vue'
+import RenderElements from './components/RenderElements.vue'
 
 export default {
   name: 'app',
   components: {
-    AttachForm
+    RenderElements
   }
 }
 </script>
@@ -24,5 +24,9 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+#app > img {
+  width: 100px;
 }
 </style>

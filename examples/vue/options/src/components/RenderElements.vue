@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1>Vue Options API + KR.attachForm</h1>
+    <h1>Vue Options API Example</h1>
     <div class="container">
       <div id="myPaymentForm">
         <!-- if you want only cards, replace kr-smart-form by kr-embedded -->
@@ -49,9 +49,7 @@ export default {
         await this.validatePayment(paymentData)
       })
 
-      // Create a payment form
-      const { result } = await KR.attachForm('#myPaymentForm')
-      await KR.showForm(result.formId)
+      await KR.renderElements('#myPaymentForm') // Create a payment form
     } catch (error) {
       error => (this.message = error + ' (see console for more details)')
     }
