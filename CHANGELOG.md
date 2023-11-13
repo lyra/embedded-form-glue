@@ -1,5 +1,10 @@
 # Change log
 
+# 1.3.8
+
+- [feat] Update d.ts file
+- [doc] Examples update with renderElements
+
 # 1.3.4
 
 - [feat] Removes promise polyfill
@@ -7,6 +12,7 @@
 # 1.3.3
 
 - [doc] Readme update
+
 # 1.3.2
 
 - [feat] Update d.ts file
