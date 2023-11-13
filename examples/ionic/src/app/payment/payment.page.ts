@@ -41,11 +41,8 @@ export class PaymentPage implements AfterViewInit {
       )
       .then(({ KR }) => KR.onSubmit(this.onSubmit))
       .then(({ KR }) =>
-        KR.attachForm('#myPaymentForm')
+        KR.renderElements('#myPaymentForm')
       ) /* Attach a payment form  to myPaymentForm div*/
-      .then(({ KR, result }) =>
-        KR.showForm(result.formId)
-      ) /* show the payment form */
       .catch(error => {
         this.message = error.message + ' (see console for more details)'
       })

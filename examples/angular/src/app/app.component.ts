@@ -9,7 +9,7 @@ import { firstValueFrom } from 'rxjs'
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements AfterViewInit {
-  title: string = 'Angular + KR.attachForm'
+  title: string = 'Angular example'
   message: string = ''
 
   constructor(private http: HttpClient, private chRef: ChangeDetectorRef) {}
@@ -41,11 +41,8 @@ export class AppComponent implements AfterViewInit {
       )
       .then(({ KR }) => KR.onSubmit(this.onSubmit))
       .then(({ KR }) =>
-        KR.attachForm('#myPaymentForm')
-      ) /* Attach a payment form  to myPaymentForm div*/
-      .then(({ KR, result }) =>
-        KR.showForm(result.formId)
-      ) /* show the payment form */
+        KR.renderElements('#myPaymentForm')
+      ) /* Render the payment form into the specified selector*/
       .catch(error => {
         this.message = error.message + ' (see console for more details)'
       })

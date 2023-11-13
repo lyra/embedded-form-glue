@@ -32,11 +32,9 @@
 
       await KR.onSubmit(validatePayment) // Custom payment callback
 
-      const { result } = await KR.attachForm(
+      await KR.renderElements(
         '#myPaymentForm'
       ) /* create a payment form */
-
-      await KR.showForm(result.formId) /* show the payment form */
     } catch (error) {
       message = error + ' (see console for more details)'
     }
@@ -56,7 +54,7 @@
 
 <main>
   <div class="container">
-    <h1>Svelte + KR.attachForm</h1>
+    <h1>Svelte Example</h1>
     <div class="form-container" id="myPaymentForm">
       <div class="kr-smart-form" kr-card-form-expanded />
     </div>

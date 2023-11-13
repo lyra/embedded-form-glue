@@ -68,7 +68,7 @@ declare interface KR {
    */
   renderElements: (
     $elements: string | HTMLElement | Array<HTMLElement> | undefined
-  ) => Promise<void>
+  ) => Promise<{ KR: KR; result: { formId: string } }>
   /**
    * Show form.
    * @param formId - Form id

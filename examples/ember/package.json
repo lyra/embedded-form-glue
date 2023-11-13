@@ -69,6 +69,6 @@
     "edition": "octane"
   },
   "dependencies": {
-    "@lyracom/embedded-form-glue": "1.3.1"
+    "@lyracom/embedded-form-glue": "1.3.7"
   }
 }
