@@ -31,10 +31,10 @@ ionic serve
 
 First you have to add 2 theme files:
 
-| File              | Description                                                                   |
-| ----------------- | ----------------------------------------------------------------------------- |
-| neon-reset.css    | default style applied before the [Lyra Javascript Library][js link] is loaded |
-| neon.js           | theme logic, like waiting annimation on submit button, ...                    |
+| File           | Description                                                                   |
+| -------------- | ----------------------------------------------------------------------------- |
+| neon-reset.css | default style applied before the [Lyra Javascript Library][js link] is loaded |
+| neon.js        | theme logic, like waiting animation on submit button, ...                     |
 
 Add them in public/index.html in the the HEAD section:
 
@@ -48,7 +48,7 @@ href="https://~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon-rese
 ```
 
 > **Note**
-> 
+>
 > Replace **[CHANGE_ME]** with your credentials and end-points.
 
 For more information about theming, take a look to [Lyra theming documentation][js themes]
@@ -59,7 +59,6 @@ Create the src/app/mycomponent/mycomponent.html with:
 (...)
 <ion-content>
   <div class="form-container">
-    <h1>KR.attachForm</h1>
     <div id="myPaymentForm">
       <div class="kr-smart-form" kr-card-form-expanded></div>
     </div>
@@ -113,11 +112,8 @@ export class PaymentPage implements AfterViewInit {
         })
       )
       .then(({ KR }) =>
-        KR.attachForm('#myPaymentForm')
-      ) /* Attach a payment form  to myPaymentForm div*/
-      .then(({ KR, result }) =>
-        KR.showForm(result.formId)
-      ) /* show the payment form */
+        KR.renderElements('#myPaymentForm')
+      ) /* Render the payment form into myPaymentForm div*/
       .catch(error => {
         this.message = error.message + ' (see console for more details)'
       })
@@ -128,6 +124,7 @@ export class PaymentPage implements AfterViewInit {
 ## The first transaction
 
 To make the first transaction, please see the [first transaction guide](../../README.md).
+
 ## Payment hash verification
 
 To learn how to verify the payment hash, please see the [payment hash verification information](../server/README.md).

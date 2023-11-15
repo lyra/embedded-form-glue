@@ -1,9 +1,19 @@
-
 # KR object methods
 
 These are the current available methods to manipulate the payment form:
 
-## attachForm
+## renderElements
+
+Render a payment form into a given DOM selector: return a `promise` with the `KR` object and result.
+
+```javascript
+const selector = `#myPaymentForm` // DOM selector
+const { KR, result } = await KR.renderElements(selector)
+```
+
+> **_NOTE:_** if nothing is provided renderElements will search the complete DOM for the supported HTML elements
+
+## attachForm (DEPRECATED use renderElements instead)
 
 Attach a payment form to a given DOM selector: return a `promise` with the `KR` object and result.
 
@@ -20,8 +30,9 @@ Add a payment form to a given DOM selector: return a `promise` with the `KR` obj
 const selector = `#myPaymentForm` // DOM selector
 const { KR, result } = await KR.addForm(selector)
 ```
+
 > **Warning**
-> 
+>
 > Only for cards payment method
 
 ## showForm
@@ -42,7 +53,6 @@ const { result } = await KR.addForm(selector)
 const { KR } = await KR.hideForm(result.formId)
 ```
 
-
 ## setFormConfig
 
 Set the configuration of the payment form on runtime: return a `promise` with the `KR` object.
@@ -53,8 +63,9 @@ const { KR } = await KR.setFormConfig({
   language: `en-US`
 })
 ```
+
 > **Note**
-> 
+>
 > Please see the [type definition](../index.d.ts) file for the list of available configuration options.
 
 ## validateForm
@@ -86,7 +97,6 @@ available in the payment form.
 ```javascript
 const { KR } = await KR.openPaymentMethod('cards')
 ```
-
 
 ## openPopin
 
@@ -159,6 +169,7 @@ Remove all generated payment forms: return a `promise` with the `KR` object.
 ```javascript
 const { KR } = await KR.removeForms()
 ```
+
 ## removeEventCallbacks
 
 Remove all event callbacks: return a `promise` with the `KR` object.

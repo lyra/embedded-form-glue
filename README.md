@@ -1,6 +1,6 @@
 <!-- BACK TO TOP LINK -->
-<a id="readme-top"></a>
 
+<a id="readme-top"></a>
 
 <!-- PROJECT SHIELDS -->
 <div align="center">
@@ -37,7 +37,6 @@
   </p>
 </div>
 
-
 ![SmartForm](./assets/smartform.png)
 
 ## About the project
@@ -45,13 +44,13 @@
 Any payment form must comply with PCI-DSS requirements. A classical integration will be displayed
 on the banks page using a redirection. In that case, PCI-DSS requirements are done by your bank.
 
-By using this package Lyra allows to integrate a payment form using standard HTML elements on your 
-website. This library will load the [Javacript library][doc-home] from Lyra servers transforming 
-automatically each sensitive field (pan, security code, ...) into an IFrame, allowing to comply with 
+By using this package Lyra allows to integrate a payment form using standard HTML elements on your
+website. This library will load the [Javacript library][doc-home] from Lyra servers transforming
+automatically each sensitive field (pan, security code, ...) into an IFrame, allowing to comply with
 all regulations.
 
-The **embedded-form-glue** library provides a set of utilities to easily integrate the Payment 
-form into any we application made with Javascript frameworks like React, Vue, Angular, Svelte, 
+The **embedded-form-glue** library provides a set of utilities to easily integrate the Payment
+form into any we application made with Javascript frameworks like React, Vue, Angular, Svelte,
 Ionic, etc.
 
 ## Getting Started
@@ -77,15 +76,17 @@ First, define the theme files to load in the head section of your HTML page:
 ```html
 <head>
   (...)
-  <link rel="stylesheet" 
-    href="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon-reset.css">
+  <link
+    rel="stylesheet"
+    href="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon-reset.css"
+  />
   <script src="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon.js"></script>
   (...)
 </head>
 ```
 
 > **Note**
-> 
+>
 > Replace **`~~CHANGE_ME_ENDPOINT~~`** with your configuration endpoint.
 
 For more information about theming, please see [Lyra theming documentation][doc-themes]
@@ -101,8 +102,8 @@ After that, define the location where the payment form will be generated in your
 ```
 
 > **Note**
-> 
-> Specifify the element **kr-smart-form** inside the target location to load the Smart Form (any 
+>
+> Specifify the element **kr-smart-form** inside the target location to load the Smart Form (any
 > kind of payment method).
 
 ### Javascript
@@ -110,36 +111,35 @@ After that, define the location where the payment form will be generated in your
 Import the library in your javascript file or component with:
 
 ```javascript
-import KRGlue from "@lyracom/embedded-form-glue";
+import KRGlue from '@lyracom/embedded-form-glue'
 ```
 
 And finally, you can generate the payment form with the following code:
 
 ```javascript
 /* Integration public key */
-const publicKey = '~~CHANGE_ME_PUBLIC_KEY~~';
-/* Endpoint. Must include the protocol (https://) */
-const endPoint = '~~CHANGE_ME_ENDPOINT~~'; 
+const publicKey = '~~CHANGE_ME_PUBLIC_KEY~~'
+/* Endpoint. Base domain with its protocol (e.g. https://domain.name, do not include any path after the domain) */
+const endPoint = '~~CHANGE_ME_ENDPOINT~~'
 
 /* Load the remote library and get the KR object */
-const { KR } = await KRGlue.loadLibrary(endPoint, publicKey) 
+const { KR } = await KRGlue.loadLibrary(endPoint, publicKey)
 /* Setting configuration */
 await KR.setFormConfig({ 'kr-language': 'en-US' })
-/* Attach a payment form to a given DOM selector */
-const { result } = await KR.attachForm('#myPaymentForm')
-/* Show the payment form */
-await KR.showForm(result.formId);
+/* Render the payment form into a given DOM selector */
+await KR.renderElements('#myPaymentForm')
 ```
+
 > **Note**
-> 
+>
 > Replace **`~~CHANGE_ME_PUBLIC_KEY~~`** with your configuration public key.
-> 
+>
 > Replace **`~~CHANGE_ME_ENDPOINT~~`** with your configuration endpoint.
 
 > **Warning**
-> 
-> KR methods use Promises. You should always use the **await** keyword or **then method** when 
-> calling them. Please see [Javascript Promises][js-promises] and [Async Functions][js-async-await] 
+>
+> KR methods use Promises. You should always use the **await** keyword or **then method** when
+> calling them. Please see [Javascript Promises][js-promises] and [Async Functions][js-async-await]
 > for more information.
 
 ## First transaction
@@ -148,8 +148,8 @@ Once the payment form is set up, you will see the skeleton animation. This is be
 using the default demo token. To make a real transaction, you need to get a real **formToken**.
 
 To get a proper test **formToken**, make a request to the Charge/CreatePayment web service. To not
-expose your credentials, it is mandatory to do that from a server. Please see the 
-[NodeJS server example](examples/server/README.md), or visit the following links for more 
+expose your credentials, it is mandatory to do that from a server. Please see the
+[NodeJS server example](examples/server/README.md), or visit the following links for more
 information:
 
 - [Embedded form quick start][doc-quick-start]
@@ -160,10 +160,14 @@ Once you have a **formToken**, you can set it in the payment form with the follo
 
 ```javascript
 // Use the loadLibrary to set the form token
-const { KR } = await KRGlue.loadLibrary(endPoint, publicKey, '~~CHANGE_ME_FORM_TOKEN~~')
+const { KR } = await KRGlue.loadLibrary(
+  endPoint,
+  publicKey,
+  '~~CHANGE_ME_FORM_TOKEN~~'
+)
 
 // Or set the form token once the library is loaded
-const { KR } = await KRGlue.loadLibrary(endPoint, publicKey) 
+const { KR } = await KRGlue.loadLibrary(endPoint, publicKey)
 await KR.setFormConfig({ formToken: '~~CHANGE_ME_FORM_TOKEN~~' })
 ```
 
@@ -178,11 +182,11 @@ methods.
 
 ### loadLibrary
 
-Use `loadLibrary` method to load the Lyra Javascript library. The method returns a `Promise` with 
+Use `loadLibrary` method to load the Lyra Javascript library. The method returns a `Promise` with
 the `KR` object.
 
 ```javascript
-const { KR } = await KRGlue.loadLibrary(endPoint, publicKey) 
+const { KR } = await KRGlue.loadLibrary(endPoint, publicKey)
 ```
 
 ## KR object
@@ -195,7 +199,7 @@ The available methods and callbacks are described in the following sections.
 - [KR callbacks](./docs/kr_callbacks.md)
 
 > **Note**
-> 
+>
 > See Lyra [Javascript library reference][doc-reference] for the complete reference guide.
 
 ## JavaScript frameworks integration
@@ -221,14 +225,15 @@ The payment form can be customized in many ways. Some of them in the following e
 - [Add additional fields](./docs/customization#add-additional-fields)
 - [Use a different HTML structure](./docs/customization#use-a-different-html-structure)
 
-Any of these customizations can be done using the same method **KR.attachForm()**.
+Any of these customizations can be done using the same method **KR.renderElements()**.
 
 > **Note**
-> 
-> Please see the [Field Customization][doc-customization] section of the documentation for more 
+>
+> Please see the [Field Customization][doc-customization] section of the documentation for more
 > information.
 
 <!-- CONTRIBUTING -->
+
 ## Contributing
 
 Contributions are welcome and pull requests will be reviewed and taken into account.
@@ -260,10 +265,11 @@ npm run examples:serve
 Execute the tests with the command:
 
 ```bash
-npm run test
+npm run test:e2e
 ```
 
 <!-- LICENSE -->
+
 ## License
 
 Distributed under the MIT License. See the [LICENSE file](./LICENCE.txt) for more information.
@@ -271,6 +277,7 @@ Distributed under the MIT License. See the [LICENSE file](./LICENCE.txt) for mor
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
+
 [build-shield]: https://img.shields.io/circleci/build/github/lyra/embedded-form-glue?style=for-the-badge&logo=github
 [build-url]: https://circleci.com/gh/lyra/embedded-form-glue
 [npm-shield]: https://img.shields.io/npm/v/@lyracom/embedded-form-glue?style=for-the-badge&logo=npm
@@ -285,6 +292,7 @@ Distributed under the MIT License. See the [LICENSE file](./LICENCE.txt) for mor
 [license-url]: https://github.com/lyra/embedded-form-glue/blob/master/LICENSE.txt
 
 <!-- DOC LINKS -->
+
 [doc-home]: https://docs.lyra.com/en/rest/V4.0/javascript/
 [doc-quick-start]: https://docs.lyra.com/en/rest/V4.0/javascript/quick_start_js.html
 [doc-reference]: https://docs.lyra.com/en/rest/V4.0/javascript/features/reference.html

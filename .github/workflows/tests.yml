@@ -1,11 +1,11 @@
-name: E2E Tests
+name: Tests
 on:
   push:
     branches: [main, master]
   pull_request:
     branches: [main, master]
 jobs:
-  test:
+  test-e2e:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
@@ -30,3 +30,15 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+  test-unit:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm ci
+      - name: Run unit tests
+        run: npm run test:unit

@@ -19,15 +19,23 @@ class Glue {
   }
 
   loadLibrary(domain, publicKey, formToken = null) {
-    const domainRegex =
-      /^(?:http(s)?:\/\/)[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/g
     const pubKeyRegex = /^\d{2,8}:(|test)publickey_.+$/g
 
     if (this.loaded) return this.getKrypton(publicKey)
     if (!domain) return Promise.reject('Domain not defined')
     if (!publicKey) return Promise.reject('Public key not defined')
 
-    if (!domainRegex.test(domain)) {
+    // Domain validation
+    try {
+      const domainUrl = new URL(domain)
+
+      if (!['http:', 'https:'].includes(domainUrl.protocol))
+        throw new Error('Invalid protocol')
+
+      if (domainUrl.port) throw new Error('No port allowed')
+      if (domainUrl.search !== '') throw new Error('No query params allowed')
+      if (domainUrl.pathname !== '/') throw new Error('Invalid path')
+    } catch (err) {
       console.error('Domain format should be https://domain.name')
       return Promise.reject(`[${domain}] is not a valid endpoint domain`)
     }

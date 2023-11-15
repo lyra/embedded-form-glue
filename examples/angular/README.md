@@ -31,10 +31,10 @@ npm run start
 
 First you have to add 2 theme files:
 
-| File              | Description                                                                   |
-| ----------------- | ----------------------------------------------------------------------------- |
-| neon-reset.css    | default style applied before the [Lyra Javascript Library][js link] is loaded |
-| neon.js           | theme logic, like waiting annimation on submit button, ...                    |
+| File           | Description                                                                   |
+| -------------- | ----------------------------------------------------------------------------- |
+| neon-reset.css | default style applied before the [Lyra Javascript Library][js link] is loaded |
+| neon.js        | theme logic, like waiting animation on submit button, ...                     |
 
 Add them in public/index.html in the the HEAD section:
 
@@ -48,7 +48,7 @@ href="https://~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon-rese
 ```
 
 > **Note**
-> 
+>
 > Replace **[CHANGE_ME]** with your credentials and end-points.
 
 For more information about theming, take a look to [Lyra theming documentation][js themes]
@@ -82,7 +82,7 @@ import { firstValueFrom } from 'rxjs'
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements AfterViewInit {
-  title: string = 'Angular + KR.attachForm'
+  title: string = 'Angular Example'
   message: string = ''
 
   constructor(private http: HttpClient, private chRef: ChangeDetectorRef) {}
@@ -113,11 +113,8 @@ export class AppComponent implements AfterViewInit {
         })
       )
       .then(({ KR }) =>
-        KR.attachForm('#myPaymentForm')
-      ) /* Attach a payment form  to myPaymentForm div*/
-      .then(({ KR, result }) =>
-        KR.showForm(result.formId)
-      ) /* show the payment form */
+        KR.renderElements('#myPaymentForm')
+      ) /* Render a payment form into myPaymentForm div*/
       .catch(error => {
         this.message = error.message + ' (see console for more details)'
       })
@@ -129,7 +126,6 @@ export class AppComponent implements AfterViewInit {
 ## The first transaction
 
 To make the first transaction, please see the [first transaction guide](../../README.md).
-
 
 ## Payment hash verification
 
