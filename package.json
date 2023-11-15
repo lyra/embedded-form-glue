@@ -9,7 +9,8 @@
     "lint": "eslint --ext .js app && eslint --ext .js lib",
     "lintfix": "eslint --fix --ext .js app && eslint --fix --ext .js lib",
     "prettier": "prettier --write \"app/**/*.js\"",
-    "test": "npx playwright test tests/e2e/specs",
+    "test:e2e": "npx playwright test tests/e2e/specs",
+    "test:unit": "vitest",
     "examples:build": "sh tests/scripts/build_examples.sh",
     "examples:prepare": "sh tests/scripts/prepare_examples.sh",
     "examples:serve": "sh tests/scripts/start_examples.sh"
@@ -47,6 +48,7 @@
     "gulp-run": "1.7.0",
     "http-server": "14.1.1",
     "prettier": "2.7.1",
+    "vitest": "^0.34.6",
     "webpack": "5.74.0",
     "webpack-cli": "4.10.0"
   },

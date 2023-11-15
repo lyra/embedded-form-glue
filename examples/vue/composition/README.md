@@ -30,10 +30,10 @@ npm run dev
 
 First you have to add 2 theme files:
 
-| File              | Description                                                                   |
-| ----------------- | ----------------------------------------------------------------------------- |
-| neon-reset.css    | default style applied before the [Lyra Javascript Library][js link] is loaded |
-| neon.js           | theme logic, like waiting annimation on submit button, ...                    |
+| File           | Description                                                                   |
+| -------------- | ----------------------------------------------------------------------------- |
+| neon-reset.css | default style applied before the [Lyra Javascript Library][js link] is loaded |
+| neon.js        | theme logic, like waiting animation on submit button, ...                     |
 
 Add them in public/index.html in the the HEAD section:
 
@@ -47,7 +47,7 @@ href="https://~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon-rese
 ```
 
 > **NOTE:**
-> 
+>
 > Replace **[CHANGE_ME]** with your credentials and endpoints.
 
 For more information about theming, take a look to [Lyra theming documentation][js themes]
@@ -102,7 +102,7 @@ the following in src/components/HelloWorld.vue on the mounted property of the ap
 import KRGlue from '@lyracom/embedded-form-glue'
 import { onMounted } from 'vue'
 
-onMounted(async () => {  
+onMounted(async () => {
   /* Use your endpoint and personal public key */
   const endpoint = '~~CHANGE_ME_ENDPOINT_WITH_HTTPS~~'
   const publicKey = '~~CHANGE_ME_PUBLIC_KEY~~'
@@ -113,8 +113,7 @@ onMounted(async () => {
     formToken: formToken,
     'kr-language': 'en-US', /* to update initialization parameter */
   }))
-  const { result } = await KR.attachForm('#myPaymentForm') /* create a payment form */
-  await KR.showForm(result.formId)  /* show the payment form */
+  await KR.renderElements('#myPaymentForm') /* create a payment form */
 })
 (...)
 ```

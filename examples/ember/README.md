@@ -31,10 +31,10 @@ npm run start
 
 First you have to add 2 theme files:
 
-| File              | Description                                                                   |
-| ----------------- | ----------------------------------------------------------------------------- |
-| neon-reset.css    | default style applied before the [Lyra Javascript Library][js link] is loaded |
-| neon.js           | theme logic, like waiting annimation on submit button, ...                    |
+| File           | Description                                                                   |
+| -------------- | ----------------------------------------------------------------------------- |
+| neon-reset.css | default style applied before the [Lyra Javascript Library][js link] is loaded |
+| neon.js        | theme logic, like waiting animation on submit button, ...                     |
 
 Add them in public/index.html in the the HEAD section:
 
@@ -48,7 +48,7 @@ href="https://~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon-rese
 ```
 
 > **Note**
-> 
+>
 > Replace **[CHANGE_ME]** with your credentials and end-points.
 
 For more information about theming, take a look to [Lyra theming documentation][js themes]
@@ -56,17 +56,21 @@ For more information about theming, take a look to [Lyra theming documentation][
 Update the app/components/attach-form.hbs template to:
 
 ```html
-<div class='container'>
-  <h1>Ember + KR.attachForm</h1>
-  <div id='myPaymentForm'>
-    <div class='kr-smart-form'></div>
+<div class="container">
+  <h1>Ember Example</h1>
+  <div id="myPaymentForm">
+    <div class="kr-smart-form"></div>
   </div>
-  <p data-test='payment-message'>{{this.message}}</p>
+  <p data-test="payment-message">{{this.message}}</p>
 </div>
 
 <style>
-  .container{ display: flex; flex-direction: column; justify-content: center;
-  align-items: center; }
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 </style>
 ```
 
@@ -77,7 +81,7 @@ import KRGlue from '@lyracom/embedded-form-glue';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 
-export default class AttachFormComponent extends Component {
+export default class RenderElementsComponent extends Component {
   @tracked message = '';
 
   constructor(...args) {
@@ -88,33 +92,30 @@ export default class AttachFormComponent extends Component {
 
     // Generate the form token
     fetch('http://localhost:3000/createPayment', {
-      method: "POST",
-      headers: { 'Content-Type': 'application/json'},
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        paymentConf: { amount: 10000, currency: 'USD' }
-      })
+        paymentConf: { amount: 10000, currency: 'USD' },
+      }),
     })
-    .then(res => res.text())
-    .then((resp) => {
-      formToken = resp;
-      return KRGlue.loadLibrary(endpoint, publicKey);
-    })
-    .then(({ KR }) =>
-      KR.setFormConfig({
-        /* set the minimal configuration */
-        formToken: formToken,
-        'kr-language': 'en-US' /* to update initialization parameter */,
+      .then((res) => res.text())
+      .then((resp) => {
+        formToken = resp;
+        return KRGlue.loadLibrary(endpoint, publicKey);
       })
-    )
-    .then(({ KR }) =>
-      KR.attachForm('#myPaymentForm')
-    ) /* create a payment form */
-    .then(({ KR, result }) => {
-      KR.showForm(result.formId);
-    }) /* show the payment form */
-    .catch((error) => {
-      this.message = error + ' (see console for more details)';
-    });
+      .then(({ KR }) =>
+        KR.setFormConfig({
+          /* set the minimal configuration */
+          formToken: formToken,
+          'kr-language': 'en-US' /* to update initialization parameter */,
+        })
+      )
+      .then(({ KR }) =>
+        KR.renderElements('#myPaymentForm')
+      ) /* create a payment form */
+      .catch((error) => {
+        this.message = error + ' (see console for more details)';
+      });
   }
 }
 ```
@@ -133,7 +134,6 @@ For more information, please see:
 - [Embedded form quick start][js quick start]
 - [embedded form integration guide][js integration guide]
 - [Payment REST API reference][rest api]
-
 
 ## Payment hash verification
 

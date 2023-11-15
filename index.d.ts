@@ -10,9 +10,12 @@ declare module '@lyracom/embedded-form-glue' {
 declare interface KRGlue {
   /**
    * Load kr-payment-form library
-   * @param endpoint - API endpoint
+   * @param endpoint - API endpoint (only the base domain, e.g. https://domain.name)
    * @param publicKey - Public key
    * @param formToken? - Form token
+   *
+   * @example
+   *    const {KR} = await KRGlue.loadLibrary('https://domain.name', '12345678:publickey_abcdefghi...')
    */
   loadLibrary: (
     endpoint: string,
@@ -58,12 +61,14 @@ declare interface KR {
   /**
    * Attach a form to the given selector.
    * @param formSelector - Form selector
+   *
+   * @deprecated Use renderElements instead
    */
   attachForm: (
     formSelector: string
   ) => Promise<{ KR: KR; result: { formId: string } }>
   /**
-   * Renders KR  in the given selector or HTML element.
+   * Renders the KR supported elements in the given selector or HTML element.
    * @param $elements - Form query selector or HTML element or array of HTML elements or undefined
    */
   renderElements: (

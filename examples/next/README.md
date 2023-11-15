@@ -30,10 +30,10 @@ npm run dev
 
 First you have to add 2 theme files:
 
-| File              | Description                                                                   |
-| ----------------- | ----------------------------------------------------------------------------- |
+| File           | Description                                                                   |
+| -------------- | ----------------------------------------------------------------------------- |
 | neon-reset.css | default style applied before the [Lyra Javascript Library][js link] is loaded |
-| neon.js        | theme logic, like waiting annimation on submit button, ...                    |
+| neon.js        | theme logic, like waiting animation on submit button, ...                     |
 
 Add them in public/index.html in the the HEAD section:
 
@@ -47,7 +47,7 @@ href="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon-reset.css">
 ```
 
 > **Note**
-> 
+>
 > Replace **[CHANGE_ME]** with your credentials and end-points.
 
 For more information about theming, take a look to [Lyra theming documentation][js themes]
@@ -84,16 +84,14 @@ export default function MyPage() {
           publicKey
         ) /* Load the remote library */
 
-        await KR.setFormConfig({ /* set the minimal configuration */
-          formToken: formToken,
+        await KR.setFormConfig({
+          /* set the minimal configuration */ formToken: formToken,
           'kr-language': 'en-US' /* to update initialization parameter */
         })
 
-        const { result } = await KR.attachForm(
+        await KR.renderElements(
           '#myPaymentForm'
-        ) /* Attach a payment form  to myPaymentForm div*/
-
-        await KR.showForm(result.formId) /* show the payment form */
+        ) /* Render the payment form into myPaymentForm div*/
       } catch (error) {
         setMessage(error + ' (see console for more details)')
       }
@@ -114,7 +112,7 @@ export default function MyPage() {
       </Head>
       <Script src="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon.js"></Script>
       <div className="container">
-        <h1>NextJS + KR.attachForm</h1>
+        <h1>NextJS Example</h1>
         <div id="myPaymentForm">
           <div className="kr-smart-form" kr-card-form-expanded="true" />
         </div>

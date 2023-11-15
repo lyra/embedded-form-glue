@@ -12,7 +12,7 @@ The payment form can be customized in many ways like:
       <div class="kr-pan"></div>
       <div class="kr-expiry"></div>
     </div>
-  </div>  
+  </div>
 </div>
 ```
 
@@ -23,7 +23,7 @@ The payment form can be customized in many ways like:
   <div class="kr-smart-form">
     <div class="kr-embedded">
       <div class="kr-pan"></div>
-      <input 
+      <input
         class="kr-theme my-custom-email-field"
         type="text"
         name="email"
@@ -57,13 +57,13 @@ The payment form can be customized in many ways like:
       </div>
       <div class="kr-expiry"></div>
     </div>
-  </div>  
+  </div>
 </div>
 ```
 
-Any of these customizations can be done using the same method **KR.attachForm()**.
+Any of these customizations can be done using the same method **KR.renderElements()**.
 
 > **Note**
-> 
-> Please see the [Field Customization][doc-customization] section of the documentation for more 
+>
+> Please see the [Field Customization][doc-customization] section of the documentation for more
 > information.

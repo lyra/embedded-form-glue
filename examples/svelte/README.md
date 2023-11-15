@@ -30,10 +30,10 @@ npm run dev
 
 First you have to add 2 theme files:
 
-| File              | Description                                                                   |
-| ----------------- | ----------------------------------------------------------------------------- |
-| neon-reset.css    | default style applied before the [Lyra Javascript Library][js link] is loaded |
-| neon.js           | theme logic, like waiting annimation on submit button, ...                    |
+| File           | Description                                                                   |
+| -------------- | ----------------------------------------------------------------------------- |
+| neon-reset.css | default style applied before the [Lyra Javascript Library][js link] is loaded |
+| neon.js        | theme logic, like waiting animation on submit button, ...                     |
 
 Add them in public/index.html in the the HEAD section:
 
@@ -47,7 +47,7 @@ href="https://~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon-rese
 ```
 
 > **NOTE:**
-> 
+>
 > Replace **[CHANGE_ME]** with your credentials and endpoints.
 
 For more information about theming, take a look to [Lyra theming documentation][js themes]
@@ -81,14 +81,12 @@ Update the src/App.svelte template to:
         publicKey
       ) /* Load the remote library */
 
-      await KR.setFormConfig({ /* set the minimal configuration */
-        formToken: formToken,
+      await KR.setFormConfig({
+        /* set the minimal configuration */ formToken: formToken,
         'kr-language': 'en-US' /* to update initialization parameter */
       })
 
-      const { result } = await KR.attachForm('#myPaymentForm') /* create a payment form */
-
-      await KR.showForm(result.formId) /* show the payment form */
+      await KR.renderElements('#myPaymentForm') /* create a payment form */
     } catch (error) {
       message = error + ' (see console for more details)'
     }
@@ -97,7 +95,7 @@ Update the src/App.svelte template to:
 
 <main>
   <div class="container">
-    <h1>Svelte + KR.attachForm</h1>
+    <h1>Svelte Example</h1>
     <div class="form-container" id="myPaymentForm">
       <div class="kr-smart-form" kr-card-form-expanded />
     </div>
@@ -109,7 +107,6 @@ Update the src/App.svelte template to:
 ## The first transaction
 
 To make the first transaction, please see the [first transaction guide](../../README.md).
-
 
 ## Payment hash verification
 
