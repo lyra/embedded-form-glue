@@ -1,5 +1,9 @@
 # Change log
 
+# 1.4.0
+
+- [feat] loadLibrary invalid value management improvements
+
 # 1.3.8
 
 - [feat] Update d.ts file
