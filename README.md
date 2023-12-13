@@ -78,7 +78,7 @@ First, define the theme files to load in the head section of your HTML page:
   (...)
   <link
     rel="stylesheet"
-    href="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon-reset.css"
+    href="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon-reset.min.css"
   />
   <script src="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon.js"></script>
   (...)
