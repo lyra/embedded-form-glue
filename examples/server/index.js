@@ -15,11 +15,12 @@ app.use(express.json())
 /**
  * Generates a payment token for the given configuration
  */
-app.post('/createPayment', async (req, res) => {
+app.post('/createPayment/:demoId', async (req, res) => {
   const paymentConf = req.body.paymentConf
+  const demoId = req.params.demoId
 
   try {
-    const formToken = await createFormToken(paymentConf)
+    const formToken = await createFormToken(paymentConf, demoId)
     res.send(formToken)
   } catch (error) {
     res.status(500).send(error)

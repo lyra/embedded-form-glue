@@ -1,17 +1,17 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <attach-form />
+    <img alt="Lyra logo" class="lyra-logo" src="./assets/lyra.png" />
+    <lyra-demo />
   </div>
 </template>
 
 <script>
-import AttachForm from './components/AttachForm.vue'
+import LyraDemo from './components/LyraDemo1.vue'
 
 export default {
   name: 'App',
   components: {
-    AttachForm
+    LyraDemo
   }
 }
 </script>
@@ -25,4 +25,9 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
+.lyra-logo {
+  height: 150px;
+}
+
 </style>

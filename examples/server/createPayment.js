@@ -1,14 +1,18 @@
 const axios = require('axios').default
 
-exports.createFormToken = async paymentConf => {
-  // format: 123456789
-  const username = '~~CHANGE_ME_USER~~'
+exports.createFormToken = async (paymentConf, demoId) => {
 
-  // format: testprivatekey_XXXXXXX
-  const password = '~~CHANGE_ME_PASSWORD~~'
+  /* default values*/
+  let username = null
+  let password = null
+  let endpoint = null
 
-  // format: api.my.psp.domain.name without https
-  const endpoint = '~~CHANGE_ME_ENDPOINT_NO_HTTPS~~'
+  switch (demoId) {
+    default: /* fr-demo */
+      username = '69876357'
+      password = 'testpassword_DEMOPRIVATEKEY23G4475zXZQ2UA5x7M'
+      endpoint = 'api.lyra.com' 
+  }
 
   const createPaymentEndpoint = `https://${username}:${password}@${endpoint}/api-payment/V4/Charge/CreatePayment`
 
