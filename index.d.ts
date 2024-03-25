@@ -141,7 +141,7 @@ declare interface KR {
    * Form valid event listener.
    * @param callback - Callback
    */
-  onFormValid: (callback: () => void) => Promise<{ KR: KR }>
+  onFormValid: (callback: (FormValidCallBackProps) => void) => Promise<{ KR: KR }>
   /**
    * Form submitted event listener.
    * @param callback - Callback
@@ -203,6 +203,7 @@ declare interface KR {
    * Payment button.
    */
   button: KRButton
+  smartForm: KRSmartForm
   wallet: KRWallet
 }
 
@@ -213,6 +214,7 @@ declare interface KRButton {
   /**
    * Payment button click event listener.
    * @param callback - Callback
+   * @deprecated Use KR.smartForm.onClick
    */
   onClick: (
     callback: () => void | boolean | Promise<boolean>
@@ -241,6 +243,19 @@ declare interface KRButton {
    * Enable payment buttons.
    */
   enable: () => Promise<{ KR: KR }>
+}
+
+/**
+ * Smart form
+ */
+declare interface KRSmartForm {
+  /**
+   * Payment button click event listener.
+   * @param callback - Callback
+   */
+  onClick: (
+    callback: () => void | boolean | Promise<boolean>
+  ) => Promise<{ KR: KR }>
 }
 
 /**
@@ -538,9 +553,17 @@ declare enum FormType {
   All = 'all'
 }
 
+declare interface FormValidCallBackProps {
+  KR: KR
+  cardInfo: {
+    bin: string
+    brand: string
+  }
+}
+
 declare interface BrandChangeCallBackProps {
   KR: KR
-  card: {
+  cardInfo: {
     bin: string
     brand: string
   }
