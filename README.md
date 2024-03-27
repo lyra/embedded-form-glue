@@ -221,9 +221,9 @@ Find integration examples for some of the main javascript frameworks in the foll
 
 The payment form can be customized in many ways. Some of them in the following examples:
 
-- [Use a custom field order](./docs/customization#use-a-custom-field-order)
-- [Add additional fields](./docs/customization#add-additional-fields)
-- [Use a different HTML structure](./docs/customization#use-a-different-html-structure)
+- [Use a custom field order](./docs/customization.md#use-a-custom-field-order)
+- [Add additional fields](./docs/customization.md#add-additional-fields)
+- [Use a different HTML structure](./docs/customization.md#use-a-different-html-structure)
 
 Any of these customizations can be done using the same method **KR.renderElements()**.
 
