@@ -141,7 +141,9 @@ declare interface KR {
    * Form valid event listener.
    * @param callback - Callback
    */
-  onFormValid: (callback: (FormValidCallBackProps) => void) => Promise<{ KR: KR }>
+  onFormValid: (
+    callback: (data: FormValidCallBackProps) => void
+  ) => Promise<{ KR: KR }>
   /**
    * Form submitted event listener.
    * @param callback - Callback
