@@ -9,7 +9,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@lyracom/embedded-form-glue": "1.4.1",
+    "@lyracom/embedded-form-glue": "1.4.2",
     "core-js": "3.29.1",
     "vue": "3.2.47"
   },
