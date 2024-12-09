@@ -78,27 +78,27 @@ declare interface KR {
    * Show form.
    * @param formId - Form id
    */
-  showForm: (formId: string) => Promise<{ KR: KR }>
+  showForm: (formId?: string) => Promise<{ KR: KR }>
   /**
    * Hide form.
    * @param formId - Form id
    */
-  hideForm: (formId: string) => Promise<{ KR: KR }>
+  hideForm: (formId?: string) => Promise<{ KR: KR }>
   /**
    * Open popin form.
    * @param formId - Form id
    */
-  openPopin: (formId: string) => Promise<{ KR: KR }>
+  openPopin: (formId?: string) => Promise<{ KR: KR }>
   /**
    * Close popin form.
    * @param formId - Form id
    */
-  closePopin: (formId: string) => Promise<{ KR: KR }>
+  closePopin: (formId?: string) => Promise<{ KR: KR }>
   /**
    * Validate form.
    * @param formId - Form id
    */
-  validateForm: (formId: string) => Promise<{ KR: KR; result: KRError }>
+  validateForm: (formId?: string) => Promise<{ KR: KR; result: KRError }>
   /**
    * Remove all forms.
    */
