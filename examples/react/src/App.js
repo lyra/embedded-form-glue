@@ -62,7 +62,7 @@ export default function MyComponent() {
       <h1>React Example</h1>
       <div className="container">
         <div id="myPaymentForm">
-          <div className="kr-smart-form" kr-card-form-expanded></div>
+          <div className="kr-smart-form" kr-card-form-expanded=""></div>
         </div>
         <div data-test="payment-message">{message}</div>
       </div>
