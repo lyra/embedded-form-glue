@@ -428,6 +428,8 @@ declare interface KRConfig {
    * Card register checkbox field label.
    */
   'kr-label-register'?: string
+
+  [key: string]: any
 }
 
 /**
@@ -501,8 +503,10 @@ declare interface KRPaymentResponse {
    */
   clientAnswer: KRClientAnswer
   /**
-   * Object containing the payment result in JSON format.
+   * Object containing the payment result in string format.
    */
+  rawClientAnswer: string
+  formId: string
   post: () => KRPaymentIPNResponse
 }
 
@@ -526,6 +530,22 @@ declare interface KRClientAnswer {
    * Server date.
    */
   serverDate: string
+  /**
+   * Payment cycle for CARD transactions (CLOSED or OPEN).
+   */
+  cardOrderCycle: string
+  /**
+   * Customer data
+   */
+  customer: any
+  /**
+   * Order information (amount, currency...)
+   */
+  orderDetails: any
+  /**
+   * Array with transactions inside the current order
+   */
+  transactions: any[]
 }
 
 /**
