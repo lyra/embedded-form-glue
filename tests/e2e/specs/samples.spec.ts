@@ -97,7 +97,7 @@ test.describe(`Sample embedded examples`, () => {
       logs.push(msg)
     })
     await page.goto(`http://127.0.0.1:8080/tests/views/loadLibrary.html`)
-    await expect(page.locator('#krtoolbar')).toBeVisible()
+    await expect(page.locator('.kr-app-container')).toHaveCount(1)
 
     await expect(logs.length).toBe(0)
   })
