@@ -37,7 +37,7 @@ test.describe(`Sample embedded examples`, () => {
     await expect(page.locator('#test-error')).toBeVisible()
 
     await expect(page.locator('#test-error')).toContainText(
-      '[~~CHANGE_ME_ENDPOINT~~] is not a valid endpoint domain'
+      '[INVALID_ENDPOINT] is not a valid endpoint domain'
     )
   })
 
@@ -59,7 +59,7 @@ test.describe(`Sample embedded examples`, () => {
     await expect(page.locator('#test-error')).toBeVisible()
 
     await expect(page.locator('#test-error')).toContainText(
-      '[api.lyra.com] is not a valid endpoint domain'
+      '[static.lyra.com] is not a valid endpoint domain'
     )
   })
 
@@ -79,7 +79,7 @@ test.describe(`Sample embedded examples`, () => {
     )
 
     await page.evaluate(async () => {
-      await KRGlue.loadLibrary('https://api.lyra.com', 'INVALID_PUBLIC_KEY')
+      await KRGlue.loadLibrary('~~CHANGE_ME_ENDPOINT~~', 'INVALID_PUBLIC_KEY')
     })
 
     const updatedPK = await page.evaluate(async () => {
