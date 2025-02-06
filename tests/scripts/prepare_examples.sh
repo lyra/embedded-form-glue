@@ -8,3 +8,4 @@ npm install
 cd ../..
 echo "Replace keys"
 npx gulp replaceKeys
+npx gulp replaceKeysOnViews

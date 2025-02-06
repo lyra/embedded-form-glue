@@ -23,6 +23,18 @@ function replaceKeys() {
   return stream.pipe(dest('./examples_build/'))
 }
 
+function replaceKeysOnViews() {
+  let reverse
+  if (~process.argv.indexOf('--restore')) {
+    reverse = true
+  }
+  let stream = src(['./tests/views/**/*.html'], { base: './' })
+  Object.entries(keyMap).forEach(([key, value]) => {
+    stream = stream.pipe(reverse ? replace(value, key) : replace(key, value))
+  })
+  return stream.pipe(dest('./'))
+}
+
 function devReplaceKeys() {
   let reverse
   if (~process.argv.indexOf('--restore')) {
@@ -47,3 +59,4 @@ function devReplaceKeys() {
 
 exports.replaceKeys = replaceKeys
 exports.devReplaceKeys = devReplaceKeys
+exports.replaceKeysOnViews = replaceKeysOnViews
