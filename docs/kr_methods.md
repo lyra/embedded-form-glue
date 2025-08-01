@@ -132,10 +132,26 @@ const { KR } = await KR.button.enable()
 
 ## button.disable
 
-Disable the submit button: return a `promise` with the `KR` object.
+Disable the submit button: returns a `promise` with the `KR` object.
 
 ```javascript
 const { KR } = await KR.button.disable()
+```
+
+## button.hide
+
+Hide the submit button: returns a `promise` with the `KR` object.
+
+```javascript
+const { KR } = await KR.button.hide()
+```
+
+## button.show
+
+Show the submit button: returns a `promise` with the `KR` object.
+
+```javascript
+const { KR } = await KR.button.show()
 ```
 
 ## button.showSpinner
@@ -177,3 +193,125 @@ Remove all event callbacks: return a `promise` with the `KR` object.
 ```javascript
 const { KR } = await KR.removeEventCallbacks()
 ```
+
+## setHelpVisibility
+
+Enables the user to hide or show the help info buttons from the card form (cvv field and pan field when the card is cobranded). The parameters are the **formId** (returned by renderElements) and a boolean. You can pass undefined for the formId and the change will apply to all forms. By default the help info buttons are visible.
+
+```javascript
+const { KR } = await KR.setHelpVisibility(formId, false)
+```
+
+## fields.pan.help.button
+
+It's possible to hide/show the help button from the pan field that appears when a cobranded card is entered. By using these methods instead of setHelpVisibility you can target only the help button from the pan field and the other from the cvv field will not be affected.
+
+```javascript
+KR.fields.pan.help.button.show()
+KR.fields.pan.help.button.hide()
+KR.fields.pan.help.button.restoreDefaultVisibility()
+```
+
+## fields.cvv.hide & fields.cvv.show
+
+It's possible to hide/show the **content** of the cvv input. If the content is hidden there will be some bullet points instead of the numbers.
+
+```javascript
+KR.fields.cvv.hide()
+KR.fields.cvv.show()
+```
+
+## fields.focus
+
+It's possible to focus a field from the cardForm. The function takes one parameter the class of the field to focus.
+It returns a succesful Promise if the field exists and is focusable.
+The parameter can be:
+
+```typescript
+type param =
+  | 'kr-pan'
+  | 'kr-expiry'
+  | 'kr-security-code'
+  | 'kr-identity-document-type'
+  | 'kr-installment-number'
+  | 'kr-first-installment-delay'
+  | 'kr-do-register'
+  | 'kr-identity-document-number'
+  | 'kr-card-holder-name'
+  | 'kr-card-holder-mail'
+```
+
+**Example**
+
+```javascript
+KR.fields.focus('kr-do-register')
+```
+
+## getPaymentMethods
+
+This method will return an object with the available payment methods and card brands.
+
+```typescript
+KR.getPaymentMethods: () => Promise<PaymentMethodObj>
+
+interface PaymentMethodObj = {
+    paymentMethods: string[],
+    cardBrands: string[]
+}
+
+const methods = await KR.getPaymentMethods()
+console.log(methods)
+```
+
+## throwCustomError
+
+This method allows a merchant to manually throw an error that will be displayed in the form.
+
+```typescript
+KR.smartForm.throwCustomError(errorMessage, paymentMethod)
+
+KR.throwCustomError('My custom error message', 'GOOGLEPAY')
+KR.throwCustomError('My custom error message', 'IP_WIRE')
+KR.throwCustomError('My custom error message', 'CARDS')
+KR.throwCustomError('My custom error message')
+```
+
+Parameters:
+
+- errorMessage: String containing the message that will be displayed.
+- paymentMethod: String containing the payment method that triggered the error
+  This parameter will define where the error message is displayed inside the application
+  If not specified the error will appear in the default position (under the smartform method list)
+  If provided a specific payment method, the error will display as if the specified payment method was the one triggering the error (depending on the used configuration the position will change. i.e. the error will appear below the smartbutton if present or appear differently if the card form is expanded).
+
+## Skeleton
+
+It is now possible to force the visibility of the skeleton in all widgets using two methods: KR.skeleton.show() and KR.skeleton.hide(). These methods override the default behavior and provide developers with full control over the skeleton's visibility.
+
+![](./images/skeleton.gif)
+
+```typescript
+KR.skeleton.show()
+```
+
+- Forces the skeleton to become visible for all widgets.
+- The call is synchronous and returns a successful promise.
+
+```typescript
+KR.skeleton.hide()
+```
+
+- Forces the skeleton to become hidden for all widgets.
+- The call is synchronous and returns a successful promise.
+
+## Overlay
+
+It is possible to force the visibillity of the loading overlay using 2 methods: KR.overlay.show() and KR.overlay.hide(). These methods override the default behavior. To restore default behavior there is the KR.overlay.restoreDefaultVisibility() method.
+
+```typescript
+KR.overlay.show()
+KR.overlay.hide()
+KR.overlay.restoreDefaultVisibility()
+```
+
+![](./images/overlay.gif)
