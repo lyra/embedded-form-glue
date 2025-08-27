@@ -1,5 +1,10 @@
 # Change log
 
+# 1.4.3
+
+- [fix] Update d.ts file
+- [doc] Updates documentation and examples
+
 # 1.4.2
 
 - [fix] Update d.ts file
