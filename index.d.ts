@@ -683,37 +683,42 @@ declare interface KRConfig {
    */
   'kr-label-register'?: string
 
-  [key: string]: any
   /**
    * Smartform specific configuration
    */
-  smartForm: {
+  smartForm?: {
     /**
      * Allows to customize the paymentMethods. Accepted keys: ALL or a payment methods like CARDS
      */
-    paymentMethods: {
-      [k in 'ALL' | KRPaymentMethod]: {
+    paymentMethods?: {
+      [k in 'ALL' | KRPaymentMethod]?: {
         /**
          * Allows the merchant to decide if a payment receipt will be shown after the payment.
          * Note that it's not possible to display a payment ticket for a simple card payment.
          * By default the ticket is displayed for non card methods and for partial and split card payments.
          * null represents the default behavior.
          **/
-        displayPaymentReceipt: boolean | null
+        displayPaymentReceipt?: boolean | null
+
+        [key: string]: any
       }
     }
     /**
      * Allowd to define a threshold. If the total number of payment method that should be displayed is (strictly) greater than said threshold, then the payment method are grouped based on our internal configuration.
      * If it's lower or equal, then every payment method is displayed individually.
      */
-    groupingThreshold: number
+    groupingThreshold?: number
     /**
      * This smartform attribute allows the user to have a hidden smartform. The client can still open the payment methods with KR.openPaymentMethod.
      * Important: For popup payment methods, the KR.openPaymentMethod has to be used in a click event listener or handler.
      * Otherwise some browsers can block the popup.
      */
-    hidden: boolean
+    hidden?: boolean
+
+    [key: string]: any
   }
+
+  [key: string]: any
 }
 
 /**
