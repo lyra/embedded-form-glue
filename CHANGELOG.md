@@ -1,5 +1,9 @@
 # Change log
 
+# 1.4.4
+
+- [fix] Update d.ts file
+
 # 1.4.3
 
 - [fix] Update d.ts file
