@@ -91,12 +91,27 @@ const { KR } = await KR.submit()
 
 ## openPaymentMethod
 
-Open the given payment method: return a `promise` with the `KR` object. The payment method must be
-available in the payment form.
+Open the given payment method: return a `promise` with the `KR` object. The payment method must be available in the payment form.
 
 ```javascript
 const { KR } = await KR.openPaymentMethod('cards')
 ```
+
+> **Note**
+>
+> Please see the [type definition](../index.d.ts) file for the list of available configuration options.
+
+## openSelectedPaymentMethod
+
+Open the selected payment method in SPB mode: return a `promise` with the `KR` object.
+
+```javascript
+const { KR } = await KR.openSelectedPaymentMethod()
+```
+
+> **Note**
+>
+> Please see the [type definition](../index.d.ts) file for the list of available configuration options.
 
 ## openPopin
 
@@ -245,6 +260,14 @@ type param =
 
 ```javascript
 KR.fields.focus('kr-do-register')
+```
+
+## isCardsFormExpanded
+
+It is possible to know if the cards form is expanded in context. This includes when cards is the sole payment method and we automatically expand it.
+
+```javascript
+const { KR } = await KR.isCardsFormExpanded()
 ```
 
 ## getPaymentMethods
