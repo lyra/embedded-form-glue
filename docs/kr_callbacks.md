@@ -415,3 +415,16 @@ KR.wallet.onPaymentTokenDeleted(console.log) >
     paymentMethod: 'CARDS'
   }
 ```
+
+
+## onPaymentMethodSelected
+
+This method allows to add a callback that will be called when a payment method is selected in the payment form.
+
+```javascript
+KR.onPaymentMethodSelected(
+  ( paymentMethod ) => {
+    // Callback implementation
+  }
+)
+```

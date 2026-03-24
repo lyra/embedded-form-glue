@@ -200,6 +200,15 @@ declare interface KR {
     callback: (props: InstallmentChangeCallbackProps) => void
   ) => Promise<{ KR: KR }> // TODO installmentInfo
   /**
+   * Payment method selected event listener (opening a payment method form or selecting
+   * a payment method in the single payment button mode)
+   * @param callback - Callback function
+   */
+  onPaymentMethodSelected: (
+    callback: (paymentMethod: string) => void
+  ) => Promise<{ KR: KR }>
+
+  /**
    * Remove event callbacks
    * @param event - Event name
    */
@@ -216,16 +225,46 @@ declare interface KR {
   /**
    * Open the specified payment method
    * @param paymentMethod - Payment method name
+   * @param options - Open payment method options
    */
-  openPaymentMethod: (paymentMethod: KRPaymentMethod) => void
+  openPaymentMethod: (
+    paymentMethod: KRPaymentMethod,
+    options: KROpenPaymentMethodOptions
+  ) => void
+  /**
+   * Open the current selected payment method (single payment button mode)
+   * @param options - Open payment method options
+   */
+  openSelectedPaymentMethod: (options: KROpenPaymentMethodOptions) => void
 
+  /**
+   * Returns true if cards form is effectively expanded in context.
+   * This includes when cards is the sole payment method and we automatically expand it.
+   */
+  isCardsFormExpanded: () => Promise<boolean>
   /**
    * This method will return an object with the available payment methods and card brands.
    */
   getPaymentMethods: () => Promise<{
-    paymentMethods: string[]
+    paymentMethods: KRPaymentMethod[]
     cardBrands: string[]
   }>
+
+  /**
+   * Returns the selected payment method in SPB mode, or null if none is selected or if not in SPB mode.
+   */
+  getSelectedPaymentMethod: () => Promise<KRPaymentMethod | null>
+
+  /**
+   * This method allows a merchant to manually throw an error that will be displayed in the form.
+   *
+   * @param errorMessage - Error message to display in the form
+   * @param paymentMethod - Payment method Key
+   */
+  throwCustomError: (
+    errorMessage: string,
+    paymentMethod?: KRPaymentMethod
+  ) => Promise<{ KR: KR }>
 
   /**
    * Payment button.
@@ -304,14 +343,6 @@ declare interface KRSmartForm {
       action: 'beforePaymentStart' | 'openPopin' | 'methodSelected'
       formId: string | null
     }) => void | boolean | Promise<boolean>
-  ) => Promise<{ KR: KR }>
-
-  /**
-   * This method allows a merchant to manually throw an error that will be displayed in the form.
-   */
-  throwCustomError: (
-    error: string,
-    paymentMethod?: KRPaymentMethod
   ) => Promise<{ KR: KR }>
 }
 /**
@@ -411,6 +442,16 @@ declare interface KROverlay {
   show: () => undefined
   hide: () => undefined
   restoreDefaultVisibility: () => undefined
+}
+
+declare type KROpenPaymentMethodOptions = {
+  /**
+   * This option allows to open the payment method without user interaction. It can be used to open a payment method on
+   * page load for example.
+   * Important: For popup payment methods, the KR.openPaymentMethod has to be used in a click event listener or handler.
+   * Otherwise some browsers can block the popup.
+   */
+  allowWithoutUserInteraction?: boolean
 }
 
 declare type KRFormFieldClass =
