@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@lyracom/embedded-form-glue": "1.4.4",
-    "next": "13.2.4",
+    "next": "15.5.14",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
