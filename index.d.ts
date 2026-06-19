@@ -72,7 +72,7 @@ declare interface KR {
    * @param $elements - Form query selector or HTML element or array of HTML elements or undefined
    */
   renderElements: (
-    $elements: string | HTMLElement | Array<HTMLElement> | undefined
+    $elements?: string | HTMLElement | Array<HTMLElement> | undefined
   ) => Promise<{ KR: KR; result: { formId: string } }>
   /**
    * Show form.
