@@ -19,11 +19,8 @@ jobs:
         run: npx playwright install --with-deps
       - name: Prepare the examples
         run: npm run examples:prepare
-      - name: Run example servers in background
-        run: |
-          npm run examples:serve &
       - name: Run E2E tests
-        run: npx playwright test tests/e2e/specs --retries=3
+        run: npm run test:e2e
       - uses: actions/upload-artifact@v4
         if: always()
         with:

@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "npm-security": {
+      "source": "bodadotsh/npm-security-best-practices",
+      "sourceType": "github",
+      "skillPath": "skills/npm-security/SKILL.md",
+      "computedHash": "3edd3b528d6f8486c87b13964ac58668b59f3ecd7b648ac48bdc73bcc9113391"
+    }
+  }
+}

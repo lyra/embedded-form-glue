@@ -24,22 +24,30 @@ examples.forEach(example => {
 
     test('Embedded form loads', async ({ page }) => {
       await expect(page.locator('.kr-embedded[kr-form-ready]')).toBeVisible()
-      await expect(page.locator('#krtoolbar')).toBeVisible()
+      await expect(page.locator('krypton-toolbar')).toBeVisible()
     })
 
     test('Accepted test card payment is succesful', async ({ page }) => {
       await expect(page.locator('.kr-embedded[kr-form-ready]')).toBeVisible()
-      await expect(page.locator('#krtoolbar')).toBeVisible()
+      await expect(page.locator('krypton-toolbar')).toBeVisible()
 
-      // Select the test card
-      await selectTestCard(page, 'visa.accepted.card-accepted')
+      // Select the test card panel
+      await page.locator('[data-testid="toolbar-cards-option-btn"]').click()
+
+      // Select the Visa card brand
+      await page.locator('[data-testid="visa-brand-btn"]').click()
+
+      // Test case
+      await page.locator('[data-testid="visa-test-card--accepted"]').click()
 
       // Before clicking the button, check that the payment message is not visible
       await expect(
         page.locator('[data-test="payment-message"]')
       ).not.toContainText('Payment successful!')
 
-      await page.locator('button.kr-payment-button').click()
+      const $button = await page.locator('button.kr-payment-button')
+      await expect($button).toBeVisible()
+      await $button.click()
 
       // After clicking the button, check that the payment message is visible
       await expect(page.locator('[data-test="payment-message"]')).toContainText(
@@ -51,10 +59,16 @@ examples.forEach(example => {
       page
     }) => {
       await expect(page.locator('.kr-embedded[kr-form-ready]')).toBeVisible()
-      await expect(page.locator('#krtoolbar')).toBeVisible()
+      await expect(page.locator('krypton-toolbar')).toBeVisible()
 
-      // Select the test card
-      await selectTestCard(page, 'visa.refused.card-refused')
+      // Select the test card panel
+      await page.locator('[data-testid="toolbar-cards-option-btn"]').click()
+
+      // Select the Visa card brand
+      await page.locator('[data-testid="visa-brand-btn"]').click()
+
+      // Test case
+      await page.locator('[data-testid="visa-test-card--refused"]').click()
 
       // Before clicking the button, check that the error is not visible
       await expect(

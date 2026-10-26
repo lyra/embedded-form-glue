@@ -1,0 +1,11 @@
+<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="27.639910000000032">
+<testsuite name="examples.spec.ts" timestamp="2026-10-26T17:12:19.537Z" hostname="chromium" tests="1" failures="0" skipped="0" time="24.316" errors="0">
+<testcase name="Vue composition API example › Accepted test card payment is succesful" classname="examples.spec.ts" time="24.316">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../test-results/examples-Vue-composition-A-52211-t-card-payment-is-succesful-chromium/trace.zip]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+</testsuites>
