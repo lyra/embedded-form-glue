@@ -1,31 +1,48 @@
 import whenDefined from './tools/whenDefined'
 
+type KryptonWindow = Window & {
+  KR?: KR & { ready?: unknown }
+}
+
+export type KRGlue = Glue
+
 class Glue {
+  private static instance: Glue | undefined
+
+  readonly _name = 'Krypton Glue'
+  configuration: Record<string, unknown> = {}
+  domain: string | null = null
+  formToken: string | null = null
+  publicKey: string | null = null
+  loaded = false
+  loading = false
+
   constructor() {
-    // Singleton
-    if (!!Glue.instance) return Glue.instance
+    if (Glue.instance) return Glue.instance
 
     Glue.instance = this
-
-    this._name = 'Krypton Glue'
-    this.configuration = {}
-    this.domain = null
-    this.formToken = null
-    this.publicKey = null
-    this.loaded = false
-    this.loading = false
-
-    return this
   }
 
-  loadLibrary(domain, publicKey, formToken = null) {
+  /**
+   * Load kr-payment-form library
+   * @param endpoint - API endpoint (only the base domain, e.g. https://domain.name)
+   * @param publicKey - Public key
+   * @param formToken? - Form token
+   *
+   * @example
+   *    const {KR} = await KRGlue.loadLibrary('https://domain.name', '12345678:publickey_abcdefghi...')
+   */
+  loadLibrary(
+    domain: string,
+    publicKey: string,
+    formToken: string | null = null
+  ): Promise<{ KR: KR }> {
     const pubKeyRegex = /^\d{2,8}:(|test)publickey_.+$/g
 
     if (this.loaded) return this.getKrypton(publicKey)
     if (!domain) return Promise.reject('Domain not defined')
     if (!publicKey) return Promise.reject('Public key not defined')
 
-    // Domain validation
     try {
       const domainUrl = new URL(domain)
 
@@ -54,16 +71,15 @@ class Glue {
     return Promise.reject('The library cannot be loaded')
   }
 
-  loadKryptonClient() {
+  private loadKryptonClient(): Promise<{ KR: KR }> {
     if (!this.loading) {
-      const publicKey = this.publicKey
-      let domain = this.domain
+      const publicKey = this.publicKey!
+      let domain = this.domain!
       this.loading = true
 
       const script = document.createElement('script')
       script.type = 'text/javascript'
 
-      // Domain must end with slash
       if (!/^.+\/$/.test(domain)) domain += '/'
 
       script.src = `${domain}static/js/krypton-client/V4.0/stable/kr-payment-form.min.js`
@@ -72,33 +88,37 @@ class Glue {
 
       if (this.formToken) script.setAttribute('kr-form-token', this.formToken)
 
-      // Check if the library is already present
-      const $script = document.querySelector(`script[src="${script.src}"]`)
+      const existingScript = document.querySelector(
+        `script[src="${script.src}"]`
+      )
 
-      // Append it to body if it's not already loaded
-      if (!$script && document.body) document.body.appendChild(script)
+      if (!existingScript && document.body) document.body.appendChild(script)
       else if (!document.body) console.warn('document.body is undefined')
     }
 
+    const kryptonWindow = window as KryptonWindow
+
     return new Promise(resolve => {
-      whenDefined(window, 'KR', () => {
-        whenDefined(window.KR, 'ready', () => {
+      whenDefined(kryptonWindow, 'KR', () => {
+        const krypton = kryptonWindow.KR!
+
+        whenDefined(krypton, 'ready', () => {
           this.loaded = true
           this.loading = false
-          resolve({ KR: window.KR })
+          resolve({ KR: krypton })
         })
       })
     })
   }
 
-  getKrypton(publicKey) {
-    return new Promise((resolve, reject) => {
-      if (publicKey && publicKey !== this.publicKey) {
-        window.KR.setFormConfig({ publicKey }).then(resolve).catch(reject)
-      } else {
-        resolve({ KR: window.KR })
-      }
-    })
+  private getKrypton(publicKey: string): Promise<{ KR: KR }> {
+    const krypton = (window as KryptonWindow).KR!
+
+    if (publicKey && publicKey !== this.publicKey) {
+      return krypton.setFormConfig({ publicKey })
+    }
+
+    return Promise.resolve({ KR: krypton })
   }
 }
 

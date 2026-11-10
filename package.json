@@ -5,10 +5,11 @@
   "main": "lib/index.js",
   "scripts": {
     "build": "webpack",
-    "prepublish": "babel app --out-dir lib && prettier --write \"lib/**/*.js\"",
-    "lint": "eslint --ext .js app && eslint --ext .js lib",
-    "lintfix": "eslint --fix --ext .js app && eslint --fix --ext .js lib",
-    "prettier": "prettier --write \"app/**/*.js\"",
+    "prepublish": "tsc -p tsconfig.lib.json && prettier --write \"lib/**/*.js\"",
+    "lint": "eslint --ext .ts app && eslint --ext .js lib",
+    "lintfix": "eslint --fix --ext .ts app && eslint --fix --ext .js lib",
+    "prettier": "prettier --write \"app/**/*.ts\"",
+    "typecheck": "tsc --noEmit",
     "test:e2e": "npx playwright test tests/e2e/specs",
     "test:unit": "vitest",
     "examples:build": "sh tests/scripts/build_examples.sh",
@@ -33,12 +34,8 @@
   },
   "homepage": "https://github.com/lyra/embedded-form-glue#readme",
   "devDependencies": {
-    "@babel/cli": "7.18.10",
-    "@babel/core": "7.19.0",
-    "@babel/preset-env": "7.19.0",
     "@playwright/test": "1.31.2",
-    "babel-eslint": "10.1.0",
-    "babel-loader": "8.2.5",
+    "@typescript-eslint/parser": "^6.21.0",
     "eslint": "8.23.1",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-prettier": "4.2.1",
@@ -48,13 +45,10 @@
     "gulp-run": "1.7.0",
     "http-server": "14.1.1",
     "prettier": "2.7.1",
+    "ts-loader": "^9.5.2",
+    "typescript": "^5.3.3",
     "vitest": "^0.34.6",
     "webpack": "5.74.0",
     "webpack-cli": "4.10.0"
-  },
-  "babel": {
-    "presets": [
-      "@babel/preset-env"
-    ]
   }
 }
