@@ -1,21 +1,35 @@
+import type {
+  KryptonWindow,
+  KryptonTheme,
+  KryptonGlueConfiguration,
+  KryptonGlueLoadParameter,
+  KryptonGlueLoadLibraryParameter,
+  KryptonGlueConfigureParameter
+} from './types'
 import whenDefined from './tools/whenDefined'
-
-type KryptonWindow = Window & {
-  KR?: KR & { ready?: unknown }
-}
+import { assertDomain, assertPublicKey, assertTheme } from './tools/guards'
+import {
+  forceAppendElement,
+  getClientScriptElement,
+  getThemeElements,
+  onceLoaded,
+  setConfigValue
+} from './tools/utils'
 
 export type KRGlue = Glue
 
 class Glue {
-  private static instance: Glue | undefined
-
   readonly _name = 'Krypton Glue'
-  configuration: Record<string, unknown> = {}
-  domain: string | null = null
-  formToken: string | null = null
-  publicKey: string | null = null
-  loaded = false
-  loading = false
+  private static instance: Glue | undefined
+  private configuration: KryptonGlueConfiguration = {
+    domain: null,
+    formToken: null,
+    publicKey: null
+  }
+
+  private loaded = false
+  private loading = false
+  private loadedPublicKey: string | null = null
 
   constructor() {
     if (Glue.instance) return Glue.instance
@@ -24,76 +38,149 @@ class Glue {
   }
 
   /**
-   * Load kr-payment-form library
-   * @param endpoint - API endpoint (only the base domain, e.g. https://domain.name)
-   * @param publicKey - Public key
-   * @param formToken? - Form token
+   * Set or update configuration used by subsequent glue calls. Omitted values remain unchanged;
+   * explicitly passing `null` clears a value.
+   *
+   * @param opts - Configuration values to update.
    *
    * @example
-   *    const {KR} = await KRGlue.loadLibrary('https://domain.name', '12345678:publickey_abcdefghi...')
+   *    await KRGlue.load({
+   *      domain: 'https://domain.name',
+   *      publicKey: '12345678:publickey_abcdefghi...',
+   *      formToken: 'FORM-TOKEN',
+   *      theme: 'neon'
+   *    })
    */
-  loadLibrary(
-    domain: string,
-    publicKey: string,
-    formToken: string | null = null
-  ): Promise<{ KR: KR }> {
-    const pubKeyRegex = /^\d{2,8}:(|test)publickey_.+$/g
+  async load(opts: KryptonGlueLoadParameter): Promise<{ KR: KR }> {
+    assertDomain(opts.domain)
+    assertPublicKey(opts.publicKey)
 
-    if (this.loaded) return this.getKrypton(publicKey)
-    if (!domain) return Promise.reject('Domain not defined')
-    if (!publicKey) return Promise.reject('Public key not defined')
+    this.configure(opts)
 
-    try {
-      const domainUrl = new URL(domain)
-
-      if (!['http:', 'https:'].includes(domainUrl.protocol))
-        throw new Error('Invalid protocol')
-
-      if (domainUrl.port) throw new Error('No port allowed')
-      if (domainUrl.search !== '') throw new Error('No query params allowed')
-      if (domainUrl.pathname !== '/') throw new Error('Invalid path')
-    } catch (err) {
-      console.error('Domain format should be https://domain.name')
-      return Promise.reject(`[${domain}] is not a valid endpoint domain`)
+    if (opts.theme !== null) {
+      const theme: KryptonTheme = opts.theme ?? 'neon'
+      assertTheme(theme)
+      await this.loadTheme(theme)
     }
-
-    if (!pubKeyRegex.test(publicKey)) {
-      console.error('Public key format should be shopId:[test]publickey_*')
-      return Promise.reject(`[${publicKey}] is not a valid public key`)
-    }
-
-    this.domain = domain
-    this.publicKey = publicKey
-    this.formToken = formToken
-
-    if (this.domain && this.publicKey) return this.loadKryptonClient()
-
-    return Promise.reject('The library cannot be loaded')
+    return await this.loadLibrary(opts)
   }
 
-  private loadKryptonClient(): Promise<{ KR: KR }> {
+  /**
+   * Set or update configuration used by subsequent glue calls. Omitted values remain unchanged;
+   * explicitly passing `null` clears a value.
+   *
+   * @param opts - Configuration values to update.
+   *
+   * @example
+   *    KRGlue.configure({
+   *      domain: 'https://domain.name',
+   *      publicKey: '12345678:publickey_abcdefghi...',
+   *      formToken: 'FORM-TOKEN'
+   *    })
+   */
+  private configure(opts: KryptonGlueConfigureParameter): void {
+    for (const key of Object.keys(opts) as (keyof KryptonGlueConfiguration)[]) {
+      const value = opts[key]
+
+      if (value !== undefined) {
+        setConfigValue(
+          this.configuration,
+          key,
+          value as KryptonGlueConfiguration[typeof key]
+        )
+      }
+    }
+  }
+
+  /**
+   * Load the CSS and JavaScript assets for the selected theme from the configured domain.
+   * Resolves after both assets load, or rejects if the domain is missing or invalid, or an asset
+   * fails to load.
+   *
+   * @param theme - Theme whose assets should be loaded.
+   * @returns A promise that resolves when both assets have loaded.
+   *
+   * @example
+   *    await KRGlue.loadTheme('material')
+   */
+  private loadTheme(theme: KryptonTheme): Promise<void> {
+    return new Promise((resolve, reject) => {
+      assertTheme(theme)
+
+      const { domain } = this.configuration
+      if (domain) {
+        assertDomain(domain)
+        const { link, script } = getThemeElements(domain, theme)
+
+        Promise.all([onceLoaded(link), onceLoaded(script)])
+          .then(() => resolve())
+          .catch(e => reject(e))
+
+        forceAppendElement(link)
+        forceAppendElement(script)
+      } else {
+        reject(new Error(`Could not load theme: domain is undefined`))
+      }
+    })
+  }
+
+  /**
+   * Load the payment form library and return its `KR` instance. Options override configured
+   * values; omitted values fall back to the configuration set with `configure`. When the library
+   * is already loaded, only a changed public key is applied; a form token is passed to the SDK
+   * script during an initial load.
+   *
+   * @param opts - Configuration values for this load.
+   * @returns A promise that resolves with the `KR` instance.
+   *
+   * @example
+   *    const {KR} = await KRGlue.loadLibrary({
+   *      domain: 'https://domain.name',
+   *      publicKey: '12345678:publickey_abcdefghi...'
+   *    })
+   */
+  private loadLibrary(
+    opts: KryptonGlueLoadLibraryParameter = {}
+  ): Promise<{ KR: KR }> {
+    const domain = this.configuration.domain
+    const publicKey = this.configuration.publicKey
+    const formToken = opts.formToken ?? this.configuration.formToken
+
+    try {
+      assertPublicKey(publicKey)
+
+      if (this.loaded) return this.getKrypton(publicKey, formToken)
+
+      assertDomain(domain)
+      return this.loadKryptonClient({ domain, publicKey, formToken })
+    } catch (e) {
+      return Promise.reject(e)
+    }
+  }
+
+  private loadKryptonClient(opts: {
+    domain: string
+    publicKey: string
+    formToken: string | null
+  }): Promise<{ KR: KR }> {
+    const { domain, publicKey, formToken } = opts
+
     if (!this.loading) {
-      const publicKey = this.publicKey!
-      let domain = this.domain!
       this.loading = true
 
-      const script = document.createElement('script')
-      script.type = 'text/javascript'
+      const script = getClientScriptElement(domain)
 
-      if (!/^.+\/$/.test(domain)) domain += '/'
-
-      script.src = `${domain}static/js/krypton-client/V4.0/stable/kr-payment-form.min.js`
       script.setAttribute('kr-public-key', publicKey)
-      script.setAttribute('kr-spa-mode', 'true')
 
-      if (this.formToken) script.setAttribute('kr-form-token', this.formToken)
+      if (formToken) script.setAttribute('kr-form-token', formToken)
 
       const existingScript = document.querySelector(
         `script[src="${script.src}"]`
       )
 
-      if (!existingScript && document.body) document.body.appendChild(script)
-      else if (!document.body) console.warn('document.body is undefined')
+      if (!document.body) throw new Error('document.body is undefined')
+      if (!existingScript) document.body.appendChild(script)
+      this.loadedPublicKey = publicKey
     }
 
     const kryptonWindow = window as KryptonWindow
@@ -103,6 +190,7 @@ class Glue {
         const krypton = kryptonWindow.KR!
 
         whenDefined(krypton, 'ready', () => {
+          this.loadedPublicKey = publicKey
           this.loaded = true
           this.loading = false
           resolve({ KR: krypton })
@@ -111,11 +199,20 @@ class Glue {
     })
   }
 
-  private getKrypton(publicKey: string): Promise<{ KR: KR }> {
+  private getKrypton(
+    publicKey: string,
+    formToken: string | null
+  ): Promise<{ KR: KR }> {
     const krypton = (window as KryptonWindow).KR!
 
-    if (publicKey && publicKey !== this.publicKey) {
-      return krypton.setFormConfig({ publicKey })
+    if (publicKey !== this.loadedPublicKey) {
+      // Update formToken
+      const config: KRConfig = { publicKey }
+      if (formToken) config.formToken = formToken
+      return krypton.setFormConfig(config).then(result => {
+        this.loadedPublicKey = publicKey
+        return result
+      })
     }
 
     return Promise.resolve({ KR: krypton })
