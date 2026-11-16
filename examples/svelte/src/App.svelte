@@ -11,6 +11,9 @@
     let formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
 
     try {
+      KRGlue.configure({ domain: endpoint, publicKey })
+      await KRGlue.loadTheme('neon')
+
       const res = await fetch('http://localhost:3000/createPayment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -19,10 +22,7 @@
         })
       })
       formToken = await res.text()
-      const { KR } = await KRGlue.loadLibrary(
-        endpoint,
-        publicKey
-      ) /* Load the remote library */
+      const { KR } = await KRGlue.loadLibrary() /* Load the remote library */
 
       await KR.setFormConfig({
         /* set the minimal configuration */
@@ -56,7 +56,7 @@
   <div class="container">
     <h1>Svelte Example</h1>
     <div class="form-container" id="myPaymentForm">
-      <div class="kr-smart-form" kr-card-form-expanded />
+      <div class="kr-smart-form" kr-card-form-expanded kr-grid />
     </div>
     <div class="message" data-test="payment-message">{message}</div>
   </div>

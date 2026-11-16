@@ -59,7 +59,7 @@ Update the app/components/attach-form.hbs template to:
 <div class="container">
   <h1>Ember Example</h1>
   <div id="myPaymentForm">
-    <div class="kr-smart-form"></div>
+    <div class="kr-smart-form" kr-card-form-expanded kr-grid></div>
   </div>
   <p data-test="payment-message">{{this.message}}</p>
 </div>
@@ -99,9 +99,11 @@ export default class RenderElementsComponent extends Component {
       }),
     })
       .then((res) => res.text())
-      .then((resp) => {
+      .then(async (resp) => {
         formToken = resp;
-        return KRGlue.loadLibrary(endpoint, publicKey);
+        KRGlue.configure({ domain: endpoint, publicKey });
+        await KRGlue.loadTheme('neon');
+        return KRGlue.loadLibrary();
       })
       .then(({ KR }) =>
         KR.setFormConfig({

@@ -3,7 +3,7 @@
   <div class="hello">
     <div class="container">
       <div id="myPaymentForm">
-        <div class="kr-smart-form" kr-card-form-expanded></div>
+        <div class="kr-smart-form" kr-card-form-expanded kr-grid></div>
       </div>
     </div>
     <div data-test="payment-message">{{ message }}</div>
@@ -23,6 +23,9 @@ onMounted(async () => {
   let formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
 
   try {
+    KRGlue.configure({ domain: endpoint, publicKey })
+    await KRGlue.loadTheme('neon')
+
     // Generate the form token
     const res = await fetch('http://localhost:3000/createPayment', {
       method: 'POST',
@@ -33,10 +36,7 @@ onMounted(async () => {
     })
     formToken = await res.text()
 
-    const { KR } = await KRGlue.loadLibrary(
-      endpoint,
-      publicKey
-    ) /* Load the remote library */
+    const { KR } = await KRGlue.loadLibrary() /* Load the remote library */
 
     await KR.setFormConfig({
       /* set the minimal configuration */

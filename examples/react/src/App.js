@@ -8,11 +8,13 @@ export default function MyComponent() {
   useEffect(() => {
     async function setupPaymentForm() {
       const endpoint = '~~CHANGE_ME_ENDPOINT~~'
-      const publicKey =
-        '~~CHANGE_ME_PUBLIC_KEY~~'
+      const publicKey = '~~CHANGE_ME_PUBLIC_KEY~~'
       let formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
 
       try {
+        KRGlue.configure({ domain: endpoint, publicKey })
+        await KRGlue.loadTheme('neon')
+
         const res = await fetch('http://localhost:3000/createPayment', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -22,10 +24,7 @@ export default function MyComponent() {
         })
         formToken = await res.text()
 
-        const { KR } = await KRGlue.loadLibrary(
-          endpoint,
-          publicKey
-        ) /* Load the remote library */
+        const { KR } = await KRGlue.loadLibrary() /* Load the remote library */
 
         await KR.setFormConfig({
           /* set the minimal configuration */
@@ -62,7 +61,11 @@ export default function MyComponent() {
       <h1>React Example</h1>
       <div className="container">
         <div id="myPaymentForm">
-          <div className="kr-smart-form" kr-card-form-expanded=""></div>
+          <div
+            className="kr-smart-form"
+            kr-card-form-expanded=""
+            kr-grid=""
+          ></div>
         </div>
         <div data-test="payment-message">{message}</div>
       </div>

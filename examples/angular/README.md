@@ -61,7 +61,7 @@ reate the src/app/mycomponent/mycomponent.html with:
   <h1>{{ title }}</h1>
   <div class="container">
     <div id="myPaymentForm">
-      <div class="kr-smart-form" kr-card-form-expanded></div>
+      <div class="kr-smart-form" kr-card-form-expanded kr-grid></div>
     </div>
     <div data-test="payment-message">{{ message }}</div>
   </div>
@@ -98,12 +98,11 @@ export class AppComponent implements AfterViewInit {
       { responseType: 'text' }
     )
     firstValueFrom(observable)
-      .then((resp: any) => {
+      .then(async (resp: any) => {
         formToken = resp
-        return KRGlue.loadLibrary(
-          endpoint,
-          publicKey
-        ) /* Load the remote library */
+        KRGlue.configure({ domain: endpoint, publicKey })
+        await KRGlue.loadTheme('neon')
+        return KRGlue.loadLibrary() /* Load the remote library */
       })
       .then(({ KR }) =>
         KR.setFormConfig({
