@@ -41,16 +41,12 @@
 
 ## About the project
 
-Any payment form must comply with PCI-DSS requirements. A classical integration will be displayed
-on the banks page using a redirection. In that case, PCI-DSS requirements are done by your bank.
+Payment forms must meet PCI-DSS requirements. With a traditional redirect-based integration, customers are sent to a payment page hosted by their bank, where they enter their payment details.
 
-By using this package Lyra allows to integrate a payment form using standard HTML elements on your
-website. This library will load the [Javacript library][doc-home] from Lyra servers transforming
-automatically each sensitive field (pan, security code, ...) into an IFrame, allowing to comply with
-all regulations.
+This package lets you embed Lyra's payment form using standard HTML elements. It loads Lyra's [JavaScript library][doc-home] and renders sensitive fields, such as the card number and security code, in iframes.
 
 The **embedded-form-glue** library provides a set of utilities to easily integrate the Payment
-form into any we application made with Javascript frameworks like React, Vue, Angular, Svelte,
+form into any web application built with JavaScript frameworks like React, Vue, Angular, Svelte,
 Ionic, etc.
 
 ## Getting Started
@@ -71,6 +67,13 @@ npm install --save @lyracom/embedded-form-glue
 
 ### Theme
 
+> **Note**
+>
+> Starting with v2.0.0, you no longer need to add the theme files manually.
+> The method `loadTheme` can be used to add the theme-related assets.
+
+<details>
+<summary>See legacy documentation (prior to v2.0.0)</summary>
 First, define the theme files to load in the head section of your HTML page:
 
 ```html
@@ -89,6 +92,8 @@ First, define the theme files to load in the head section of your HTML page:
 >
 > Replace **`~~CHANGE_ME_ENDPOINT~~`** with your configuration endpoint.
 
+</details>
+
 For more information about theming, please see [Lyra theming documentation][doc-themes]
 
 ### DOM location
@@ -97,16 +102,16 @@ After that, define the location where the payment form will be generated in your
 
 ```html
 <div id="myPaymentForm">
-  <div class="kr-smart-form"></div>
+  <div class="kr-smart-form" kr-card-form-expanded kr-grid></div>
 </div>
 ```
 
 > **Note**
 >
-> Specifify the element **kr-smart-form** inside the target location to load the Smart Form (any
+> Specify the element **kr-smart-form** inside the target location to load the Smart Form (any
 > kind of payment method).
 
-### Javascript
+### JavaScript
 
 Import the library in your javascript file or component with:
 
@@ -120,10 +125,13 @@ And finally, you can generate the payment form with the following code:
 /* Integration public key */
 const publicKey = '~~CHANGE_ME_PUBLIC_KEY~~'
 /* Endpoint. Base domain with its protocol (e.g. https://domain.name, do not include any path after the domain) */
-const endPoint = '~~CHANGE_ME_ENDPOINT~~'
+const domain = '~~CHANGE_ME_ENDPOINT~~'
 
+/* Define the domain and the publicKey */
+KRGlue.configure({ domain, publicKey })
+await KRGlue.loadTheme('neon')
 /* Load the remote library and get the KR object */
-const { KR } = await KRGlue.loadLibrary(endPoint, publicKey)
+const { KR } = await KRGlue.loadLibrary()
 /* Setting configuration */
 await KR.setFormConfig({ 'kr-language': 'en-US' })
 /* Render the payment form into a given DOM selector */
@@ -138,8 +146,8 @@ await KR.renderElements('#myPaymentForm')
 
 > **Warning**
 >
-> KR methods use Promises. You should always use the **await** keyword or **then method** when
-> calling them. Please see [Javascript Promises][js-promises] and [Async Functions][js-async-await]
+> KR methods use Promises. You should always use **await** or the **then** method when
+> calling them. Please see [JavaScript Promises][js-promises] and [Async Functions][js-async-await]
 > for more information.
 
 ## First transaction
@@ -147,8 +155,7 @@ await KR.renderElements('#myPaymentForm')
 Once the payment form is set up, you will see the skeleton animation. This is because the form is
 using the default demo token. To make a real transaction, you need to get a real **formToken**.
 
-To get a proper test **formToken**, make a request to the Charge/CreatePayment web service. To not
-expose your credentials, it is mandatory to do that from a server. Please see the
+To obtain a test **formToken**, call the Charge/CreatePayment web service from your server. This keeps your credentials off the client. Please see the
 [NodeJS server example](examples/server/README.md), or visit the following links for more
 information:
 
@@ -160,14 +167,16 @@ Once you have a **formToken**, you can set it in the payment form with the follo
 
 ```javascript
 // Use the loadLibrary to set the form token
-const { KR } = await KRGlue.loadLibrary(
-  endPoint,
+const { KR } = await KRGlue.loadLibrary({
+  domain,
   publicKey,
-  '~~CHANGE_ME_FORM_TOKEN~~'
-)
+  formToken: '~~CHANGE_ME_FORM_TOKEN~~'
+})
+```
 
+```javascript
 // Or set the form token once the library is loaded
-const { KR } = await KRGlue.loadLibrary(endPoint, publicKey)
+const { KR } = await KRGlue.loadLibrary({ domain, publicKey })
 await KR.setFormConfig({ formToken: '~~CHANGE_ME_FORM_TOKEN~~' })
 ```
 
@@ -180,13 +189,53 @@ methods.
 
 ## Methods
 
+### configure
+
+Use `configure` to define the configuration prior to any other call.
+
+```javascript
+KRGlue.configure({
+  domain: 'https://domain.name',
+  publicKey: '12345678:publickey_abcdefghi...',
+  formToken: 'FORM-TOKEN'
+})
+```
+
+### loadTheme
+
+Load the assets for the required theme.
+Valid values: `neon`, `classic` & `material`.
+
+> [!WARNING]
+>
+> Call `configure` with a domain before loading the theme
+
+```javascript
+await KRGlue.loadTheme('neon')
+```
+
 ### loadLibrary
 
-Use `loadLibrary` method to load the Lyra Javascript library. The method returns a `Promise` with
+Use the `loadLibrary` method to load the Lyra JavaScript library. The method returns a `Promise` with
 the `KR` object.
 
 ```javascript
-const { KR } = await KRGlue.loadLibrary(endPoint, publicKey)
+const { KR } = await KRGlue.loadLibrary({ domain, publicKey })
+```
+
+As shown above, it is possible to pass no parameter if `configure` was called beforehand.
+
+```javascript
+KRGlue.configure({ domain, publicKey })
+const { KR } = await KRGlue.loadLibrary()
+```
+
+It is also possible to override the configuration previously defined.
+This is useful if a new formToken was generated or the publicKey needs to be updated.
+
+```javascript
+KRGlue.configure({ domain, publicKey, formToken })
+const { KR } = await KRGlue.loadLibrary({ publicKey, formToken })
 ```
 
 ## KR object
@@ -200,7 +249,7 @@ The available methods and callbacks are described in the following sections.
 
 > **Note**
 >
-> See Lyra [Javascript library reference][doc-reference] for the complete reference guide.
+> See Lyra [JavaScript library reference][doc-reference] for the complete reference guide.
 
 ## JavaScript frameworks integration
 
@@ -219,7 +268,7 @@ Find integration examples for some of the main javascript frameworks in the foll
 
 ## Customization
 
-The payment form can be customized in many ways. Some of them in the following examples:
+The payment form can be customized in many ways. Examples of these customizations include:
 
 - [Use a custom field order](./docs/customization.md#use-a-custom-field-order)
 - [Add additional fields](./docs/customization.md#add-additional-fields)
@@ -247,6 +296,27 @@ npm install
 npm run build
 ```
 
+### Prepare a tarball and update the examples
+
+1. Create the tarball with:
+
+```bash
+npm pack
+```
+
+A tarball is created with the version defined in package.json.
+Use the `-rc` suffix because the release has not yet been approved.
+
+> For example with `2.0.0-rc`, a file `lyracom-embedded-form-glue-2.0.0-rc.tgz` is generated
+
+2. Move the tarball to the `dist/npm/` folder.
+
+3. For each example in the `examples` folder, update package.json to reference the generated tarball using a relative path.
+
+```json
+"@lyracom/embedded-form-glue": "file:../../dist/npm/lyracom-embedded-form-glue-2.0.0-rc.tgz"
+```
+
 ### Testing
 
 To run the e2e tests, first build the examples with:
@@ -256,7 +326,7 @@ npm run examples:build
 npm run examples:prepare
 ```
 
-On a separated instance, initialize the servers with:
+In a separate instance, initialize the servers with:
 
 ```bash
 npm run examples:serve

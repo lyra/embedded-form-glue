@@ -1,6 +1,6 @@
 {
   "name": "@lyracom/embedded-form-glue",
-  "version": "1.4.4",
+  "version": "2.0.0",
   "description": "Lyra embedded form glue",
   "main": "lib/index.js",
   "scripts": {
@@ -34,7 +34,7 @@
   },
   "homepage": "https://github.com/lyra/embedded-form-glue#readme",
   "devDependencies": {
-    "@playwright/test": "1.31.2",
+    "@playwright/test": "1.65.1",
     "@typescript-eslint/parser": "^6.21.0",
     "eslint": "8.23.1",
     "eslint-config-prettier": "8.5.0",
