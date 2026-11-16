@@ -61,7 +61,7 @@ reate the src/app/mycomponent/mycomponent.html with:
   <h1>{{ title }}</h1>
   <div class="container">
     <div id="myPaymentForm">
-      <div class="kr-smart-form" kr-card-form-expanded></div>
+      <div class="kr-smart-form" kr-card-form-expanded kr-grid></div>
     </div>
     <div data-test="payment-message">{{ message }}</div>
   </div>
@@ -90,25 +90,23 @@ export class AppComponent implements AfterViewInit {
   ngAfterViewInit() {
     const endpoint = '~~CHANGE_ME_ENDPOINT~~'
     const publicKey = '~~CHANGE_ME_PUBLIC_KEY~~'
-    let formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
-
     const observable = this.http.post(
       'http://localhost:3000/createPayment',
       { paymentConf: { amount: 10000, currency: 'USD' } },
       { responseType: 'text' }
     )
     firstValueFrom(observable)
-      .then((resp: any) => {
-        formToken = resp
-        return KRGlue.loadLibrary(
-          endpoint,
-          publicKey
-        ) /* Load the remote library */
+      .then((formToken: string) => {
+        return KRGlue.load({
+          domain: endpoint,
+          publicKey,
+          formToken,
+          theme: 'neon'
+        }) /* Load the remote library */
       })
       .then(({ KR }) =>
         KR.setFormConfig({
-          /* set the minimal configuration */
-          formToken: formToken,
+          /* set the remaining configuration */
           'kr-language': 'en-US' /* to update initialization parameter */
         })
       )

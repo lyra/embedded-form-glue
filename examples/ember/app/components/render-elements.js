@@ -9,8 +9,6 @@ export default class RenderElementsComponent extends Component {
     super(...args);
     const endpoint = '~~CHANGE_ME_ENDPOINT~~';
     const publicKey = '~~CHANGE_ME_PUBLIC_KEY~~';
-    let formToken = 'DEMO-TOKEN-TO-BE-REPLACED';
-
     // Generate the form token
     fetch('http://localhost:3000/createPayment', {
       method: 'POST',
@@ -20,14 +18,17 @@ export default class RenderElementsComponent extends Component {
       }),
     })
       .then((res) => res.text())
-      .then((resp) => {
-        formToken = resp;
-        return KRGlue.loadLibrary(endpoint, publicKey);
+      .then((formToken) => {
+        return KRGlue.load({
+          domain: endpoint,
+          publicKey,
+          formToken,
+          theme: 'neon',
+        });
       })
       .then(({ KR }) =>
         KR.setFormConfig({
-          /* set the minimal configuration */
-          formToken: formToken,
+          /* set the remaining configuration */
           'kr-language': 'en-US' /* to update initialization parameter */,
         })
       )

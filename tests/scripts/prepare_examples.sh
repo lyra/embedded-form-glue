@@ -1,3 +1,7 @@
+#!/bin/bash
+
+set -x
+
 echo "Copy server to examples_build"
 mkdir examples_build/server
 cd examples
