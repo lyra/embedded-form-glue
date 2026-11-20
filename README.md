@@ -167,16 +167,14 @@ Once you have a **formToken**, you can set it in the payment form with the follo
 
 ```javascript
 // Use the loadLibrary to set the form token
-const { KR } = await KRGlue.loadLibrary({
-  domain,
-  publicKey,
-  formToken: '~~CHANGE_ME_FORM_TOKEN~~'
-})
+KRGlue.configuration({ domain, publicKey })
+const { KR } = await KRGlue.loadLibrary('~~CHANGE_ME_FORM_TOKEN~~')
 ```
 
 ```javascript
 // Or set the form token once the library is loaded
-const { KR } = await KRGlue.loadLibrary({ domain, publicKey })
+KRGlue.configuration({ domain, publicKey })
+const { KR } = await KRGlue.loadLibrary()
 await KR.setFormConfig({ formToken: '~~CHANGE_ME_FORM_TOKEN~~' })
 ```
 
@@ -216,26 +214,20 @@ await KRGlue.loadTheme('neon')
 
 ### loadLibrary
 
-Use the `loadLibrary` method to load the Lyra JavaScript library. The method returns a `Promise` with
+First use `configuration` to set `domain` and `publicKey`.
+Then use the `loadLibrary` method to load the Lyra JavaScript library. The method returns a `Promise` with
 the `KR` object.
 
 ```javascript
-const { KR } = await KRGlue.loadLibrary({ domain, publicKey })
-```
-
-As shown above, it is possible to pass no parameter if `configure` was called beforehand.
-
-```javascript
-KRGlue.configure({ domain, publicKey })
+KRGlue.configuration({ domain, publicKey })
 const { KR } = await KRGlue.loadLibrary()
 ```
 
-It is also possible to override the configuration previously defined.
-This is useful if a new formToken was generated or the publicKey needs to be updated.
+It is possible to pass the formToken to automatically configure the `KR` library.
 
 ```javascript
-KRGlue.configure({ domain, publicKey, formToken })
-const { KR } = await KRGlue.loadLibrary({ publicKey, formToken })
+KRGlue.configure({ domain, publicKey })
+const { KR } = await KRGlue.loadLibrary(formToken)
 ```
 
 ## KR object
