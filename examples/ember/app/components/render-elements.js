@@ -20,9 +20,11 @@ export default class RenderElementsComponent extends Component {
       }),
     })
       .then((res) => res.text())
-      .then((resp) => {
+      .then(async (resp) => {
         formToken = resp;
-        return KRGlue.loadLibrary(endpoint, publicKey);
+        KRGlue.configure({ domain: endpoint, publicKey });
+        await KRGlue.loadTheme('neon');
+        return KRGlue.loadLibrary();
       })
       .then(({ KR }) =>
         KR.setFormConfig({

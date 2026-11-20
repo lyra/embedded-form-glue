@@ -1,35 +1,35 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+      name="viewport"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Glue testing view</title>
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Glue testing view</title>
+    <!-- the component we want to test -->
+    <script src="/dist/js/kr-payment-form-glue.min.js"></script>
 
-  <!-- theme and plugins. should be loaded in the HEAD section -->
-  <link rel="stylesheet" href="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon-reset.css" />
-  <script src="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon.js"></script>
+    <script>
+      const publicKey =
+        '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5'
+      const domain = '~~CHANGE_ME_ENDPOINT~~'
+      document.addEventListener('DOMContentLoaded', async () => {
+        KRGlue.configure({ domain })
+        await KRGlue.loadTheme('neon')
+        await Promise.all([
+          KRGlue.loadLibrary({ publicKey }),
+          KRGlue.loadLibrary({ publicKey })
+        ])
+      })
+    </script>
+  </head>
 
-  <!-- the component we want to test -->
-  <script src="/dist/js/kr-payment-form-glue.min.js"></script>
-
-  <script>
-    const publicKey =
-      '69876357:testpublickey_DEMOPUBLICKEY95me92597fd28tGD4r5'
-    document.addEventListener('DOMContentLoaded', () =>
-      KRGlue.loadLibrary('~~CHANGE_ME_ENDPOINT~~', publicKey)
-    )
-    document.addEventListener('DOMContentLoaded', () =>
-      KRGlue.loadLibrary('~~CHANGE_ME_ENDPOINT~~', publicKey)
-    )
-  </script>
-</head>
-
-<body>
-  <div id="myPaymentForm">
-    <div class="kr-smart-form"></div>
-  </div>
-</body>
-
+  <body>
+    <div id="myPaymentForm">
+      <div class="kr-smart-form"></div>
+    </div>
+  </body>
 </html>

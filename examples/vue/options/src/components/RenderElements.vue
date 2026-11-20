@@ -4,7 +4,7 @@
     <div class="container">
       <div id="myPaymentForm">
         <!-- if you want only cards, replace kr-smart-form by kr-embedded -->
-        <div class="kr-smart-form" kr-card-form-expanded></div>
+        <div class="kr-smart-form" kr-card-form-expanded kr-grid></div>
       </div>
     </div>
     <div data-test="payment-message">{{ message }}</div>
@@ -28,6 +28,9 @@ export default {
 
     // Generate the form token
     try {
+      KRGlue.configure({ domain: endpoint, publicKey })
+      await KRGlue.loadTheme('neon')
+
       const res = await fetch('http://localhost:3000/createPayment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -37,7 +40,7 @@ export default {
       })
       const formToken = await res.text()
       // Load the remote library
-      const { KR } = await KRGlue.loadLibrary(endpoint, publicKey)
+      const { KR } = await KRGlue.loadLibrary()
       // Set the minimal configuration
       await KR.setFormConfig({
         formToken: formToken,

@@ -25,12 +25,11 @@ export class PaymentPage implements AfterViewInit {
 
     observable
       .toPromise()
-      .then((resp: any) => {
+      .then(async (resp: any) => {
         formToken = resp
-        return KRGlue.loadLibrary(
-          endpoint,
-          publicKey
-        ) /* Load the remote library */
+        KRGlue.configure({ domain: endpoint, publicKey })
+        await KRGlue.loadTheme('neon')
+        return KRGlue.loadLibrary() /* Load the remote library */
       })
       .then(({ KR }) =>
         KR.setFormConfig({

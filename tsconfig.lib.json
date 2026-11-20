@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "rootDir": "app",
+    "outDir": "lib",
+    "declaration": true,
+    "declarationDir": "./@types"
+  }
+}

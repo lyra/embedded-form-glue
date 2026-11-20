@@ -62,6 +62,9 @@
     "qunit-dom": "2.0.0",
     "webpack": "5.76.2"
   },
+  "overrides": {
+    "broccoli-clean-css": "2.0.1"
+  },
   "engines": {
     "node": "12.* || 14.* || >= 16"
   },
@@ -69,6 +72,6 @@
     "edition": "octane"
   },
   "dependencies": {
-    "@lyracom/embedded-form-glue": "1.4.4"
+    "@lyracom/embedded-form-glue": "file:../../dist/npm/lyracom-embedded-form-glue-2.0.0-rc.tgz"
   }
 }

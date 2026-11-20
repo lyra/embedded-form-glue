@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect, type Page } from '@playwright/test'
 
 const examples = [
   { name: 'Angular', port: '9000' },
@@ -22,17 +22,22 @@ examples.forEach(example => {
       await expect(page.locator('#myPaymentForm')).toBeVisible()
     })
 
+    test('Theme assets are included', async ({ page }) => {
+      await expect(page.locator('head script#krglue-theme-js')).toBeAttached()
+      await expect(page.locator('head link#krglue-theme-css')).toBeAttached()
+    })
+
     test('Embedded form loads', async ({ page }) => {
       await expect(page.locator('.kr-embedded[kr-form-ready]')).toBeVisible()
-      await expect(page.locator('#krtoolbar')).toBeVisible()
+      await expect(page.locator('krypton-toolbar')).toBeVisible()
     })
 
     test('Accepted test card payment is succesful', async ({ page }) => {
       await expect(page.locator('.kr-embedded[kr-form-ready]')).toBeVisible()
-      await expect(page.locator('#krtoolbar')).toBeVisible()
+      await expect(page.locator('krypton-toolbar')).toBeVisible()
 
       // Select the test card
-      await selectTestCard(page, 'visa.accepted.card-accepted')
+      await selectTestCard(page, 'visa:accepted')
 
       // Before clicking the button, check that the payment message is not visible
       await expect(
@@ -51,10 +56,10 @@ examples.forEach(example => {
       page
     }) => {
       await expect(page.locator('.kr-embedded[kr-form-ready]')).toBeVisible()
-      await expect(page.locator('#krtoolbar')).toBeVisible()
+      await expect(page.locator('krypton-toolbar')).toBeVisible()
 
       // Select the test card
-      await selectTestCard(page, 'visa.refused.card-refused')
+      await selectTestCard(page, 'visa:refused')
 
       // Before clicking the button, check that the error is not visible
       await expect(
@@ -71,8 +76,11 @@ examples.forEach(example => {
   })
 })
 
-async function selectTestCard(page, cardClass) {
-  await page.locator('#krcardsMenu').hover()
-  if (cardClass.includes('visa')) await page.locator(`span.visa`).click()
-  await page.locator(`tr.${cardClass}`).click()
+async function selectTestCard(page: Page, cardId: string) {
+  await page.evaluate(cardId => {
+    const toolbarWindow = window as typeof window & {
+      KR_TOOLBAR: { selectTestCard(cardId: string): void | Promise<void> }
+    }
+    return toolbarWindow.KR_TOOLBAR.selectTestCard(cardId)
+  }, cardId)
 }

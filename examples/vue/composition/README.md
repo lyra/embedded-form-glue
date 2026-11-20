@@ -71,7 +71,7 @@ Update the src/components/HelloWorld.vue template to:
     <h1>{{ msg }}</h1>
     <div class="container">
       <div id="myPaymentForm">
-        <div class="kr-smart-form" kr-card-form-expanded></div>
+        <div class="kr-smart-form" kr-card-form-expanded kr-grid></div>
       </div>
     </div>
   </div>
@@ -108,7 +108,10 @@ onMounted(async () => {
   const publicKey = '~~CHANGE_ME_PUBLIC_KEY~~'
   const formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
 
-  const { KR } = await KRGlue.loadLibrary(endpoint, publicKey) /* Load the remote library */
+  KRGlue.configure({ domain: endpoint, publicKey })
+  await KRGlue.loadTheme('neon')
+
+  const { KR } = await KRGlue.loadLibrary() /* Load the remote library */
   await KR.setFormConfig({ /* set the minimal configuration */
     formToken: formToken,
     'kr-language': 'en-US', /* to update initialization parameter */
