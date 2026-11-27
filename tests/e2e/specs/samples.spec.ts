@@ -8,7 +8,7 @@ test.describe(`Sample embedded examples`, () => {
   test('KR.addForm minimal', async ({ page }) => {
     await page.goto(`http://127.0.0.1:8080/tests/views/addFormMinimal.html`)
     await expect(page.locator('.kr-embedded[kr-form-ready]')).toBeVisible()
-    await expect(page.locator('#krtoolbar')).toBeVisible()
+    await expect(page.locator('krypton-toolbar')).toBeVisible()
 
     await expect(page.locator('.kr-payment-button')).toBeVisible()
     await expect(page.locator('.kr-payment-button')).toContainText('PAY')
@@ -17,7 +17,7 @@ test.describe(`Sample embedded examples`, () => {
   test('KR.attachForm minimal', async ({ page }) => {
     await page.goto(`http://127.0.0.1:8080/tests/views/attachFormMinimal.html`)
     await expect(page.locator('.kr-embedded[kr-form-ready]')).toBeVisible()
-    await expect(page.locator('#krtoolbar')).toBeVisible()
+    await expect(page.locator('krypton-toolbar')).toBeVisible()
 
     await expect(page.locator('.kr-payment-button')).toBeVisible()
     await expect(page.locator('.kr-payment-button')).toContainText('PAY')
@@ -26,7 +26,7 @@ test.describe(`Sample embedded examples`, () => {
   test('KR.attachForm reload', async ({ page }) => {
     await page.goto(`http://127.0.0.1:8080/tests/views/attachFormReload.html`)
     await expect(page.locator('.kr-embedded[kr-form-ready]')).toBeVisible()
-    await expect(page.locator('#krtoolbar')).toBeVisible()
+    await expect(page.locator('krypton-toolbar')).toBeVisible()
 
     await expect(page.locator('.kr-payment-button')).toBeVisible()
     await expect(page.locator('.kr-payment-button')).toContainText('PAY')
@@ -66,7 +66,7 @@ test.describe(`Sample embedded examples`, () => {
   test('KR.attachForm minimal + publicKey update', async ({ page }) => {
     await page.goto(`http://127.0.0.1:8080/tests/views/attachFormMinimal.html`)
     await expect(page.locator('.kr-embedded[kr-form-ready]')).toBeVisible()
-    await expect(page.locator('#krtoolbar')).toBeVisible()
+    await expect(page.locator('krypton-toolbar')).toBeVisible()
 
     await expect(page.locator('.kr-payment-button')).toBeVisible()
     await expect(page.locator('.kr-payment-button')).toContainText('PAY')
@@ -79,16 +79,24 @@ test.describe(`Sample embedded examples`, () => {
     )
 
     await page.evaluate(async () => {
-      await KRGlue.loadLibrary('~~CHANGE_ME_ENDPOINT~~', 'INVALID_PUBLIC_KEY')
+      await KRGlue.load({
+        domain: 'https://kjs-develop.lyra-labs.fr',
+        publicKey:
+          '33148340:testpublickey_l83P7WpRK2hoUIcWyFVQsd4Omsz0XbCKYtNKeGbpX6CvS',
+        theme: null
+      })
     })
 
     const updatedPK = await page.evaluate(async () => {
       return KR.$store.state.publicKey
     })
-    await expect(updatedPK).toBe('INVALID_PUBLIC_KEY')
+
+    await expect(updatedPK).toBe(
+      '33148340:testpublickey_l83P7WpRK2hoUIcWyFVQsd4Omsz0XbCKYtNKeGbpX6CvS'
+    )
   })
 
-  test('KR.loadLibrary + mutliple times', async ({ page }) => {
+  test('KR.load multiple times', async ({ page }) => {
     const logs = []
     page.on('pageerror', exception => {
       logs.push(exception)

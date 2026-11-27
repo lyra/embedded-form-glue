@@ -1,40 +1,54 @@
 # Change log
 
-# 1.4.4
+## 2.0.0
+
+### Changed
+
+- Breaking: `loadLibrary` now accepts a configuration object instead of positional arguments.
+- Convert formerly JS source files to TypeScript.
+- Adapt build and linters to use TypeScript while maintaining the previous output.
+  igure`&`loadTheme`.
+- Update examples & examples_build
+
+### Added
+
+- Add methods `conf
+
+## 1.4.4
 
 - [fix] Update d.ts file
 
-# 1.4.3
+## 1.4.3
 
 - [fix] Update d.ts file
 - [doc] Updates documentation and examples
 
-# 1.4.2
+## 1.4.2
 
 - [fix] Update d.ts file
 
-# 1.4.1
+## 1.4.1
 
 - [feat] Update d.ts file
 
-# 1.4.0
+## 1.4.0
 
 - [feat] loadLibrary invalid value management improvements
 
-# 1.3.8
+## 1.3.8
 
 - [feat] Update d.ts file
 - [doc] Examples update with renderElements
 
-# 1.3.4
+## 1.3.4
 
 - [feat] Removes promise polyfill
 
-# 1.3.3
+## 1.3.3
 
 - [doc] Readme update
 
-# 1.3.2
+## 1.3.2
 
 - [feat] Update d.ts file
 - [doc] Readme update
@@ -43,28 +57,28 @@
 - [ci] Moved to Playwright
 - [doc] Licence
 
-# 1.3.1
+## 1.3.1
 
 - [feat] Update d.ts file
 - [doc] Examples improvements
 
-# 1.3.0
+## 1.3.0
 
 - [feat] Multiple loadLibrary method calls securization
-  
-# 1.2.0
+
+## 1.2.0
 
 - [fix] Wait for KR ready
 
-# 1.1.0
+## 1.1.0
 
 - [feat] publicKey update with loadLibrary
 
-# 1.0.0
+## 1.0.0
 
 - [chore] Stable version (0.3.4)
 
-# 0.3.4
+## 0.3.4
 
 - Hash validation examples
 - Server side example
@@ -73,15 +87,15 @@
 - Migration from Travis to CircleCI
 - Migration from selenium to TestCafe
 
-# 0.3.3
+## 0.3.3
 
 - Fix when the body is not inside the DOM (happen sometime with some frameworks)
 
-# 0.3.2
+## 0.3.2
 
 - do not add script tag if already exits (when library is removed and re-added)
 
-# 0.3.1
+## 0.3.1
 
 - Fix 'es6-promise/auto' dependency error
 

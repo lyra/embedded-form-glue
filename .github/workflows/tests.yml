@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 26
       - name: Install dependencies
         run: npm ci
       - name: Install Playwright Browsers
@@ -22,6 +22,8 @@ jobs:
       - name: Run example servers in background
         run: |
           npm run examples:serve &
+      - name: Prepare E2E view files
+        run: npx gulp replaceKeysOnViews
       - name: Run E2E tests
         run: npx playwright test tests/e2e/specs --retries=3
       - uses: actions/upload-artifact@v4
@@ -37,7 +39,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 26
       - name: Install dependencies
         run: npm ci
       - name: Run unit tests

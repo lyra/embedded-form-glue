@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x
+
 cd examples
 
 echo "Removing angular node_modules"
@@ -44,9 +46,14 @@ cd ..
 echo "Remove examples_build"
 rm -rf examples_build
 
+mkdir -p examples_build/angular
+mkdir -p examples_build/ember
+mkdir -p examples_build/ionic
+mkdir -p examples_build/next
 mkdir -p examples_build/react
-mkdir examples_build/next
-mkdir examples_build/svelte
+mkdir -p examples_build/svelte
+mkdir -p examples_build/vue-composition
+mkdir -p examples_build/vue-options
 
 cd examples
 

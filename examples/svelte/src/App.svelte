@@ -8,8 +8,6 @@
   onMount(async () => {
     const endpoint = '~~CHANGE_ME_ENDPOINT~~'
     const publicKey = '~~CHANGE_ME_PUBLIC_KEY~~'
-    let formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
-
     try {
       const res = await fetch('http://localhost:3000/createPayment', {
         method: 'POST',
@@ -18,15 +16,16 @@
           paymentConf: { amount: 10000, currency: 'USD' }
         })
       })
-      formToken = await res.text()
-      const { KR } = await KRGlue.loadLibrary(
-        endpoint,
-        publicKey
-      ) /* Load the remote library */
+      const formToken = await res.text()
+      const { KR } = await KRGlue.load({
+        domain: endpoint,
+        publicKey,
+        formToken,
+        theme: 'neon'
+      }) /* Load the remote library */
 
       await KR.setFormConfig({
-        /* set the minimal configuration */
-        formToken: formToken,
+        /* set the remaining configuration */
         'kr-language': 'en-US' /* to update initialization parameter */
       })
 
@@ -56,7 +55,7 @@
   <div class="container">
     <h1>Svelte Example</h1>
     <div class="form-container" id="myPaymentForm">
-      <div class="kr-smart-form" kr-card-form-expanded />
+      <div class="kr-smart-form" kr-card-form-expanded kr-grid />
     </div>
     <div class="message" data-test="payment-message">{message}</div>
   </div>

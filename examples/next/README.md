@@ -28,23 +28,7 @@ npm run dev
 
 ## Add the payment form
 
-First you have to add 2 theme files:
-
-| File           | Description                                                                   |
-| -------------- | ----------------------------------------------------------------------------- |
-| neon-reset.css | default style applied before the [Lyra Javascript Library][js link] is loaded |
-| neon.js        | theme logic, like waiting animation on submit button, ...                     |
-
-Add them in public/index.html in the the HEAD section:
-
-```javascript
-<!-- theme and plugins. should be loaded in the HEAD section -->
-<link rel="stylesheet"
-href="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon-reset.css">
-<script
-    src="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon.js">
-</script>
-```
+The example loads the theme CSS, JavaScript, and payment library with `KRGlue.load`.
 
 > **Note**
 >
@@ -58,7 +42,6 @@ Next, update **pages/mypage.js** to:
 import Head from 'next/head'
 import KRGlue from '@lyracom/embedded-form-glue'
 import { useState, useEffect } from 'react'
-import Script from 'next/script'
 
 export default function MyPage() {
   const [message, setMessage] = useState('')
@@ -67,8 +50,6 @@ export default function MyPage() {
     async function setupPaymentForm() {
       const endpoint = '~~CHANGE_ME_ENDPOINT~~'
       const publicKey = '~~CHANGE_ME_PUBLIC_KEY~~'
-      let formToken = 'DEMO-TOKEN-TO-BE-REPLACED'
-
       try {
         const res = await fetch('http://localhost:3000/createPayment', {
           method: 'POST',
@@ -77,15 +58,17 @@ export default function MyPage() {
             paymentConf: { amount: 10000, currency: 'USD' }
           })
         })
-        formToken = await res.text()
+        const formToken = await res.text()
 
-        const { KR } = await KRGlue.loadLibrary(
-          endpoint,
-          publicKey
-        ) /* Load the remote library */
+        const { KR } = await KRGlue.load({
+          domain: endpoint,
+          publicKey,
+          formToken,
+          theme: 'neon'
+        }) /* Load the remote library */
 
         await KR.setFormConfig({
-          /* set the minimal configuration */ formToken: formToken,
+          /* set the remaining configuration */
           'kr-language': 'en-US' /* to update initialization parameter */
         })
 
@@ -105,16 +88,15 @@ export default function MyPage() {
       <Head>
         <title>NextJS</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <link
-          rel="stylesheet"
-          href="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon-reset.css"
-        />
       </Head>
-      <Script src="~~CHANGE_ME_ENDPOINT~~/static/js/krypton-client/V4.0/ext/neon.js"></Script>
       <div className="container">
         <h1>NextJS Example</h1>
         <div id="myPaymentForm">
-          <div className="kr-smart-form" kr-card-form-expanded="true" />
+          <div
+            className="kr-smart-form"
+            kr-card-form-expanded="true"
+            kr-grid="true"
+          />
         </div>
         <div data-test="payment-message">{message}</div>
       </div>

@@ -59,7 +59,7 @@ Update the app/components/attach-form.hbs template to:
 <div class="container">
   <h1>Ember Example</h1>
   <div id="myPaymentForm">
-    <div class="kr-smart-form"></div>
+    <div class="kr-smart-form" kr-card-form-expanded kr-grid></div>
   </div>
   <p data-test="payment-message">{{this.message}}</p>
 </div>
@@ -88,8 +88,6 @@ export default class RenderElementsComponent extends Component {
     super(...args);
     const endpoint = '~~CHANGE_ME_ENDPOINT~~';
     const publicKey = '~~CHANGE_ME_PUBLIC_KEY~~';
-    let formToken = 'DEMO-TOKEN-TO-BE-REPLACED';
-
     // Generate the form token
     fetch('http://localhost:3000/createPayment', {
       method: 'POST',
@@ -99,14 +97,17 @@ export default class RenderElementsComponent extends Component {
       }),
     })
       .then((res) => res.text())
-      .then((resp) => {
-        formToken = resp;
-        return KRGlue.loadLibrary(endpoint, publicKey);
+      .then((formToken) => {
+        return KRGlue.load({
+          domain: endpoint,
+          publicKey,
+          formToken,
+          theme: 'neon',
+        });
       })
       .then(({ KR }) =>
         KR.setFormConfig({
-          /* set the minimal configuration */
-          formToken: formToken,
+          /* set the remaining configuration */
           'kr-language': 'en-US' /* to update initialization parameter */,
         })
       )
@@ -125,10 +126,11 @@ export default class RenderElementsComponent extends Component {
 The payment form is up and ready, you can try to make a transaction using
 a test card with the debug toolbar (at the bottom of the page).
 
-If you try to pay, you will have the following error: **CLIENT_998: Demo form, see the documentation**.
-It's because the **formToken** you have defined using **KR.setFormConfig** is set to **DEMO-TOKEN-TO-BE-REPLACED**.
+For real transactions, configure the credentials and endpoint in the example server so it can
+request a **formToken** from the Charge/CreatePayment web service. The example passes the returned
+token to **KRGlue.load**. If the server still returns a demo token, the form displays
+**CLIENT_998: Demo form, see the documentation**.
 
-you have to create a **formToken** before displaying the payment form using Charge/CreatePayment web-service.
 For more information, please see:
 
 - [Embedded form quick start][js quick start]

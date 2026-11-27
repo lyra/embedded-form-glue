@@ -3,25 +3,8 @@
 // TypeScript Version: 4.5.2
 
 declare module '@lyracom/embedded-form-glue' {
-  const KRGlue: KRGlue
+  const KRGlue: import('./app/KryptonGlue').KRGlue
   export default KRGlue
-}
-
-declare interface KRGlue {
-  /**
-   * Load kr-payment-form library
-   * @param endpoint - API endpoint (only the base domain, e.g. https://domain.name)
-   * @param publicKey - Public key
-   * @param formToken? - Form token
-   *
-   * @example
-   *    const {KR} = await KRGlue.loadLibrary('https://domain.name', '12345678:publickey_abcdefghi...')
-   */
-  loadLibrary: (
-    endpoint: string,
-    publicKey: string,
-    formToken?: string
-  ) => Promise<{ KR: KR }>
 }
 
 declare interface KR {

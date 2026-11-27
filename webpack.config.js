@@ -3,22 +3,23 @@
 const path = require('path')
 
 module.exports = {
-  entry: './app/glue.js',
+  entry: './app/glue.ts',
   devtool: 'source-map',
   mode: 'production',
   output: {
     path: path.resolve(__dirname, 'dist/js'),
     filename: 'kr-payment-form-glue.min.js'
   },
+  resolve: {
+    extensions: ['.ts', '.js']
+  },
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.ts$/,
         use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env']
-          }
+          loader: 'ts-loader',
+          options: { configFile: 'tsconfig.json' }
         }
       }
     ]

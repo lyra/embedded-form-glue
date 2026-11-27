@@ -1,11 +1,11 @@
 module.exports = {
   root: true,
+  parser: '@typescript-eslint/parser',
   env: {
     browser: true,
     node: true
   },
   parserOptions: {
-    parser: 'babel-eslint',
     sourceType: 'module',
     ecmaVersion: 2015
   },
